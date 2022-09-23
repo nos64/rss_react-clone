@@ -1,5 +1,6 @@
 export const ROUTES = {
-  HOMEPAGE: '/',
+  LAYOUT: '/',
+  HOMEPAGE: '',
   ABOUTUS: '/about',
   NOTFOUND: '*',
 };
