@@ -1,23 +1,33 @@
 import React from 'react';
 
 class SearchBar extends React.Component {
-  constructor(props: string) {
-    super(props);
-    this.state = '';
-  }
+  state = {
+    searchString: '',
+  };
 
   componentDidMount() {
-    localStorage.getItem('value');
+    const searchString = localStorage.getItem('searchString')
+      ? localStorage.getItem('searchString')
+      : '';
+    this.setState({ searchString });
   }
 
-  componentWillMount() {
-    // localStorage.setItem('value', this.setState);
-  }
+  handleChange = (event: React.SyntheticEvent): void => {
+    const input = event.target;
+    if (input && input instanceof HTMLInputElement) {
+      this.setState({ searchString: input.value });
+      localStorage.setItem('searchString', input.value);
+    }
+  };
+
   render() {
     return (
-      <input type="search" placeholder="Enter your text here">
-        {/* {this.state} */}
-      </input>
+      <form>
+        <label>
+          Search:
+          <input name="searchString" value={this.state.searchString} onChange={this.handleChange} />
+        </label>
+      </form>
     );
   }
 }
