@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import style from './SearchBar.module.css';
 
-class SearchBar extends React.Component {
+export default class SearchBar extends Component {
   state = {
     searchString: '',
   };
@@ -25,11 +26,16 @@ class SearchBar extends React.Component {
       <form>
         <label>
           Search:
-          <input name="searchString" value={this.state.searchString} onChange={this.handleChange} />
+          <input
+            type="search"
+            name="searchString"
+            value={this.state.searchString}
+            onChange={this.handleChange}
+            placeholder="Enter your text here"
+          />
         </label>
+        <button type="button">Search</button>
       </form>
     );
   }
 }
-
-export default SearchBar;

@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import SearchBar from 'components/SearchBar/SearchBar';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from 'pages/HomePage/HomePage';
+import AboutUsPage from './pages/AboutUsPage/AboutUsPage';
+import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
+import { ROUTES } from 'variables/routes';
 
-class App extends React.Component {
+class App extends Component {
   render() {
-    return <SearchBar />;
+    return (
+      <Routes>
+        <Route path={ROUTES.HOMEPAGE} element={<HomePage />} />;
+        <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
+        <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
+      </Routes>
+    );
   }
 }
 
