@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import style from './SearchBar.module.css';
+import style from './SearchBar.module.scss';
 
 export default class SearchBar extends Component {
   state = {
@@ -12,6 +12,10 @@ export default class SearchBar extends Component {
       : '';
     this.setState({ searchString });
   }
+
+  // componentWillUnmount() {
+  //   localStorage.setItem('searchString', this.state.searchString);
+  // }
 
   handleChange = (event: React.SyntheticEvent): void => {
     const input = event.target;

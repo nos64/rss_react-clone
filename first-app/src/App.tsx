@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import './App.scss';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/HomePage/HomePage';
 import AboutUsPage from './pages/AboutUsPage/AboutUsPage';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
@@ -15,8 +15,8 @@ class App extends Component {
           <Route path={ROUTES.HOMEPAGE} element={<HomePage />} />;
           <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
           <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
+          <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOTFOUND} />} />;
         </Route>
-        ;
       </Routes>
     );
   }

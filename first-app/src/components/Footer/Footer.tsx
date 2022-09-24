@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import style from './Footer.module.css';
+import style from './Footer.module.scss';
 import { ReactComponent as RSLogo } from '../../assets/images/rs_school_js.svg';
 import React from 'react';
 

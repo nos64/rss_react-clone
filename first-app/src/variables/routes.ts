@@ -2,5 +2,6 @@ export const ROUTES = {
   LAYOUT: '/',
   HOMEPAGE: '',
   ABOUTUS: '/about',
-  NOTFOUND: '*',
+  NOTFOUND: '/404',
+  REDIRECT: '*',
 };
