@@ -8,7 +8,15 @@
   background: #ffd901;
 }
 
-.footer__link {
+.linkList {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+}
+.link {
   opacity: .7;
   transition: opacity .3s ease-in-out;
   font-size: 24px;
@@ -17,10 +25,10 @@
   color: black;
 }
 
-.footer__link:hover {
+.link:hover {
   opacity: 1;
 }
 
-.footer__logo {
+.logo {
   width: 80px;
 }

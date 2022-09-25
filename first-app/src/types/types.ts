@@ -13,6 +13,6 @@ export interface ICard {
   inBasket?: boolean;
 }
 
-export interface ICardIndex extends ICard {
-  index: number;
+export interface IChildren {
+  children?: React.ReactNode;
 }

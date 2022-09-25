@@ -35,7 +35,7 @@ export default class Card extends Component<ICard> {
           </p>
           <p className={style.card__description}>
             Количество собственников:{' '}
-            <span className={style.card__volume}>{this.props.owners}</span>
+            <span className={style.card__owners}>{this.props.owners}</span>
           </p>
         </div>
       </div>

@@ -1,9 +1,10 @@
 .card__list {
   list-style: none;
   display: flex;
-  align-self: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
+  row-gap: 25px;
+  column-gap: 15px;
   text-align: center;
   font-size: 60px;
   color: #064;

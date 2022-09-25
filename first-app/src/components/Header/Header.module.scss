@@ -1,0 +1,26 @@
+.header {
+  background-color: #4a4950;
+}
+
+.link__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 50px;
+}
+
+.link {
+  padding: 5px 10px;
+  color:#d1d2d3;
+  text-decoration: none;
+  border: 5px solid transparent;
+  transition: all .3s ease-in-out;
+}
+
+.link:hover,
+.link:focus {
+  color: #ffd901;
+  border: 5px solid #ffd901;
+  outline: none;
+}

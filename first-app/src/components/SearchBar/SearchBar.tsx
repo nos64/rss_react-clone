@@ -27,10 +27,10 @@ export default class SearchBar extends Component {
 
   render() {
     return (
-      <form>
+      <form className={style.searchForm}>
         <label>
-          Search:
           <input
+            className={style.searchField}
             type="search"
             name="searchString"
             value={this.state.searchString}
@@ -38,7 +38,9 @@ export default class SearchBar extends Component {
             placeholder="Enter your text here"
           />
         </label>
-        <button type="button">Search</button>
+        <button type="button" className={style.searchButton}>
+          Search
+        </button>
       </form>
     );
   }
