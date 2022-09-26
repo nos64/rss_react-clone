@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/nos64-REACT2022Q3/module01/static/css/main.b5c4ff9b.css",
-    "main.js": "/nos64-REACT2022Q3/module01/static/js/main.99756f60.js",
+    "main.css": "./nos64-REACT2022Q3/module01/static/css/main.b5c4ff9b.css",
+    "main.js": "./nos64-REACT2022Q3/module01/static/js/main.99756f60.js",
     "static/js/787.f3d7924f.chunk.js": "/nos64-REACT2022Q3/module01/static/js/787.f3d7924f.chunk.js",
     "static/media/mercedes-benz-180.jpg": "/nos64-REACT2022Q3/module01/static/media/mercedes-benz-180.fd674bec3ba190353fd8.jpg",
     "static/media/ferrari-365.jpg": "/nos64-REACT2022Q3/module01/static/media/ferrari-365.a180f9d0a79a4396c72f.jpg",
