@@ -16,3 +16,11 @@ export interface ICard {
 export interface IChildren {
   children?: React.ReactNode;
 }
+
+export type SearchProps = {
+  props?: string;
+};
+
+export type SearchState = {
+  searchString: string;
+};

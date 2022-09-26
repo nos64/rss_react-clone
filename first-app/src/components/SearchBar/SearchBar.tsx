@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
+import { SearchProps, SearchState } from 'types/types';
 import style from './SearchBar.module.scss';
 
-export default class SearchBar extends Component {
-  state = {
-    searchString: '',
-  };
+export default class SearchBar extends Component<SearchProps, SearchState> {
+  constructor(props: SearchProps) {
+    super(props);
+    this.state = {
+      searchString: '',
+    };
+  }
 
   componentDidMount() {
-    const searchString = localStorage.getItem('searchString')
-      ? localStorage.getItem('searchString')
-      : '';
-    this.setState({ searchString });
+    this.setState({ searchString: localStorage.getItem('searchString') || '' });
   }
 
   // componentWillUnmount() {
   //   localStorage.setItem('searchString', this.state.searchString);
   // }
 
+  componentDidUpdate() {
+    localStorage.setItem('searchString', this.state.searchString);
+  }
+
   handleChange = (event: React.SyntheticEvent): void => {
     const input = event.target;
     if (input && input instanceof HTMLInputElement) {
       this.setState({ searchString: input.value });
-      localStorage.setItem('searchString', input.value);
     }
   };
 
