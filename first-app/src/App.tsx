@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
-import './App.scss';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import HomePage from 'pages/HomePage/HomePage';
-import AboutUsPage from './pages/AboutUsPage/AboutUsPage';
-import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
-import { ROUTES } from 'variables/routes';
-import Layout from 'components/Layout/Layout';
-
+import { Outlet } from 'react-router-dom';
+import Header from 'components/Header/Header';
+import style from './App.module.scss';
+import Footer from 'components/Footer/Footer';
 class App extends Component {
   render() {
     return (
-      <Routes>
-        <Route path={ROUTES.LAYOUT} element={<Layout />}>
-          <Route path={ROUTES.HOMEPAGE} element={<HomePage />} />;
-          <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
-          <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
-          <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOTFOUND} />} />;
-        </Route>
-      </Routes>
+      <div className={style.layout}>
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
     );
   }
 }
