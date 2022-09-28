@@ -19,12 +19,12 @@
   gap: 50px;
 }
 .link {
-  opacity: .7;
-  transition: opacity .3s ease-in-out;
+  opacity: .6;
   font-size: 24px;
   font-weight: 700;
   text-decoration: none;
   color: black;
+  transition: all .3s ease-in-out;
 }
 
 .link:hover {
