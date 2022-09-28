@@ -8,13 +8,13 @@ import style from './HomePage.module.scss';
 export default class HomePAge extends Component {
   render() {
     return (
-      <>
+      <main>
         <Container>
           <h1 className={style.title}>Homepage</h1>
           <SearchBar />
           <CardList />
         </Container>
-      </>
+      </main>
     );
   }
 }
