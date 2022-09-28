@@ -5,7 +5,7 @@ import NotFoundPage from './NotFoundPage';
 describe('NotFoundPage', () => {
   it('render NotFoundPage component', () => {
     render(<NotFoundPage />);
-    screen.debug();
+    // screen.debug();
     expect(screen.getByText(/Page Not Found/i)).toBeInTheDocument();
   });
 });

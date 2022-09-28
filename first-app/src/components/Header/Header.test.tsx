@@ -11,7 +11,7 @@ describe('Header', () => {
         <Header />
       </MemoryRouter>
     );
-    screen.debug();
+    // screen.debug();
     const homepageLink = screen.getByText(/Homepage/i);
     expect(homepageLink).toBeInTheDocument();
     userEvent.click(homepageLink);
