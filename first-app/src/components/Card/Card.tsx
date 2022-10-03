@@ -4,13 +4,9 @@ import { ICard } from 'types/types';
 import style from './Card.module.scss';
 
 export default class Card extends Component<ICard> {
-  constructor(props: ICard) {
-    super(props);
-  }
-
   render() {
     return (
-      <div className={style.card}>
+      <li className={style.card}>
         <h3 className={style.card__title}>{this.props.brand}</h3>
         <p className={style.card__subtitle}>{this.props.model}</p>
         <div className={style.card__imageWrapper}>
@@ -37,7 +33,7 @@ export default class Card extends Component<ICard> {
             Количество собственников: <span className={style.card__param}>{this.props.owners}</span>
           </p>
         </div>
-      </div>
+      </li>
     );
   }
 }
