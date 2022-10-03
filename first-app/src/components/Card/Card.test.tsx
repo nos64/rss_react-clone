@@ -6,14 +6,11 @@ describe('Card', () => {
   it('render Card component', () => {
     render(
       <Card
-        id={''}
         image={''}
         brand={''}
         model={''}
         year={''}
         color={''}
-        colorID={''}
-        favorite={false}
         doors={''}
         volume={''}
         owners={''}

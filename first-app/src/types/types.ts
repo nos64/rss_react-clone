@@ -1,12 +1,9 @@
 export interface ICard {
-  id: string;
   image: string;
   brand: string;
   model: string;
   year: string;
   color: string;
-  colorID: string;
-  favorite: boolean;
   doors: string;
   volume: string;
   owners: string;
@@ -16,11 +13,3 @@ export interface ICard {
 export interface IChildren {
   children?: React.ReactNode;
 }
-
-export type SearchProps = {
-  props?: string;
-};
-
-export type SearchState = {
-  searchString: string;
-};

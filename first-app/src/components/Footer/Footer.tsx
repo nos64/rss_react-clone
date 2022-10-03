@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import style from './Footer.module.scss';
-import { ReactComponent as RSLogo } from '../../assets/images/rs_school_js.svg';
+import rsLogo from '../../assets/images/rs_school_js.svg';
 import React from 'react';
-import Container from 'components/Container/Container';
+import Container from 'components/Container';
 
 export default class Footer extends Component {
   render() {
@@ -18,7 +18,7 @@ export default class Footer extends Component {
                 rel="noreferrer"
               >
                 <div className={style.logo}>
-                  <RSLogo />
+                  <img src={rsLogo} alt="School Logo" />
                 </div>
               </a>
             </li>

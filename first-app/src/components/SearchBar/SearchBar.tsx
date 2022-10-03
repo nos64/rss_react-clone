@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import { SearchProps, SearchState } from 'types/types';
 import style from './SearchBar.module.scss';
+
+type SearchProps = {
+  props?: string;
+};
+
+type SearchState = {
+  searchString: string;
+};
 
 export default class SearchBar extends Component<SearchProps, SearchState> {
   constructor(props: SearchProps) {

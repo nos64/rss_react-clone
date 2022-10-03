@@ -1,6 +1,6 @@
-import CardList from 'components/CardList/CardList';
-import Container from 'components/Container/Container';
-import SearchBar from 'components/SearchBar/SearchBar';
+import CardList from 'components/CardList';
+import Container from 'components/Container';
+import SearchBar from 'components/SearchBar';
 import React from 'react';
 import { Component } from 'react';
 import style from './HomePage.module.scss';

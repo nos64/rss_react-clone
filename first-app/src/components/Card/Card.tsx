@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { ICard } from 'types/types';
 import style from './Card.module.scss';
-
+import CardSimpleText from '../CardSimpleText';
 export default class Card extends Component<ICard> {
   render() {
     return (
@@ -17,21 +17,11 @@ export default class Card extends Component<ICard> {
           />
         </div>
         <div>
-          <p className={style.card__description}>
-            Год выпуска: <span className={style.card__param}>{this.props.year}</span>
-          </p>
-          <p className={style.card__description}>
-            Цвет: <span className={style.card__param}>{this.props.color}</span>
-          </p>
-          <p className={style.card__description}>
-            Количество дверей: <span className={style.card__param}>{this.props.doors}</span>
-          </p>
-          <p className={style.card__description}>
-            Мощность двигателя: <span className={style.card__param}>{this.props.volume}</span>
-          </p>
-          <p className={style.card__description}>
-            Количество собственников: <span className={style.card__param}>{this.props.owners}</span>
-          </p>
+          <CardSimpleText description={'Год выпуска: '} param={this.props.year} />
+          <CardSimpleText description={'Цвет: '} param={this.props.color} />
+          <CardSimpleText description={'Количество дверей: '} param={this.props.doors} />
+          <CardSimpleText description={'Мощность двигателя: '} param={this.props.volume} />
+          <CardSimpleText description={'Количество собственников: '} param={this.props.owners} />
         </div>
       </li>
     );
