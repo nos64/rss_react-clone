@@ -22,20 +22,19 @@ export default class Card extends Component<ICard> {
         </div>
         <div>
           <p className={style.card__description}>
-            Год выпуска: <span className={style.card__year}>{this.props.year}</span>
+            Год выпуска: <span className={style.card__param}>{this.props.year}</span>
           </p>
           <p className={style.card__description}>
-            Цвет: <span className={style.card__color}>{this.props.color}</span>
+            Цвет: <span className={style.card__param}>{this.props.color}</span>
           </p>
           <p className={style.card__description}>
-            Количество дверей: <span className={style.card__door}>{this.props.doors}</span>
+            Количество дверей: <span className={style.card__param}>{this.props.doors}</span>
           </p>
           <p className={style.card__description}>
-            Мощность двигателя: <span className={style.card__volume}>{this.props.volume}</span>
+            Мощность двигателя: <span className={style.card__param}>{this.props.volume}</span>
           </p>
           <p className={style.card__description}>
-            Количество собственников:{' '}
-            <span className={style.card__owners}>{this.props.owners}</span>
+            Количество собственников: <span className={style.card__param}>{this.props.owners}</span>
           </p>
         </div>
       </div>
