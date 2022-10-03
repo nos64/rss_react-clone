@@ -5,7 +5,7 @@ import React from 'react';
 import { Component } from 'react';
 import style from './HomePage.module.scss';
 
-export default class HomePAge extends Component {
+export default class HomePage extends Component {
   render() {
     return (
       <main>
