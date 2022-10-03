@@ -1,21 +1,13 @@
 import React from 'react';
-import { render, screen, fireEvent, getByRole } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import SearchBar from './SearchBar';
 import userEvent from '@testing-library/user-event';
-import App from 'App';
-import AboutUsPage from 'pages/AboutUsPage/AboutUsPage';
-import HomePage from 'pages/HomePage/HomePage';
-import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
-import { MemoryRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ROUTES } from 'variables/routes';
 
 describe('SearchBar', () => {
   it('render SearchBar component', () => {
     render(<SearchBar />);
-    // screen.debug();
     expect(screen.getByText(/Search/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Enter your text here/i)).toBeInTheDocument();
-    // expect(screen.getByRole('')).toBeInTheDocument();
   });
 
   it('placeholder', () => {

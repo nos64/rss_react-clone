@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 describe('Footer', () => {
   it('render Footer component', () => {
     render(<Footer />);
-    // screen.debug();
     expect(screen.getByText(/2022/i)).toBeInTheDocument();
   });
 

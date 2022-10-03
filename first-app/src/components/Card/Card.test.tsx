@@ -19,7 +19,6 @@ describe('Card', () => {
         owners={''}
       />
     );
-    // screen.debug();
     expect(screen.getByText(/Год выпуска/i)).toBeInTheDocument();
   });
 });

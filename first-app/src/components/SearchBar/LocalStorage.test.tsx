@@ -2,12 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import SearchBar from './SearchBar';
 import userEvent from '@testing-library/user-event';
-import App from 'App';
-import AboutUsPage from 'pages/AboutUsPage/AboutUsPage';
-import HomePage from 'pages/HomePage/HomePage';
-import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
-import { MemoryRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ROUTES } from 'variables/routes';
 
 describe('localStorage', () => {
   it('show value in searchBar', async () => {
@@ -16,12 +10,10 @@ describe('localStorage', () => {
     localStorage.clear();
     localStorage.removeItem('searchString');
     const { rerender } = render(<SearchBar />);
-    // screen.debug();
     await user.type(screen.getByPlaceholderText(/Enter your text here/i), 'someText12345');
     localStorage.setItem('searchString', 'someText12345');
 
     rerender(<SearchBar />);
-    // screen.debug();
     localStorage.getItem('searchString');
     expect(screen.getByDisplayValue('someText12345')).toBeInTheDocument();
   });
