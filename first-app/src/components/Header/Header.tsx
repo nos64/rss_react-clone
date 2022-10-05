@@ -20,6 +20,11 @@ export default class Header extends Component {
                 About Us
               </Link>
             </li>
+            <li className={style.link__item}>
+              <Link className={style.link} to="/form">
+                Form
+              </Link>
+            </li>
           </ul>
         </Container>
       </header>
