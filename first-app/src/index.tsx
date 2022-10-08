@@ -7,7 +7,7 @@ import AboutUsPage from 'pages/AboutUsPage';
 import HomePage from 'pages/HomePage';
 import NotFoundPage from 'pages/NotFoundPage';
 import { ROUTES } from 'variables/routes';
-import Form from 'pages/Form';
+import FormPage from 'pages/FormPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -17,7 +17,7 @@ root.render(
         <Route path={ROUTES.LAYOUT} element={<App />}>
           <Route path={ROUTES.HOMEPAGE} element={<HomePage />} />;
           <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
-          <Route path={ROUTES.FORM} element={<Form />} />;
+          <Route path={ROUTES.FORM} element={<FormPage />} />;
           <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
           <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOTFOUND} />} />;
         </Route>
