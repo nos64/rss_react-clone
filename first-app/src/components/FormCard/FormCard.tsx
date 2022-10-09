@@ -10,6 +10,7 @@ interface IFormCard {
   country: string;
   picture: string;
   rule: boolean;
+  keyID: string;
 }
 
 interface FormPageState {
@@ -29,7 +30,7 @@ export default class FormCard extends Component<FormPageState, FormPageProps> {
       <ul>
         {this.props.formCards.map((card) => (
           <FormCardInstance
-            key={new Date().getTime()}
+            key={card.keyID}
             firstName={card.firstName}
             surname={card.surname}
             dateOfBirth={card.dateOfBirth}

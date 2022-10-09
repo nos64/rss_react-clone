@@ -9,6 +9,10 @@ interface IFormCard {
   country: string;
   picture: string;
   rule: boolean;
+  // keyID: string;
+}
+interface FormPageProps {
+  props?: string;
 }
 
 export default class FormCardInstance extends Component<IFormCard> {

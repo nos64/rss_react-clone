@@ -106,9 +106,8 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       country: this.country.current?.value as string,
       picture: this.picture.current?.value as string,
       rule: this.rule.current?.checked as boolean,
-      // keyID: new Date().getTime(),
+      keyID: new Date().getTime().toString(),
     };
-
     this.props.createCard(formObj);
 
     // this.validateForm();
