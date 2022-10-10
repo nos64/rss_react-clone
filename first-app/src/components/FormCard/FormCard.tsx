@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
 import FormCardInstance from '../FormCardInstance';
-
-interface IFormCard {
-  firstName: string;
-  surname: string;
-  dateOfBirth: string;
-  gender: string;
-  email: string;
-  country: string;
-  picture: string;
-  rule: boolean;
-  keyID: string;
-}
+import { IFormCard } from './../../pages/FormPage/FormPage';
 
 interface FormPageState {
   formCards: IFormCard[];

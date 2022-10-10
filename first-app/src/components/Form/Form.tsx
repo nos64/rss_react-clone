@@ -1,33 +1,24 @@
 import Container from 'components/Container';
 import React, { Component } from 'react';
 import style from './Form.module.scss';
-
+import { IFormCard } from './../../pages/FormPage/FormPage';
 interface IFormState {
   disableBtn: boolean;
-  firstName: boolean;
-  surname: boolean;
-  dateOfBirth: boolean;
-  gender: boolean;
-  email: boolean;
-  country: boolean;
-  picture: boolean | null;
-  rule: boolean;
+  errors: IFormError;
+  //   firstName: boolean;
+  //   surname: boolean;
+  //   dateOfBirth: boolean;
+  //   gender: boolean;
+  //   email: boolean;
+  //   country: boolean;
+  //   picture: boolean | null;
+  //   rule: boolean;
 }
 
 interface IFormPropsCreate {
   createCard: (data: IFormCard) => void;
 }
 
-interface IFormCard {
-  firstName: string;
-  surname: string;
-  dateOfBirth: string;
-  gender: string;
-  email: string;
-  country: string;
-  picture: string;
-  rule: boolean;
-}
 interface IFormProps {
   firstName?: string;
   surname?: string;
@@ -83,37 +74,39 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     this.rule = React.createRef();
     this.state = {
       disableBtn: true,
-      firstName: true,
-      surname: true,
-      dateOfBirth: true,
-      gender: true,
-      email: true,
-      country: true,
-      picture: null,
-      rule: true,
+      errors: {},
     };
   }
 
-  // handleSubmit: React.FormEventHandler<HTMLFormElement & FormFields> = (e) => {
-  handleSubmit = (e: React.SyntheticEvent) => {
+  handleSubmit: React.FocusEventHandler<HTMLFormElement & FormFields> = (e) => {
+    // handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const formObj = {
-      firstName: this.firstName.current?.value as string,
-      surname: this.surname.current?.value as string,
-      dateOfBirth: this.dateOfBirth.current?.value as string,
-      gender: this.gender.current?.value as string,
-      email: this.email.current?.value as string,
-      country: this.country.current?.value as string,
-      picture: this.picture.current?.value as string,
-      rule: this.rule.current?.checked as boolean,
-      keyID: new Date().getTime().toString(),
-    };
-    this.props.createCard(formObj);
-
-    // this.validateForm();
-    // console.log(formObj);
-    // e.target.reset();
+    if (this.validateForm()) {
+      const formObj = {
+        firstName: this.firstName.current?.value as string,
+        surname: this.surname.current?.value as string,
+        dateOfBirth: this.dateOfBirth.current?.value as string,
+        gender: this.gender.current?.value as string,
+        email: this.email.current?.value as string,
+        country: this.country.current?.value as string,
+        picture: this.picture.current?.value as string,
+        rule: this.rule.current?.checked as boolean,
+        keyID: new Date().getTime().toString(),
+      };
+      this.props.createCard(formObj);
+      // this.validateForm();
+      // console.log(formObj);
+      e.target.reset();
+      this.setState({ disableBtn: true });
+    }
   };
+  componentDidUpdate() {
+    if (this.state.disableBtn === false) {
+      if (this.isAnyErrorsValidate()) {
+        this.setDisabledSubmit();
+      }
+    }
+  }
 
   validateForm = () => {
     let isValidForm = true;
@@ -125,43 +118,96 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     ) {
       isValidForm = false;
       errorMessage.firstName = 'Please enter your correct first name';
+      console.log(this.firstName.current?.value);
     }
-    if (
-      this.surname.current?.value &&
-      !this.surname.current?.value.length &&
-      !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current?.value)
-    ) {
-      isValidForm = false;
-      errorMessage.surname = 'Please enter your correct surname name';
-    }
-    if (this.dateOfBirth.current?.value) {
-      isValidForm = false;
-      errorMessage.dateOfBirth = 'Please select your date of birth';
-    }
-    if (this.gender.current?.value) {
-      isValidForm = false;
-      errorMessage.gender = 'Please select your gender';
-    }
-    if (
-      this.email.current?.value &&
-      !this.email.current?.value.length &&
-      !/.+@.+\..+/i.test(this.email.current?.value)
-    ) {
-      isValidForm = false;
-      errorMessage.email = 'Please enter correct E-mail';
-    }
-    if (this.country.current?.value) {
-      isValidForm = false;
-      errorMessage.country = 'Please select your country';
-    }
-    if (!this.rule.current?.checked) {
-      isValidForm = false;
-      errorMessage.rule = 'Please select this';
-    }
-    // this.setState({
-    //   errors: errorMessage,
-    // });
+    // if (
+    //   this.surname.current?.value &&
+    //   !this.surname.current?.value.length &&
+    //   !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current?.value)
+    // ) {
+    //   isValidForm = false;
+    //   errorMessage.surname = 'Please enter your correct surname name';
+    // }
+    // if (!this.dateOfBirth.current?.value) {
+    //   isValidForm = false;
+    //   errorMessage.dateOfBirth = 'Please select your date of birth';
+    // }
+    // if (!this.gender.current?.value) {
+    //   isValidForm = false;
+    //   errorMessage.gender = 'Please select your gender';
+    // }
+    // if (
+    //   this.email.current?.value &&
+    //   !this.email.current?.value.length &&
+    //   !/.+@.+\..+/i.test(this.email.current?.value)
+    // ) {
+    //   isValidForm = false;
+    //   errorMessage.email = 'Please enter correct E-mail';
+    // }
+    // if (this.country.current?.value) {
+    //   isValidForm = false;
+    //   errorMessage.country = 'Please select your country';
+    // }
+    // if (!this.rule.current?.checked) {
+    //   isValidForm = false;
+    //   errorMessage.rule = 'Please select this';
+    // }
+    this.setState({
+      errors: errorMessage,
+    });
     return isValidForm;
+  };
+
+  resetError = (error: string) => {
+    this.setState({
+      errors: {
+        ...this.state.errors,
+        [error]: null,
+      },
+    });
+  };
+
+  setUndisabledSubmit = () => {
+    this.setState({
+      disableBtn: false,
+    });
+  };
+
+  setDisabledSubmit = () => {
+    this.setState({
+      disableBtn: true,
+    });
+  };
+
+  isAnyErrorsValidate = () => {
+    const errors = this.state.errors;
+    if (
+      errors.firstName &&
+      errors.surname &&
+      errors.dateOfBirth &&
+      errors.gender &&
+      errors.email &&
+      errors.country &&
+      errors.picture &&
+      errors.rule
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  onFocus = (input: string) => {
+    this.resetError(input);
+    if (this.isAnyErrorsValidate()) {
+      this.setDisabledSubmit();
+    }
+  };
+
+  onChange = () => {
+    this.setUndisabledSubmit();
+    if (this.isAnyErrorsValidate()) {
+      this.setDisabledSubmit();
+    }
   };
 
   render() {

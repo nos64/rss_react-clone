@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Form from '../../components/Form';
 import FormCard from '../../components/FormCard';
 
-interface IFormCard {
+export interface IFormCard {
   firstName: string;
   surname: string;
   dateOfBirth: string;
@@ -12,6 +12,7 @@ interface IFormCard {
   country: string;
   picture: string;
   rule: boolean;
+  keyID?: string;
 }
 
 interface FormPageState {

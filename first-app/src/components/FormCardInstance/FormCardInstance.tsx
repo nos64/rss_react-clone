@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
+import { IFormCard } from './../../pages/FormPage/FormPage';
 
-interface IFormCard {
-  firstName: string;
-  surname: string;
-  dateOfBirth: string;
-  gender: string;
-  email: string;
-  country: string;
-  picture: string;
-  rule: boolean;
-  // keyID: string;
-}
 interface FormPageProps {
   props?: string;
 }
