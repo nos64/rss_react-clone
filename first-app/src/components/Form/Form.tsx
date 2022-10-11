@@ -4,31 +4,22 @@ import style from './Form.module.scss';
 import { IFormCard } from './../../pages/FormPage/FormPage';
 interface IFormState {
   disableBtn: boolean;
-  errors: IFormError;
-  //   firstName: boolean;
-  //   surname: boolean;
-  //   dateOfBirth: boolean;
-  //   gender: boolean;
-  //   email: boolean;
-  //   country: boolean;
-  //   picture: boolean | null;
-  //   rule: boolean;
+  // errors: IFormError;
+  firstName: boolean;
+  surname: boolean;
+  dateOfBirth: boolean;
+  gender: boolean;
+  email: boolean;
+  country: boolean;
+  picture: boolean | null;
+  rule: boolean;
+  dataProcess: boolean;
 }
 
 interface IFormPropsCreate {
   createCard: (data: IFormCard) => void;
 }
 
-interface IFormProps {
-  firstName?: string;
-  surname?: string;
-  dateOfBirth?: string;
-  gender?: string;
-  email?: string;
-  country?: string;
-  picture?: string;
-  rule?: boolean;
-}
 interface IFormError {
   firstName?: string;
   surname?: string;
@@ -51,19 +42,17 @@ type FormFields = {
   rule: HTMLInputElement;
 };
 export default class Form extends Component<IFormPropsCreate, IFormState> {
-  // form: React.RefObject<HTMLFormElement>;
   firstName: React.RefObject<HTMLInputElement>;
-  surname: React.RefObject<HTMLInputElement>;
-  dateOfBirth: React.RefObject<HTMLInputElement>;
-  gender: React.RefObject<HTMLInputElement>;
-  email: React.RefObject<HTMLInputElement>;
-  country: React.RefObject<HTMLSelectElement>;
-  picture: React.RefObject<HTMLInputElement>;
-  rule: React.RefObject<HTMLInputElement>;
+  private surname: React.RefObject<HTMLInputElement>;
+  readonly dateOfBirth: React.RefObject<HTMLInputElement>;
+  readonly gender: React.RefObject<HTMLInputElement>;
+  readonly email: React.RefObject<HTMLInputElement>;
+  readonly country: React.RefObject<HTMLSelectElement>;
+  readonly picture: React.RefObject<HTMLInputElement>;
+  readonly rule: React.RefObject<HTMLInputElement>;
 
   constructor(props: IFormPropsCreate) {
     super(props);
-    // this.form = React.createRef();
     this.firstName = React.createRef();
     this.surname = React.createRef();
     this.dateOfBirth = React.createRef();
@@ -74,7 +63,15 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     this.rule = React.createRef();
     this.state = {
       disableBtn: true,
-      errors: {},
+      firstName: true,
+      surname: true,
+      dateOfBirth: true,
+      gender: true,
+      email: true,
+      country: true,
+      picture: true,
+      rule: true,
+      dataProcess: true,
     };
   }
 
@@ -105,18 +102,29 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
   handleSubmit: React.FocusEventHandler<HTMLFormElement & FormFields> = (e) => {
     // handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const formObj = {
-      firstName: this.firstName.current?.value as string,
-      surname: this.surname.current?.value as string,
-      dateOfBirth: this.dateOfBirth.current?.value as string,
-      gender: this.gender.current?.value as string,
-      email: this.email.current?.value as string,
-      country: this.country.current?.value as string,
-      picture: this.picture.current?.value as string,
-      rule: this.rule.current?.checked as boolean,
-      keyID: new Date().getTime().toString(),
-    };
-    this.props.createCard(formObj);
+    if (
+      this.firstName.current &&
+      this.surname.current &&
+      this.dateOfBirth.current &&
+      this.gender.current &&
+      this.email.current &&
+      this.country.current &&
+      this.picture.current &&
+      this.rule.current
+    ) {
+      const formObj = {
+        firstName: this.firstName.current.value,
+        surname: this.surname.current.value,
+        dateOfBirth: this.dateOfBirth.current.value,
+        gender: this.gender.current.value,
+        email: this.email.current.value,
+        country: this.country.current.value,
+        picture: this.picture.current.value,
+        rule: this.rule.current.checked,
+        keyID: new Date().getTime().toString(),
+      };
+      this.props.createCard(formObj);
+    }
     e.target.reset();
     this.setState({ disableBtn: true });
   };
@@ -171,27 +179,6 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
   //   return isValidForm;
   // };
 
-  resetError = (error: string) => {
-    this.setState({
-      errors: {
-        ...this.state.errors,
-        [error]: null,
-      },
-    });
-  };
-
-  setUndisabledSubmit = () => {
-    this.setState({
-      disableBtn: false,
-    });
-  };
-
-  setDisabledSubmit = () => {
-    this.setState({
-      disableBtn: true,
-    });
-  };
-
   render() {
     return (
       <Container>
@@ -221,11 +208,23 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               />
             </label>
             <label>
-              <input type="radio" name="gender" value="male" ref={this.gender} />
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                ref={this.gender}
+                onChange={this.handleChange}
+              />
               Male
             </label>
             <label>
-              <input type="radio" name="gender" value="female" ref={this.gender} />
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                ref={this.gender}
+                onChange={this.handleChange}
+              />
               Female
             </label>
             <label>
@@ -251,7 +250,8 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               <input type="file" name="picture" ref={this.picture} onChange={this.handleChange} />
             </label>
             <label>
-              <input type="checkbox" name="rule" ref={this.rule} />I consent to my personal data
+              <input type="checkbox" name="rule" ref={this.rule} onChange={this.handleChange} />I
+              consent to my personal data
             </label>
             <button type="submit" disabled={this.state.disableBtn ? true : false}>
               Registration
