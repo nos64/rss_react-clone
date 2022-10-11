@@ -2,6 +2,7 @@ import Container from 'components/Container';
 import React, { Component } from 'react';
 import Form from '../../components/Form';
 import FormCard from '../../components/FormCard';
+import style from './FormPage.module.scss';
 
 export interface IFormCard {
   firstName: string;
@@ -39,8 +40,10 @@ export default class FormPage extends Component<FormPageProps, FormPageState> {
   render() {
     return (
       <Container>
-        <Form createCard={this.createCard} />
-        <FormCard formCards={this.state.formCards} />
+        <div className={style.wrapper}>
+          <Form createCard={this.createCard} />
+          <FormCard formCards={this.state.formCards} />
+        </div>
       </Container>
     );
   }

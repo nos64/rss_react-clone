@@ -78,136 +78,47 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     };
   }
 
+  handleChange: React.ChangeEventHandler<HTMLInputElement> = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    e.preventDefault();
+    if (
+      (this.firstName.current && this.firstName.current.value.length) ||
+      (this.surname.current && this.surname.current.value.length) ||
+      (this.dateOfBirth.current && this.dateOfBirth.current.value.length) ||
+      (this.email.current && this.email.current.value.length) ||
+      (this.picture.current && this.picture.current.value.length)
+    ) {
+      this.setState({ disableBtn: false });
+    } else this.setState({ disableBtn: true });
+  };
+
+  handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    e.preventDefault();
+    if (this.country.current && this.country.current.value.length) {
+      this.setState({ disableBtn: false });
+    }
+  };
+
   handleSubmit: React.FocusEventHandler<HTMLFormElement & FormFields> = (e) => {
     // handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (this.validateForm()) {
-      const formObj = {
-        firstName: this.firstName.current?.value as string,
-        surname: this.surname.current?.value as string,
-        dateOfBirth: this.dateOfBirth.current?.value as string,
-        gender: this.gender.current?.value as string,
-        email: this.email.current?.value as string,
-        country: this.country.current?.value as string,
-        picture: this.picture.current?.value as string,
-        rule: this.rule.current?.checked as boolean,
-        keyID: new Date().getTime().toString(),
-      };
-      this.props.createCard(formObj);
-      // this.validateForm();
-      // console.log(formObj);
-      e.target.reset();
-      this.setState({ disableBtn: true });
-    }
-  };
-  componentDidUpdate() {
-    if (this.state.disableBtn === false) {
-      if (this.isAnyErrorsValidate()) {
-        this.setDisabledSubmit();
-      }
-    }
-  }
-
-  validateForm = () => {
-    let isValidForm = true;
-    const errorMessage: IFormError = {};
-    if (
-      this.firstName.current?.value &&
-      !this.firstName.current?.value.length &&
-      !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.firstName.current?.value)
-    ) {
-      isValidForm = false;
-      errorMessage.firstName = 'Please enter your correct first name';
-      console.log(this.firstName.current?.value);
-    }
-    // if (
-    //   this.surname.current?.value &&
-    //   !this.surname.current?.value.length &&
-    //   !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current?.value)
-    // ) {
-    //   isValidForm = false;
-    //   errorMessage.surname = 'Please enter your correct surname name';
-    // }
-    // if (!this.dateOfBirth.current?.value) {
-    //   isValidForm = false;
-    //   errorMessage.dateOfBirth = 'Please select your date of birth';
-    // }
-    // if (!this.gender.current?.value) {
-    //   isValidForm = false;
-    //   errorMessage.gender = 'Please select your gender';
-    // }
-    // if (
-    //   this.email.current?.value &&
-    //   !this.email.current?.value.length &&
-    //   !/.+@.+\..+/i.test(this.email.current?.value)
-    // ) {
-    //   isValidForm = false;
-    //   errorMessage.email = 'Please enter correct E-mail';
-    // }
-    // if (this.country.current?.value) {
-    //   isValidForm = false;
-    //   errorMessage.country = 'Please select your country';
-    // }
-    // if (!this.rule.current?.checked) {
-    //   isValidForm = false;
-    //   errorMessage.rule = 'Please select this';
-    // }
-    this.setState({
-      errors: errorMessage,
-    });
-    return isValidForm;
-  };
-
-  resetError = (error: string) => {
-    this.setState({
-      errors: {
-        ...this.state.errors,
-        [error]: null,
-      },
-    });
-  };
-
-  setUndisabledSubmit = () => {
-    this.setState({
-      disableBtn: false,
-    });
-  };
-
-  setDisabledSubmit = () => {
-    this.setState({
-      disableBtn: true,
-    });
-  };
-
-  isAnyErrorsValidate = () => {
-    const errors = this.state.errors;
-    if (
-      errors.firstName &&
-      errors.surname &&
-      errors.dateOfBirth &&
-      errors.gender &&
-      errors.email &&
-      errors.country &&
-      errors.picture &&
-      errors.rule
-    ) {
-      return true;
-    }
-    return false;
-  };
-
-  onFocus = (input: string) => {
-    this.resetError(input);
-    if (this.isAnyErrorsValidate()) {
-      this.setDisabledSubmit();
-    }
-  };
-
-  onChange = () => {
-    this.setUndisabledSubmit();
-    if (this.isAnyErrorsValidate()) {
-      this.setDisabledSubmit();
-    }
+    const formObj = {
+      firstName: this.firstName.current?.value as string,
+      surname: this.surname.current?.value as string,
+      dateOfBirth: this.dateOfBirth.current?.value as string,
+      gender: this.gender.current?.value as string,
+      email: this.email.current?.value as string,
+      country: this.country.current?.value as string,
+      picture: this.picture.current?.value as string,
+      rule: this.rule.current?.checked as boolean,
+      keyID: new Date().getTime().toString(),
+    };
+    this.props.createCard(formObj);
+    e.target.reset();
+    this.setState({ disableBtn: true });
   };
 
   render() {
@@ -218,15 +129,25 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
           <fieldset className={style.fieldset}>
             <label>
               Name:
-              <input type="text" name="firstName" ref={this.firstName} />
+              <input
+                type="text"
+                name="firstName"
+                ref={this.firstName}
+                onChange={this.handleChange}
+              />
             </label>
             <label>
               Surname:
-              <input type="text" name="surname" ref={this.surname} />
+              <input type="text" name="surname" ref={this.surname} onChange={this.handleChange} />
             </label>
             <label>
               Date of bith:
-              <input type="date" name="dateOfBirth" ref={this.dateOfBirth} />
+              <input
+                type="date"
+                name="dateOfBirth"
+                ref={this.dateOfBirth}
+                onChange={this.handleChange}
+              />
             </label>
             <label>
               <input type="radio" name="gender" value="male" ref={this.gender} />
@@ -238,11 +159,16 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
             </label>
             <label>
               E-mail:
-              <input type="email" title="Enter your e-mail" ref={this.email} />
+              <input
+                type="email"
+                title="Enter your e-mail"
+                ref={this.email}
+                onChange={this.handleChange}
+              />
             </label>
             <label>
               Country:
-              <select name="country" ref={this.country}>
+              <select name="country" ref={this.country} onChange={this.handleChangeSelect}>
                 <option value="">--Please choose a country--</option>
                 <option value="russia">Russia</option>
                 <option value="belarus">Belarus</option>
@@ -251,13 +177,14 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               </select>
             </label>
             <label>
-              <input type="file" name="picture" ref={this.picture} />
-              Profile picture
+              <input type="file" name="picture" ref={this.picture} onChange={this.handleChange} />
             </label>
             <label>
               <input type="checkbox" name="rule" ref={this.rule} />I consent to my personal data
             </label>
-            <button type="submit">Registration</button>
+            <button type="submit" disabled={this.state.disableBtn ? true : false}>
+              Registration
+            </button>
           </fieldset>
         </form>
       </Container>

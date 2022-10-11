@@ -1,5 +1,5 @@
-.form,
-.fieldset {
-  display: flex;
+.wrapper {
+  display: block;
   flex-direction: column;
+  align-items: flex-start;
 }
