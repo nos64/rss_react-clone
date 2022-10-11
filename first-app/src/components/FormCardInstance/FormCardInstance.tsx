@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { IFormCard } from './../../pages/FormPage/FormPage';
-
+import style from './FormCardInstance.module.scss';
 interface FormPageProps {
   props?: string;
 }
@@ -8,28 +8,31 @@ interface FormPageProps {
 export default class FormCardInstance extends Component<IFormCard> {
   render() {
     return (
-      <li>
-        <p>
-          Name: <span>{this.props.firstName}</span>
-        </p>
-        <p>
-          Surname: <span>{this.props.surname}</span>
-        </p>
-        <p>
-          Date of birth: <span>{this.props.dateOfBirth}</span>
-        </p>
-        <p>
-          Gender: <span>{this.props.gender}</span>
-        </p>
-        <p>
-          E-mail: <span>{this.props.email}</span>
-        </p>
-        <p>
-          Country: <span>{this.props.country}</span>
-        </p>
-        <p>
-          Picture: <span>{this.props.picture}</span>
-        </p>
+      <li className={style.item}>
+        <div className={style.descriptionWrapper}>
+          <p className={style.description}>
+            Name: <span className={style.param}>{this.props.firstName}</span>
+          </p>
+          <p className={style.description}>
+            Surname: <span className={style.param}>{this.props.surname}</span>
+          </p>
+          <p className={style.description}>
+            Date of birth: <span className={style.param}>{this.props.dateOfBirth}</span>
+          </p>
+          <p className={style.description}>
+            Gender: <span className={style.param}>{this.props.gender}</span>
+          </p>
+          <p className={style.description}>
+            E-mail: <span className={style.param}>{this.props.email}</span>
+          </p>
+          <p className={style.description}>
+            Country: <span className={style.param}>{this.props.country}</span>
+          </p>
+        </div>
+
+        <div className={style.avatarWrapper}>
+          <img className={style.image} src={this.props.picture} />
+        </div>
       </li>
     );
   }

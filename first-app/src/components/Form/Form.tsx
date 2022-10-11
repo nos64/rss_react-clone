@@ -79,6 +79,9 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     e.preventDefault();
+    // if (this.picture.current && this.picture.current.files && this.picture.current.value.length) {
+    //   this.setState({ picture: URL.createObjectURL(this.picture.current.files[0]), file: true });
+    // }
     if (
       (this.firstName.current && this.firstName.current.value.length) ||
       (this.surname.current && this.surname.current.value.length) ||
@@ -183,80 +186,99 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     return (
       <Container>
         <form className={style.form} action="" onSubmit={this.handleSubmit}>
-          <p>Registration form</p>
-          <fieldset className={style.fieldset}>
-            <label>
-              Name:
+          <h2 className={style.title}>Registration form</h2>
+          {/* <fieldset className={style.fieldset}> */}
+          <label className={style.label}>
+            Name:
+            <input
+              className={style.textField}
+              type="text"
+              name="firstName"
+              ref={this.firstName}
+              onChange={this.handleChange}
+            />
+          </label>
+          <label className={style.label}>
+            Surname:
+            <input
+              className={style.textField}
+              type="text"
+              name="surname"
+              ref={this.surname}
+              onChange={this.handleChange}
+            />
+          </label>
+          <div className={style.dateWrapper}>
+            <label className={style.label}>
+              Date of birth:
               <input
-                type="text"
-                name="firstName"
-                ref={this.firstName}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              Surname:
-              <input type="text" name="surname" ref={this.surname} onChange={this.handleChange} />
-            </label>
-            <label>
-              Date of bith:
-              <input
+                className={style.dateField}
                 type="date"
                 name="dateOfBirth"
                 ref={this.dateOfBirth}
                 onChange={this.handleChange}
               />
             </label>
+          </div>
+          <div className={style.genderWrapper}>
+            Gender:
             <label>
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                ref={this.gender}
-                onChange={this.handleChange}
-              />
+              <input type="radio" name="gender" value="male" ref={this.gender} />
               Male
             </label>
             <label>
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                ref={this.gender}
-                onChange={this.handleChange}
-              />
+              <input type="radio" name="gender" value="female" ref={this.gender} />
               Female
             </label>
-            <label>
-              E-mail:
-              <input
-                type="email"
-                title="Enter your e-mail"
-                ref={this.email}
-                onChange={this.handleChange}
-              />
-            </label>
-            <label>
-              Country:
-              <select name="country" ref={this.country} onChange={this.handleChangeSelect}>
-                <option value="">--Please choose a country--</option>
-                <option value="russia">Russia</option>
-                <option value="belarus">Belarus</option>
-                <option value="ukrane">Ukrane</option>
-                <option value="kazakhstan">Kazakhstan</option>
-              </select>
-            </label>
-            <label>
-              <input type="file" name="picture" ref={this.picture} onChange={this.handleChange} />
-            </label>
-            <label>
-              <input type="checkbox" name="rule" ref={this.rule} onChange={this.handleChange} />I
-              consent to my personal data
-            </label>
-            <button type="submit" disabled={this.state.disableBtn ? true : false}>
-              Registration
-            </button>
-          </fieldset>
+          </div>
+
+          <label className={style.label}>
+            E-mail:
+            <input
+              className={style.textField}
+              type="email"
+              title="Enter your e-mail"
+              ref={this.email}
+              onChange={this.handleChange}
+            />
+          </label>
+          <label className={style.label}>
+            Country:
+            <select
+              className={style.textField}
+              name="country"
+              ref={this.country}
+              onChange={this.handleChangeSelect}
+            >
+              <option value="">--Please choose a country--</option>
+              <option value="russia">Russia</option>
+              <option value="belarus">Belarus</option>
+              <option value="ukrane">Ukrane</option>
+              <option value="kazakhstan">Kazakhstan</option>
+            </select>
+          </label>
+          <label className={style.label}>
+            Avatart:
+            <input
+              className={style.textField}
+              type="file"
+              name="picture"
+              ref={this.picture}
+              onChange={this.handleChange}
+            />
+          </label>
+          <label>
+            <input className={style.checkbox} type="checkbox" name="rule" ref={this.rule} />I
+            consent to my personal data
+          </label>
+          <button
+            className={style.button}
+            type="submit"
+            disabled={this.state.disableBtn ? true : false}
+          >
+            Registration
+          </button>
+          {/* </fieldset> */}
         </form>
       </Container>
     );

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormCardInstance from '../FormCardInstance';
 import { IFormCard } from './../../pages/FormPage/FormPage';
-
+import style from './FormCard.module.scss';
 interface FormPageState {
   formCards: IFormCard[];
 }
@@ -16,7 +16,7 @@ export default class FormCard extends Component<FormPageState, FormPageProps> {
   }
   render() {
     return (
-      <ul>
+      <ul className={style.list}>
         {this.props.formCards.map((card) => (
           <FormCardInstance
             key={card.keyID}
