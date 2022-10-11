@@ -121,6 +121,77 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     this.setState({ disableBtn: true });
   };
 
+  // validateForm = () => {
+  //   let isValidForm = true;
+  //   const errorMessage: IFormError = {};
+  //   if (
+  //     this.firstName.current.value &&
+  //     !this.firstName.current.value.length &&
+  //     !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.firstName.current?.value)
+  //   ) {
+  //     isValidForm = false;
+  //     errorMessage.firstName = 'Please enter your correct first name';
+  //     console.log(this.firstName.current?.value);
+  //   }
+  // if (
+  //   this.surname.current?.value &&
+  //   !this.surname.current?.value.length &&
+  //   !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current?.value)
+  // ) {
+  //   isValidForm = false;
+  //   errorMessage.surname = 'Please enter your correct surname name';
+  // }
+  // if (!this.dateOfBirth.current?.value) {
+  //   isValidForm = false;
+  //   errorMessage.dateOfBirth = 'Please select your date of birth';
+  // }
+  // if (!this.gender.current?.value) {
+  //   isValidForm = false;
+  //   errorMessage.gender = 'Please select your gender';
+  // }
+  // if (
+  //   this.email.current?.value &&
+  //   !this.email.current?.value.length &&
+  //   !/.+@.+\..+/i.test(this.email.current?.value)
+  // ) {
+  //   isValidForm = false;
+  //   errorMessage.email = 'Please enter correct E-mail';
+  // }
+  // if (this.country.current?.value) {
+  //   isValidForm = false;
+  //   errorMessage.country = 'Please select your country';
+  // }
+  // if (!this.rule.current?.checked) {
+  //   isValidForm = false;
+  //   errorMessage.rule = 'Please select this';
+  // }
+  //   this.setState({
+  //     errors: errorMessage,
+  //   });
+  //   return isValidForm;
+  // };
+
+  resetError = (error: string) => {
+    this.setState({
+      errors: {
+        ...this.state.errors,
+        [error]: null,
+      },
+    });
+  };
+
+  setUndisabledSubmit = () => {
+    this.setState({
+      disableBtn: false,
+    });
+  };
+
+  setDisabledSubmit = () => {
+    this.setState({
+      disableBtn: true,
+    });
+  };
+
   render() {
     return (
       <Container>
