@@ -45,7 +45,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
   firstName: React.RefObject<HTMLInputElement>;
   private surname: React.RefObject<HTMLInputElement>;
   readonly dateOfBirth: React.RefObject<HTMLInputElement>;
-  readonly gender: React.RefObject<HTMLInputElement>;
+  gender: React.RefObject<HTMLInputElement>;
   readonly email: React.RefObject<HTMLInputElement>;
   readonly country: React.RefObject<HTMLSelectElement>;
   readonly picture: React.RefObject<HTMLInputElement>;
@@ -84,6 +84,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       (this.surname.current && this.surname.current.value.length) ||
       (this.dateOfBirth.current && this.dateOfBirth.current.value.length) ||
       (this.email.current && this.email.current.value.length) ||
+      (this.gender.current && this.gender.current.checked) ||
       (this.picture.current && this.picture.current.value.length)
     ) {
       this.setState({ disableBtn: false });
@@ -111,6 +112,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       this.surname.current &&
       this.dateOfBirth.current &&
       this.gender.current &&
+      this.gender.current.checked &&
       this.email.current &&
       this.country.current &&
       this.picture.current &&
@@ -124,8 +126,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
         gender: this.gender.current.value,
         email: this.email.current.value,
         country: this.country.current.value,
-        // picture: this.picture.current.value,
-        picture: URL.createObjectURL(this.picture.current?.files[0]),
+        picture: URL.createObjectURL(this.picture.current.files[0]),
         rule: this.rule.current.checked,
         keyID: new Date().getTime().toString(),
       };
@@ -138,57 +139,37 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
   validateForm = () => {
     let isValidForm = true;
     const errorMessage: IFormError = {};
-    if (
-      this.firstName.current &&
-      // !this.firstName.current.value &&
-      !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.firstName.current.value)
-    ) {
+    if (this.firstName.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.firstName.current.value)) {
       isValidForm = false;
       errorMessage.firstName = 'Please enter your correct first name';
-      console.log(111);
     }
-    if (
-      this.surname.current &&
-      // !this.surname.current.value.length &&
-      !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current.value)
-    ) {
+    if (this.surname.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current.value)) {
       isValidForm = false;
       errorMessage.surname = 'Please enter your correct surname name';
-      console.log(222);
     }
     if (this.dateOfBirth.current && !this.dateOfBirth.current.value) {
       isValidForm = false;
       errorMessage.dateOfBirth = 'Please select your date of birth';
-      console.log(333);
     }
-    if (this.gender.current && !this.gender.current.value) {
+    if (this.gender.current && !this.gender.current.checked) {
       isValidForm = false;
       errorMessage.gender = 'Please select your gender';
-      console.log(444);
     }
-    if (
-      this.email.current &&
-      // !this.email.current?.value.length &&
-      !/.+@.+\..+/i.test(this.email.current.value)
-    ) {
+    if (this.email.current && !/.+@.+\..+/i.test(this.email.current.value)) {
       isValidForm = false;
       errorMessage.email = 'Please enter correct E-mail';
-      console.log(555);
     }
     if (this.country.current && !this.country.current.value) {
       isValidForm = false;
       errorMessage.country = 'Please select your country';
-      console.log(666);
     }
     if (this.picture.current && !this.picture.current.value) {
       isValidForm = false;
       errorMessage.picture = 'Please onput you avatar';
-      console.log('avatatar');
     }
     if (this.rule.current && !this.rule.current.checked) {
       isValidForm = false;
       errorMessage.rule = 'Please select this';
-      console.log(777);
     }
     this.setState({
       errors: errorMessage,
@@ -260,6 +241,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
                 name="gender"
                 value="male"
                 ref={this.gender}
+                onChange={(e) => this.handleChange(e)}
               />
               Male
             </label>
@@ -270,6 +252,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
                 name="gender"
                 value="female"
                 ref={this.gender}
+                // onChange={this.handleChange}
               />
               Female
             </label>
