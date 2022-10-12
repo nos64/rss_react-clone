@@ -79,9 +79,6 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     e.preventDefault();
-    // if (this.picture.current && this.picture.current.files && this.picture.current.value.length) {
-    //   this.setState({ picture: URL.createObjectURL(this.picture.current.files[0]), file: true });
-    // }
     if (
       (this.firstName.current && this.firstName.current.value.length) ||
       (this.surname.current && this.surname.current.value.length) ||
@@ -117,6 +114,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       this.email.current &&
       this.country.current &&
       this.picture.current &&
+      this.picture.current.files &&
       this.rule.current
     ) {
       const formObj = {
@@ -126,7 +124,8 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
         gender: this.gender.current.value,
         email: this.email.current.value,
         country: this.country.current.value,
-        picture: this.picture.current.value,
+        // picture: this.picture.current.value,
+        picture: URL.createObjectURL(this.picture.current?.files[0]),
         rule: this.rule.current.checked,
         keyID: new Date().getTime().toString(),
       };
