@@ -57,11 +57,20 @@
 .selectField {
   cursor: pointer;
 }
+
 .genderWrapper {
   display: flex;
   justify-content: space-between;
 }
 
+.radioLabel {
+  cursor: pointer;
+}
+
+.radio {
+  transform: scale(1.5);
+  margin-right: 10px;
+}
 .checkbox {
   width: 20px;
   height: 20px;
@@ -83,4 +92,8 @@
   color: rgba(16, 16, 16, 0.3);
   background-color:rgba(239, 239, 239, 0.3);
   cursor: not-allowed;
+}
+
+.errorMessage {
+  height: 25px;
 }
