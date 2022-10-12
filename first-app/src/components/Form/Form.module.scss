@@ -77,3 +77,10 @@
   border: 2px solid transparent;
   transition: all .3s ease-in-out;
 }
+
+.button[disabled]:hover {
+  border: 2px solid transparent;
+  color: rgba(16, 16, 16, 0.3);
+  background-color:rgba(239, 239, 239, 0.3);
+  cursor: not-allowed;
+}
