@@ -181,6 +181,11 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       errorMessage.country = 'Please select your country';
       console.log(666);
     }
+    if (this.picture.current && !this.picture.current.value) {
+      isValidForm = false;
+      errorMessage.picture = 'Please onput you avatar';
+      console.log('avatatar');
+    }
     if (this.rule.current && !this.rule.current.checked) {
       isValidForm = false;
       errorMessage.rule = 'Please select this';
@@ -197,7 +202,6 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       <Container>
         <form className={style.form} action="" onSubmit={this.handleSubmit}>
           <h2 className={style.title}>Registration form</h2>
-          {/* <fieldset className={style.fieldset}> */}
           <label className={style.label}>
             Name:
             <input
@@ -347,7 +351,6 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
           >
             Registration
           </button>
-          {/* </fieldset> */}
         </form>
       </Container>
     );
