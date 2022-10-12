@@ -2,6 +2,7 @@ import Container from 'components/Container';
 import React, { Component } from 'react';
 import style from './Form.module.scss';
 import { IFormCard } from './../../pages/FormPage/FormPage';
+import FormErrorMessage from '../FormErrorMessage';
 interface IFormState {
   disableBtn: boolean;
   errors: IFormError;
@@ -192,12 +193,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               onChange={this.handleChange}
             />
           </label>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.firstName ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.firstName}
-          </div>
+          <FormErrorMessage message={this.state.errors.firstName} />
           <label className={style.label}>
             Surname:
             <input
@@ -208,12 +204,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               onChange={this.handleChange}
             />
           </label>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.surname ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.surname}
-          </div>
+          <FormErrorMessage message={this.state.errors.surname} />
           <div className={style.dateWrapper}>
             <label className={style.label}>
               Date of birth:
@@ -226,12 +217,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               />
             </label>
           </div>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.dateOfBirth ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.dateOfBirth}
-          </div>
+          <FormErrorMessage message={this.state.errors.dateOfBirth} />
           <div className={style.genderWrapper}>
             Gender:
             <label className={style.radioLabel}>
@@ -257,12 +243,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               Female
             </label>
           </div>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.gender ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.gender}
-          </div>
+          <FormErrorMessage message={this.state.errors.gender} />
           <label className={style.label}>
             E-mail:
             <input
@@ -273,12 +254,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               onChange={this.handleChange}
             />
           </label>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.email ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.email}
-          </div>
+          <FormErrorMessage message={this.state.errors.email} />
           <label className={style.label}>
             Country:
             <select
@@ -294,12 +270,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               <option value="Kazakhstan">Kazakhstan</option>
             </select>
           </label>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.country ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.country}
-          </div>
+          <FormErrorMessage message={this.state.errors.country} />
           <label className={style.label}>
             Avatart:
             <input
@@ -310,22 +281,12 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               onChange={this.handleChange}
             />
           </label>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.picture ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.picture}
-          </div>
+          <FormErrorMessage message={this.state.errors.picture} />
           <label>
             <input className={style.checkbox} type="checkbox" name="rule" ref={this.rule} />I
             consent to my personal data
           </label>
-          <div
-            className={style.errorMessage}
-            style={this.state.errors.rule ? { color: 'red' } : { color: 'transperernt' }}
-          >
-            {this.state.errors.rule}
-          </div>
+          <FormErrorMessage message={this.state.errors.rule} />
           <button
             className={style.button}
             type="submit"
