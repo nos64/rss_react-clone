@@ -81,7 +81,6 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
   };
 
   handleSubmit: React.FocusEventHandler<HTMLFormElement & FormFields> = (e) => {
-    // handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!this.validateForm()) {
       this.setState({ disableBtn: true });
@@ -155,7 +154,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     }
     if (this.picture.current && !this.picture.current.value) {
       isValidForm = false;
-      errorMessage.picture = 'Please onput you avatar';
+      errorMessage.picture = 'Please input you avatar';
     }
     if (this.rule.current && !this.rule.current.checked) {
       isValidForm = false;
@@ -227,7 +226,6 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
             Gender:
             <label className={style.radioLabel}>
               <input
-                // defaultChecked
                 className={style.radio}
                 type="radio"
                 name="gender"
