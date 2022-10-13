@@ -6,15 +6,6 @@ import FormErrorMessage from '../FormErrorMessage';
 interface IFormState {
   disableBtn: boolean;
   errors: IFormError;
-  firstName: boolean;
-  surname: boolean;
-  dateOfBirth: boolean;
-  gender: boolean;
-  email: boolean;
-  country: boolean;
-  picture: boolean | null;
-  rule: boolean;
-  // dataProcess: boolean;
 }
 
 interface IFormPropsCreate {
@@ -37,16 +28,18 @@ type FormFields = {
   surname: HTMLInputElement;
   dateOfBirth: HTMLInputElement;
   gender: HTMLInputElement;
+
   email: HTMLInputElement;
   country: HTMLSelectElement;
   picture: HTMLInputElement;
   rule: HTMLInputElement;
 };
 export default class Form extends Component<IFormPropsCreate, IFormState> {
-  firstName: React.RefObject<HTMLInputElement>;
-  private surname: React.RefObject<HTMLInputElement>;
+  readonly firstName: React.RefObject<HTMLInputElement>;
+  readonly surname: React.RefObject<HTMLInputElement>;
   readonly dateOfBirth: React.RefObject<HTMLInputElement>;
-  gender: React.RefObject<HTMLInputElement>;
+  readonly genderMale: React.RefObject<HTMLInputElement>;
+  readonly genderFemale: React.RefObject<HTMLInputElement>;
   readonly email: React.RefObject<HTMLInputElement>;
   readonly country: React.RefObject<HTMLSelectElement>;
   readonly picture: React.RefObject<HTMLInputElement>;
@@ -57,7 +50,8 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     this.firstName = React.createRef();
     this.surname = React.createRef();
     this.dateOfBirth = React.createRef();
-    this.gender = React.createRef();
+    this.genderMale = React.createRef();
+    this.genderFemale = React.createRef();
     this.email = React.createRef();
     this.country = React.createRef();
     this.picture = React.createRef();
@@ -65,19 +59,11 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     this.state = {
       disableBtn: true,
       errors: {},
-      firstName: false,
-      surname: false,
-      dateOfBirth: false,
-      gender: false,
-      email: false,
-      country: false,
-      picture: false,
-      rule: false,
     };
   }
 
-  handleChange: React.ChangeEventHandler<HTMLInputElement> = (
-    e: React.ChangeEvent<HTMLInputElement>
+  handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
     if (
@@ -85,20 +71,13 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       (this.surname.current && this.surname.current.value.length) ||
       (this.dateOfBirth.current && this.dateOfBirth.current.value.length) ||
       (this.email.current && this.email.current.value.length) ||
-      (this.gender.current && this.gender.current.checked) ||
+      (this.genderMale.current && this.genderMale.current.checked) ||
+      (this.genderFemale.current && this.genderFemale.current.checked) ||
+      (this.country.current && this.country.current.value.length) ||
       (this.picture.current && this.picture.current.value.length)
     ) {
       this.setState({ disableBtn: false });
     } else this.setState({ disableBtn: true });
-  };
-
-  handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    e.preventDefault();
-    if (this.country.current && this.country.current.value.length) {
-      this.setState({ disableBtn: false });
-    }
   };
 
   handleSubmit: React.FocusEventHandler<HTMLFormElement & FormFields> = (e) => {
@@ -112,8 +91,8 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       this.firstName.current &&
       this.surname.current &&
       this.dateOfBirth.current &&
-      this.gender.current &&
-      this.gender.current.checked &&
+      this.genderMale.current &&
+      this.genderFemale.current &&
       this.email.current &&
       this.country.current &&
       this.picture.current &&
@@ -124,7 +103,9 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
         firstName: this.firstName.current.value,
         surname: this.surname.current.value,
         dateOfBirth: this.dateOfBirth.current.value,
-        gender: this.gender.current.value,
+        gender: this.genderMale.current.checked
+          ? this.genderMale.current.value
+          : this.genderFemale.current.value,
         email: this.email.current.value,
         country: this.country.current.value,
         picture: URL.createObjectURL(this.picture.current.files[0]),
@@ -132,6 +113,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
         keyID: new Date().getTime().toString(),
       };
       this.props.createCard(formObj);
+      console.log('formObj: ', formObj);
     }
     e.target.reset();
     this.setState({ disableBtn: true });
@@ -148,13 +130,20 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       isValidForm = false;
       errorMessage.surname = 'Please enter your correct surname name';
     }
-    if (this.dateOfBirth.current && !this.dateOfBirth.current.value) {
-      isValidForm = false;
-      errorMessage.dateOfBirth = 'Please select your date of birth';
+    if (this.dateOfBirth.current) {
+      if (
+        !this.dateOfBirth.current.value ||
+        new Date(this.dateOfBirth.current.value) > new Date()
+      ) {
+        isValidForm = false;
+        errorMessage.dateOfBirth = 'Please select your correct date of birth';
+      }
     }
-    if (this.gender.current && !this.gender.current.checked) {
-      isValidForm = false;
-      errorMessage.gender = 'Please select your gender';
+    if (this.genderMale.current && this.genderFemale.current) {
+      if (!this.genderMale.current.checked && !this.genderFemale.current.checked) {
+        isValidForm = false;
+        errorMessage.gender = 'Please select your gender';
+      }
     }
     if (this.email.current && !/.+@.+\..+/i.test(this.email.current.value)) {
       isValidForm = false;
@@ -175,22 +164,36 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     this.setState({
       errors: errorMessage,
     });
+    if (isValidForm) {
+      this.setState({ errors: {} });
+    }
     return isValidForm;
+  };
+
+  resetErrorOnFocus = (input: string) => {
+    this.setState({
+      errors: {
+        ...this.state.errors,
+        [input]: '',
+      },
+    });
   };
 
   render() {
     return (
       <Container>
-        <form className={style.form} action="" onSubmit={this.handleSubmit}>
+        <form className={style.form} action="" onSubmit={this.handleSubmit} data-testid="form">
           <h2 className={style.title}>Registration form</h2>
           <label className={style.label}>
-            Name:
+            First Name:
             <input
               className={style.textField}
               type="text"
               name="firstName"
               ref={this.firstName}
               onChange={this.handleChange}
+              data-testid="firstName"
+              onFocus={() => this.resetErrorOnFocus('firstName')}
             />
           </label>
           <FormErrorMessage message={this.state.errors.firstName} />
@@ -202,6 +205,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               name="surname"
               ref={this.surname}
               onChange={this.handleChange}
+              onFocus={() => this.resetErrorOnFocus('surname')}
             />
           </label>
           <FormErrorMessage message={this.state.errors.surname} />
@@ -214,20 +218,22 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
                 name="dateOfBirth"
                 ref={this.dateOfBirth}
                 onChange={this.handleChange}
+                onFocus={() => this.resetErrorOnFocus('dateOfBirth')}
               />
             </label>
           </div>
           <FormErrorMessage message={this.state.errors.dateOfBirth} />
-          <div className={style.genderWrapper}>
+          <div className={style.genderWrapper} onFocus={() => this.resetErrorOnFocus('gender')}>
             Gender:
             <label className={style.radioLabel}>
               <input
+                // defaultChecked
                 className={style.radio}
                 type="radio"
                 name="gender"
-                value="male"
-                ref={this.gender}
-                onChange={(e) => this.handleChange(e)}
+                value="Male"
+                ref={this.genderMale}
+                onChange={this.handleChange}
               />
               Male
             </label>
@@ -236,9 +242,9 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
                 className={style.radio}
                 type="radio"
                 name="gender"
-                value="female"
-                ref={this.gender}
-                // onChange={this.handleChange}
+                value="Female"
+                ref={this.genderFemale}
+                onChange={this.handleChange}
               />
               Female
             </label>
@@ -252,6 +258,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               title="Enter your e-mail"
               ref={this.email}
               onChange={this.handleChange}
+              onFocus={() => this.resetErrorOnFocus('email')}
             />
           </label>
           <FormErrorMessage message={this.state.errors.email} />
@@ -261,7 +268,8 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               className={style.textField}
               name="country"
               ref={this.country}
-              onChange={this.handleChangeSelect}
+              onChange={this.handleChange}
+              onFocus={() => this.resetErrorOnFocus('country')}
             >
               <option value="">--Please choose a country--</option>
               <option value="Russia">Russia</option>
@@ -279,18 +287,26 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               name="picture"
               ref={this.picture}
               onChange={this.handleChange}
+              onFocus={() => this.resetErrorOnFocus('picture')}
             />
           </label>
           <FormErrorMessage message={this.state.errors.picture} />
           <label>
-            <input className={style.checkbox} type="checkbox" name="rule" ref={this.rule} />I
-            consent to my personal data
+            <input
+              className={style.checkbox}
+              type="checkbox"
+              name="rule"
+              ref={this.rule}
+              onFocus={() => this.resetErrorOnFocus('rule')}
+            />
+            I consent to my personal data
           </label>
           <FormErrorMessage message={this.state.errors.rule} />
           <button
             className={style.button}
             type="submit"
             disabled={this.state.disableBtn ? true : false}
+            data-testid="form-button"
           >
             Registration
           </button>

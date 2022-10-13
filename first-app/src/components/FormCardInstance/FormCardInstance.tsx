@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { IFormCard } from './../../pages/FormPage/FormPage';
 import style from './FormCardInstance.module.scss';
-interface FormPageProps {
-  props?: string;
-}
 
 export default class FormCardInstance extends Component<IFormCard> {
   render() {
