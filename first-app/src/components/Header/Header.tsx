@@ -25,6 +25,11 @@ export default class Header extends Component {
                 Form
               </Link>
             </li>
+            <li className={style.link__item}>
+              <Link className={style.link} to="/API">
+                API
+              </Link>
+            </li>
           </ul>
         </Container>
       </header>

@@ -3,6 +3,7 @@ export const ROUTES = {
   HOMEPAGE: '',
   ABOUTUS: '/about',
   FORM: '/form',
+  API: '/API',
   NOTFOUND: '/404',
   REDIRECT: '*',
 };
