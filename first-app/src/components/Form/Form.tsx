@@ -226,6 +226,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
             Gender:
             <label className={style.radioLabel}>
               <input
+              
                 className={style.radio}
                 type="radio"
                 name="gender"
