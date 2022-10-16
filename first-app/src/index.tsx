@@ -8,7 +8,7 @@ import HomePage from 'pages/HomePage';
 import NotFoundPage from 'pages/NotFoundPage';
 import { ROUTES } from 'variables/routes';
 import FormPage from 'pages/FormPage';
-import API from 'pages/API';
+import API from 'pages/APIPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
