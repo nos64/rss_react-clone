@@ -35,7 +35,7 @@ export default class APISearchBar extends Component<SearchProps, SearchState> {
             className={style.searchField}
             type="search"
             name="searchString"
-            placeholder="Enter your text here"
+            placeholder="Enter name you character"
             onChange={this.props.onChange}
             onKeyPress={this.props.onKeyPress}
             value={this.props.value}

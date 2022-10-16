@@ -1,7 +1,6 @@
 import APICard from 'components/APICard/APICard';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APISearchBar from 'components/APISearchBar';
-import SearchBar from 'components/SearchBar';
 import React, { Component } from 'react';
 import style from './APIComponent.module.scss';
 
@@ -70,7 +69,7 @@ const BASE_PATH = 'https://rickandmortyapi.com/api';
 const CHARACTERS = `${BASE_PATH}/character`;
 const LOCATIONS = `${BASE_PATH}/location`;
 const EPISODES = `${BASE_PATH}/episode`;
-const SEARCH_PATH = '/search';
+const SEARCH_PATH = '?name=';
 const SEARCH_PARAM = 'query=';
 
 export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
@@ -90,11 +89,10 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
   }
 
   fetchData = (searchQuery: string) => {
-    fetch(`${CHARACTERS}?name=${searchQuery}`)
+    fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
-          console.log(result.results);
           if (result.results) {
             this.setState({
               isLoaded: true,
