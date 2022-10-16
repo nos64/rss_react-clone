@@ -1,4 +1,5 @@
 import APICard from 'components/APICard/APICard';
+import APIErrorMessage from 'components/APIErrorMessage';
 import APISearchBar from 'components/APISearchBar';
 import SearchBar from 'components/SearchBar';
 import React, { Component } from 'react';
@@ -93,10 +94,19 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
-          this.setState({
-            isLoaded: true,
-            items: result.results,
-          });
+          console.log(result.results);
+          if (result.results) {
+            this.setState({
+              isLoaded: true,
+              items: result.results,
+            });
+          } else {
+            this.setState({
+              isLoaded: true,
+              items: result.results,
+              searchQuery: '',
+            });
+          }
         },
         (error) => {
           this.setState({
@@ -127,54 +137,49 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
     } else {
       return (
         <>
-          {/* <input
-            className={style.searchField}
-            type="search"
-            name="searchString"
-            value={this.state.searchQuery}
-            onChange={this.handleInputChange}
-            onKeyPress={this.getSearch}
-            placeholder="Enter your text here"
-          /> */}
           <APISearchBar
             onKeyPress={this.getSearch}
             onChange={this.handleInputChange}
             value={this.state.searchQuery}
           />
-          <ul className={style.card__list}>
-            {items.map(
-              ({
-                id,
-                name,
-                gender,
-                image,
-                status,
-                species,
-                origin,
-                location,
-                type,
-                episode,
-                created,
-                url,
-              }) => (
-                <APICard
-                  key={id}
-                  id={id}
-                  name={name}
-                  image={image}
-                  status={status}
-                  gender={gender}
-                  species={species}
-                  origin={origin}
-                  location={location}
-                  type={type}
-                  episode={episode}
-                  created={created}
-                  url={url}
-                />
-              )
-            )}
-          </ul>
+          {items ? (
+            <ul className={style.card__list}>
+              {items.map(
+                ({
+                  id,
+                  name,
+                  gender,
+                  image,
+                  status,
+                  species,
+                  origin,
+                  location,
+                  type,
+                  episode,
+                  created,
+                  url,
+                }) => (
+                  <APICard
+                    key={id}
+                    id={id}
+                    name={name}
+                    image={image}
+                    status={status}
+                    gender={gender}
+                    species={species}
+                    origin={origin}
+                    location={location}
+                    type={type}
+                    episode={episode}
+                    created={created}
+                    url={url}
+                  />
+                )
+              )}
+            </ul>
+          ) : (
+            <APIErrorMessage />
+          )}
         </>
       );
     }
