@@ -1,4 +1,6 @@
 import APICard from 'components/APICard/APICard';
+import APISearchBar from 'components/APISearchBar';
+import SearchBar from 'components/SearchBar';
 import React, { Component } from 'react';
 import style from './APIComponent.module.scss';
 
@@ -7,6 +9,7 @@ interface IPropsAPI {
 }
 
 interface IStateAPI {
+  searchQuery: string;
   error: null | { message: string };
   isLoaded: boolean;
   items: ICharacter[];
@@ -73,6 +76,7 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
   constructor(props: IPropsAPI) {
     super(props);
     this.state = {
+      searchQuery: '',
       error: null,
       isLoaded: false,
       items: [],
@@ -80,7 +84,12 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
   }
 
   componentDidMount(): void {
-    fetch(`${CHARACTERS}`)
+    const { searchQuery } = this.state;
+    this.fetchData(searchQuery);
+  }
+
+  fetchData = (searchQuery: string) => {
+    fetch(`${CHARACTERS}?name=${searchQuery}`)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
@@ -96,7 +105,18 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
           });
         }
       );
-  }
+  };
+
+  handleInputChange = (e: { target: { value: string } }) => {
+    this.setState({ searchQuery: e.target.value });
+  };
+
+  getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const { searchQuery } = this.state;
+      this.fetchData(searchQuery);
+    }
+  };
 
   render() {
     const { error, isLoaded, items } = this.state;
@@ -106,74 +126,57 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
       return <p> Loading...</p>;
     } else {
       return (
-        <ul className={style.card__list}>
-          {items.map(
-            ({
-              id,
-              name,
-              gender,
-              image,
-              status,
-              species,
-              origin,
-              location,
-              type,
-              episode,
-              created,
-              url,
-            }) => (
-              <APICard
-                key={id}
-                id={id}
-                name={name}
-                image={image}
-                status={status}
-                gender={gender}
-                species={species}
-                origin={origin}
-                location={location}
-                type={type}
-                episode={episode}
-                created={created}
-                url={url}
-              />
-            )
-          )}
-        </ul>
+        <>
+          {/* <input
+            className={style.searchField}
+            type="search"
+            name="searchString"
+            value={this.state.searchQuery}
+            onChange={this.handleInputChange}
+            onKeyPress={this.getSearch}
+            placeholder="Enter your text here"
+          /> */}
+          <APISearchBar
+            onKeyPress={this.getSearch}
+            onChange={this.handleInputChange}
+            value={this.state.searchQuery}
+          />
+          <ul className={style.card__list}>
+            {items.map(
+              ({
+                id,
+                name,
+                gender,
+                image,
+                status,
+                species,
+                origin,
+                location,
+                type,
+                episode,
+                created,
+                url,
+              }) => (
+                <APICard
+                  key={id}
+                  id={id}
+                  name={name}
+                  image={image}
+                  status={status}
+                  gender={gender}
+                  species={species}
+                  origin={origin}
+                  location={location}
+                  type={type}
+                  episode={episode}
+                  created={created}
+                  url={url}
+                />
+              )
+            )}
+          </ul>
+        </>
       );
     }
-
-    // id={item.id}
-    // name={item.name}
-    // status={item.status}
-    // species={item.species}
-    // type={item.type}
-    // gender={item.gender}
-    // origin={item.origin}
-    // location={item.id}
-    // image={item.id}
-    // episode={item.id}
-    // created={item.id}
-
-    // const { searchQuery, result } = this.state;
-    // const { hits } = result;
-    // console.log(result);
-    // return (
-    //   <div>
-    //     <ul>
-    //       {hits.map(({ author, created_at, num_comments, objectID, title, points, url }) => (
-    //         <li key={objectID}>
-    //           <div>
-    //             <a href={url}>{title}</a>
-    //             <span>{`${points} points`}</span>
-    //             <span>{`${num_comments} comments`}</span>
-    //             <span>{new Date(created_at).toLocaleDateString()}</span>
-    //             <span>{author}</span>
-    //           </div>
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   </div>
-    // );
   }
 }
