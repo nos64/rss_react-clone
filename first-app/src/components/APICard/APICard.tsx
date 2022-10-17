@@ -6,19 +6,19 @@ import style from './APICard.module.scss';
 interface IPropsAPI {
   props?: string;
 }
-interface IAPICard {
+interface IAPICard extends ICharacter {
   activeModal: boolean;
+  activeItem: null | ICharacter;
 }
-export default class APICard extends Component<ICharacter, IAPICard> {
-  constructor(props: ICharacter) {
+
+export default class APICard extends Component<IAPICard> {
+  constructor(props: IAPICard) {
     super(props);
-    this.state = {
-      activeModal: false,
-    };
   }
+
   render() {
     return (
-      <li className={style.card} onClick={() => this.setState({ activeModal: true })}>
+      <li className={style.card}>
         <h3 className={style.card__title}>{this.props.name}</h3>
         <div className={style.card__imageWrapper}>
           <img
