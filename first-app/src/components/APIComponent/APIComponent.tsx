@@ -1,11 +1,10 @@
-import APICard from 'components/APICard/APICard';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import CardSimpleText from 'components/CardSimpleText';
 import React, { Component } from 'react';
 import style from './APIComponent.module.scss';
-
+import closeBtn from '../../assets/images/closeBtn.svg';
 interface IPropsAPI {
   props?: string;
 }
@@ -151,10 +150,11 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
     if (error) {
       return <p> Error {error.message}</p>;
     } else if (!isLoaded) {
-      return <p> Loading...</p>;
+      return <p>Loading...</p>;
     } else {
       return (
         <>
+          <h1 className={style.title}>API Page</h1>
           <APISearchBar
             onKeyPress={this.getSearch}
             onChange={this.handleInputChange}
@@ -194,20 +194,7 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
               onClick={(e) => e.stopPropagation()}
             >
               <button className={style.modalClose} onClick={this.closeModal}>
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 12 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M7.42618 6.00003L11.7046 1.72158C12.0985 1.32775 12.0985 0.689213 11.7046 0.295433C11.3108 -0.0984027 10.6723 -0.0984027 10.2785 0.295433L5.99998 4.57394L1.72148 0.295377C1.32765 -0.098459 0.68917 -0.098459 0.295334 0.295377C-0.0984448 0.689213 -0.0984448 1.32775 0.295334 1.72153L4.57383 5.99997L0.295334 10.2785C-0.0984448 10.6723 -0.0984448 11.3108 0.295334 11.7046C0.68917 12.0985 1.32765 12.0985 1.72148 11.7046L5.99998 7.42612L10.2785 11.7046C10.6723 12.0985 11.3108 12.0985 11.7046 11.7046C12.0985 11.3108 12.0985 10.6723 11.7046 10.2785L7.42618 6.00003Z"
-                    fill="#292929"
-                  />
-                </svg>
+                <img src={closeBtn} alt="close Btn" />
               </button>
               {this.state.activeItem ? <APIModal activeCard={this.state.activeItem} /> : ''}
             </div>
