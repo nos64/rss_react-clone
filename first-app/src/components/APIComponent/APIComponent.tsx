@@ -5,6 +5,8 @@ import CardSimpleText from 'components/CardSimpleText';
 import React, { Component } from 'react';
 import style from './APIComponent.module.scss';
 import closeBtn from '../../assets/images/closeBtn.svg';
+import loader from '../..//assets/images/oval.svg';
+
 interface IPropsAPI {
   props?: string;
 }
@@ -150,7 +152,7 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
     if (error) {
       return <p> Error {error.message}</p>;
     } else if (!isLoaded) {
-      return <p>Loading...</p>;
+      return <img src={loader} alt="Loader" />;
     } else {
       return (
         <>
