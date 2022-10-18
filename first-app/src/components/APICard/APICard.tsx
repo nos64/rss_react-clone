@@ -3,22 +3,19 @@ import React, { Component } from 'react';
 import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APICard.module.scss';
 
-interface IPropsAPI {
-  props?: string;
-}
+// interface IPropsAPI {
+//   props?: string;
+// }
 interface IAPICard extends ICharacter {
-  activeModal: boolean;
+  isModalActive: boolean;
   activeItem: null | ICharacter;
+  onClick: () => void;
 }
 
 export default class APICard extends Component<IAPICard> {
-  constructor(props: IAPICard) {
-    super(props);
-  }
-
   render() {
     return (
-      <li className={style.card}>
+      <li className={style.card} onClick={() => this.props.onClick()}>
         <h3 className={style.card__title}>{this.props.name}</h3>
         <div className={style.card__imageWrapper}>
           <img
