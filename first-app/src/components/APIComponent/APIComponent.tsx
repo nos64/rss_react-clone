@@ -1,10 +1,8 @@
+import React, { Component } from 'react';
+import style from './APIComponent.module.scss';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
-import CardSimpleText from 'components/CardSimpleText';
-import React, { Component } from 'react';
-import style from './APIComponent.module.scss';
-
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
 
@@ -140,13 +138,6 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
       activeItem: !this.state.isModalActive ? item : null,
     });
   };
-
-  // openModal = (item: ICharacter) => {
-  //   this.setState({
-  //     isModalActive: true,
-  //     activeItem: item,
-  //   });
-  // };
 
   closeModal = () => {
     this.setState({

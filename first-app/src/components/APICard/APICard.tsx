@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APICard.module.scss';
 
-// interface IPropsAPI {
-//   props?: string;
-// }
 interface IAPICard extends ICharacter {
   isModalActive: boolean;
   activeItem: null | ICharacter;
