@@ -1,9 +1,35 @@
 import React from 'react';
-import { findByText, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import APIComponent from './APIComponent';
 
-jest.mock('fetch');
+test('loads and displays APIComponent', async () => {});
+
+const server = setupServer(
+  rest.get('/greeting', (req, res, ctx) => {
+    return res(ctx.json({ greeting: 'hello there' }));
+  })
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+test('handles server error', async () => {
+  server.use(
+    rest.get('/greeting', (req, res, ctx) => {
+      return res(ctx.status(500));
+    })
+  );
+  render(<APIComponent url="/greeting" />);
+  fireEvent.click(screen.getByText('Load Greeting'));
+  await waitFor(() =>
+  screen.getByRole('heading'),
+  expect(screen.getByRole('alert')).toHaveTextContent('Oops, failed to fetch!');
+  expect(screen.getByRole('button')).not.toBeDisabled()
+});
 
 const cards = [
   {
@@ -48,11 +74,11 @@ const cards = [
   },
 ];
 
-describe('APIComponent', () => {
-  it('APIComponent', async () => {
-    global.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({ data: { cards } }));
-    render(<APIComponent />);
-    screen.debug();
-    expect(await screen.findByText(/Agency Director/i)).toBeInTheDocument();
-  });
-});
+// describe('APIComponent', () => {
+//   it('APIComponent', async () => {
+//     global.fetch = jest.fn().mockImplementationOnce(() => Promise.resolve({ data: { cards } }));
+//     render(<APIComponent />);
+//     screen.debug();
+//     expect(await screen.findByText(/Agency Director/i)).toBeInTheDocument();
+//   });
+// });
