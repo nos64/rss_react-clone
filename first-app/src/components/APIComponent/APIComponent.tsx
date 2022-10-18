@@ -154,7 +154,9 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
     } else {
       return (
         <>
-          <h1 className={style.title}>API Page</h1>
+          <h1 className={style.title} data-testid="api-title">
+            API Page
+          </h1>
           <APISearchBar
             onKeyPress={this.getSearch}
             onChange={this.handleInputChange}

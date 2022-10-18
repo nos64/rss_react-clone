@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import APIPage from './APIPage';
 
 describe('APIPage', () => {
-  it('render FormPage component', async () => {
+  it('render FormPage component', () => {
     render(<APIPage />);
-    await expect(screen.getByText(/Loading..</i)).toBeInTheDocument();
+    expect(screen.getByTestId(/api-title/i)).toBeInTheDocument();
   });
 });
