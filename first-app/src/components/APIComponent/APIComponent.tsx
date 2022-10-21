@@ -1,11 +1,10 @@
+import React, { Component } from 'react';
+import style from './APIComponent.module.scss';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
-import CardSimpleText from 'components/CardSimpleText';
-import React, { Component } from 'react';
-import style from './APIComponent.module.scss';
-import closeBtn from '../../assets/images/closeBtn.svg';
 import loader from '../..//assets/images/oval.svg';
+import APICard from 'components/APICard';
 
 interface IPropsAPI {
   props?: string;
@@ -16,7 +15,7 @@ interface IStateAPI {
   error: null | { message: string };
   isLoaded: boolean;
   items: ICharacter[];
-  activeModal: boolean;
+  isModalActive: boolean;
   activeItem: null | ICharacter;
 }
 interface IItems {
@@ -85,7 +84,7 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
       error: null,
       isLoaded: false,
       items: [],
-      activeModal: false,
+      isModalActive: false,
       activeItem: null,
     };
   }
@@ -133,16 +132,16 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
     }
   };
 
-  openModal = (item: ICharacter) => {
+  handleClick = (item: ICharacter | null) => {
     this.setState({
-      activeModal: true,
-      activeItem: item,
+      isModalActive: !this.state.isModalActive,
+      activeItem: !this.state.isModalActive ? item : null,
     });
   };
 
   closeModal = () => {
     this.setState({
-      activeModal: false,
+      isModalActive: false,
       activeItem: null,
     });
   };
@@ -167,42 +166,34 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
           {items ? (
             <ul className={style.card__list}>
               {items.map((item) => (
-                <li className={style.card} key={item.id} onClick={() => this.openModal(item)}>
-                  <h3 className={style.card__title}>{item.name}</h3>
-                  <div className={style.card__imageWrapper}>
-                    <img
-                      className={style.card__image}
-                      src={`${item.image}`}
-                      alt={`Image ${item.name}`}
-                    />
-                  </div>
-                  <div>
-                    <CardSimpleText description={'Status: '} param={item.status} />
-                    <CardSimpleText description={'Species: '} param={item.species} />
-                    <CardSimpleText description={'Gender: '} param={item.gender} />
-                    <CardSimpleText description={'Origin: '} param={item.origin.name} />
-                    <CardSimpleText description={'Location: '} param={item.location.name} />
-                  </div>
-                </li>
+                <APICard
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  image={item.image}
+                  status={item.status}
+                  gender={item.gender}
+                  species={item.species}
+                  origin={item.origin}
+                  location={item.location}
+                  type={item.type}
+                  episode={item.episode}
+                  created={item.created}
+                  url={item.url}
+                  isModalActive={this.state.isModalActive}
+                  activeItem={this.state.activeItem}
+                  onClick={() => this.handleClick(item)}
+                />
               ))}
             </ul>
           ) : (
             <APIErrorMessage />
           )}
-          <div
-            className={this.state.activeModal ? style.active : style.modal}
-            onClick={this.closeModal}
-          >
-            <div
-              className={this.state.activeModal ? style.modalContentActive : style.modalContent}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button className={style.modalClose} onClick={this.closeModal}>
-                <img src={closeBtn} alt="close Btn" />
-              </button>
-              {this.state.activeItem ? <APIModal activeCard={this.state.activeItem} /> : ''}
-            </div>
-          </div>
+          <APIModal
+            isModalActive={this.state.isModalActive}
+            activeItem={this.state.activeItem}
+            onClick={() => this.closeModal()}
+          />
         </>
       );
     }
