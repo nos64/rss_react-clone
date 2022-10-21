@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import style from './Container.module.scss';
 import { IChildren } from 'types/types';
 
-export default class Container extends Component<IChildren> {
-  render() {
-    return <div className={style.container}>{this.props.children}</div>;
-  }
-}
+const Container = (props: IChildren) => {
+  return <div className={style.container}>{props.children}</div>;
+};
+
+export default Container;

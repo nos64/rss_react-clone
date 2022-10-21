@@ -6,31 +6,24 @@ interface FormPageState {
   formCards: IFormCard[];
 }
 
-interface FormPageProps {
-  props?: string;
-}
+const FormCard = (props: FormPageState) => {
+  return (
+    <ul className={style.list}>
+      {props.formCards.map((card) => (
+        <FormCardInstance
+          key={card.keyID}
+          firstName={card.firstName}
+          surname={card.surname}
+          dateOfBirth={card.dateOfBirth}
+          gender={card.gender}
+          email={card.email}
+          country={card.country}
+          picture={card.picture}
+          rule={card.rule}
+        />
+      ))}
+    </ul>
+  );
+};
 
-export default class FormCard extends Component<FormPageState, FormPageProps> {
-  constructor(props: FormPageState) {
-    super(props);
-  }
-  render() {
-    return (
-      <ul className={style.list}>
-        {this.props.formCards.map((card) => (
-          <FormCardInstance
-            key={card.keyID}
-            firstName={card.firstName}
-            surname={card.surname}
-            dateOfBirth={card.dateOfBirth}
-            gender={card.gender}
-            email={card.email}
-            country={card.country}
-            picture={card.picture}
-            rule={card.rule}
-          />
-        ))}
-      </ul>
-    );
-  }
-}
+export default FormCard;

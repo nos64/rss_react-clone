@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import style from './CardSimpleText.module.scss';
 
 interface ICardSimpleTextProps {
@@ -6,15 +6,12 @@ interface ICardSimpleTextProps {
   param: string;
 }
 
-export default class CardSimpleText extends Component<ICardSimpleTextProps> {
-  constructor(props: ICardSimpleTextProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <p className={style.card__description}>
-        {this.props.description} <span className={style.card__param}>{this.props.param}</span>
-      </p>
-    );
-  }
-}
+const CardSimpleText = (props: ICardSimpleTextProps) => {
+  return (
+    <p className={style.card__description}>
+      {props.description} <span className={style.card__param}>{props.param}</span>
+    </p>
+  );
+};
+
+export default CardSimpleText;

@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import style from './APISearchBar.module.scss';
-
-// value={this.state.searchQuery}
-// onChange={this.handleInputChange}
-// onKeyPress={this.getSearch}
 
 type SearchProps = {
   value: string;
@@ -11,37 +7,26 @@ type SearchProps = {
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
-type SearchState = {
-  searchString: string;
-};
-
-export default class APISearchBar extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      searchString: this.props.value,
-    };
-  }
-
-  handleSubmit = (e: React.SyntheticEvent) => {
+const APISearchBar = (props: SearchProps) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
   };
 
-  render() {
-    return (
-      <form className={style.searchForm} onSubmit={this.handleSubmit}>
-        <label>
-          <input
-            className={style.searchField}
-            type="search"
-            name="searchString"
-            placeholder="Enter name you character"
-            onChange={this.props.onChange}
-            onKeyPress={this.props.onKeyPress}
-            value={this.props.value}
-          />
-        </label>
-      </form>
-    );
-  }
-}
+  return (
+    <form className={style.searchForm} onSubmit={handleSubmit}>
+      <label>
+        <input
+          className={style.searchField}
+          type="search"
+          name="searchString"
+          placeholder="Enter name you character"
+          onChange={props.onChange}
+          onKeyPress={props.onKeyPress}
+          value={props.value}
+        />
+      </label>
+    </form>
+  );
+};
+
+export default APISearchBar;

@@ -1,58 +1,41 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './SearchBar.module.scss';
 
-type SearchProps = {
-  props?: string;
-};
+const SearchBar = () => {
+  const [searchString, setSearchString] = useState(localStorage.getItem('searchString') || '');
 
-type SearchState = {
-  searchString: string;
-};
+  useEffect(() => {
+    setSearchString(localStorage.getItem('searchString') || '');
+  }, []);
 
-export default class SearchBar extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      searchString: '',
-    };
-  }
+  useEffect(() => {
+    localStorage.setItem('searchString', searchString);
+  }, [searchString]);
 
-  componentDidMount() {
-    this.setState({ searchString: localStorage.getItem('searchString') || '' });
-  }
-
-  // componentWillUnmount() {
-  //   localStorage.setItem('searchString', this.state.searchString);
-  // }
-
-  componentDidUpdate() {
-    localStorage.setItem('searchString', this.state.searchString);
-  }
-
-  handleChange = (event: React.SyntheticEvent): void => {
+  const handleChange = (event: React.SyntheticEvent): void => {
     const input = event.target;
     if (input && input instanceof HTMLInputElement) {
-      this.setState({ searchString: input.value });
+      setSearchString(input.value);
     }
   };
 
-  render() {
-    return (
-      <form className={style.searchForm}>
-        <label>
-          <input
-            className={style.searchField}
-            type="search"
-            name="searchString"
-            value={this.state.searchString}
-            onChange={this.handleChange}
-            placeholder="Enter your text here"
-          />
-        </label>
-        <button type="button" className={style.searchButton}>
-          Search
-        </button>
-      </form>
-    );
-  }
-}
+  return (
+    <form className={style.searchForm}>
+      <label>
+        <input
+          className={style.searchField}
+          type="search"
+          name="searchString"
+          value={searchString}
+          onChange={(e) => handleChange(e)}
+          placeholder="Enter your text here"
+        />
+      </label>
+      <button type="button" className={style.searchButton}>
+        Search
+      </button>
+    </form>
+  );
+};
+
+export default SearchBar;

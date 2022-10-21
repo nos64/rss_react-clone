@@ -295,6 +295,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               type="checkbox"
               name="rule"
               ref={this.rule}
+              onChange={this.handleChange}
               onFocus={() => this.resetErrorOnFocus('rule')}
             />
             I consent to my personal data
