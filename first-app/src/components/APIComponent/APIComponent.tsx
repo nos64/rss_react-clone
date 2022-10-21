@@ -1,22 +1,14 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './APIComponent.module.scss';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
-
-interface IPropsAPI {
-  props?: string;
-}
-
-interface IStateAPI {
-  searchQuery: string;
-  error: null | { message: string };
-  isLoaded: boolean;
-  items: ICharacter[];
-  isModalActive: boolean;
-  activeItem: null | ICharacter;
+interface IError {
+  message: string;
+  fileName: string;
+  lineNumber: string;
 }
 interface IItems {
   info: {
@@ -76,130 +68,105 @@ const EPISODES = `${BASE_PATH}/episode`;
 const SEARCH_PATH = '?name=';
 const SEARCH_PARAM = 'query=';
 
-export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
-  constructor(props: IPropsAPI) {
-    super(props);
-    this.state = {
-      searchQuery: '',
-      error: null,
-      isLoaded: false,
-      items: [],
-      isModalActive: false,
-      activeItem: null,
-    };
-  }
+const APIComponent = () => {
+  const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
+  const [error, setError] = useState<Partial<IError>>();
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [items, setItems] = useState<ICharacter[]>([]);
+  const [isModalActive, setIsModalActive] = useState<boolean>(false);
+  const [activeItem, setActiveItem] = useState<ICharacter | null>(null);
 
-  componentDidMount(): void {
-    this.setState({ searchQuery: localStorage.getItem('searchString') || '' });
-    this.fetchData(localStorage.getItem('searchString') || '');
-  }
+  useEffect(() => {
+    setSearchQuery(localStorage.getItem('searchQuery') || '');
+    fetchData(localStorage.getItem('searchQuery') || '');
+  }, []);
 
-  componentDidUpdate() {
-    localStorage.setItem('searchString', this.state.searchQuery);
-  }
+  useEffect(() => {
+    localStorage.setItem('searchQuery', searchQuery);
+  }, [searchQuery]);
 
-  fetchData = (searchQuery: string) => {
+  const fetchData = (searchQuery: string) => {
     fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
           if (result.results) {
-            this.setState({
-              isLoaded: true,
-              items: result.results,
-            });
+            setIsLoaded(true);
+            setItems(result.results);
           } else {
-            this.setState({
-              isLoaded: true,
-              items: result.results,
-              searchQuery: '',
-            });
+            setIsLoaded(true);
+            setItems(result.results);
+            setSearchQuery('');
           }
         },
         (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
+          setIsLoaded(true);
+          setError(error);
         }
       );
   };
 
-  handleInputChange = (e: { target: { value: string } }) => {
-    this.setState({ searchQuery: e.target.value });
+  const handleInputChange = (e: { target: { value: string } }) => {
+    setSearchQuery(e.target.value);
   };
 
-  getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const { searchQuery } = this.state;
-      this.fetchData(searchQuery);
+      fetchData(searchQuery);
     }
   };
 
-  handleClick = (item: ICharacter | null) => {
-    this.setState({
-      isModalActive: !this.state.isModalActive,
-      activeItem: !this.state.isModalActive ? item : null,
-    });
+  const handleClick = (item: ICharacter | null) => {
+    setIsModalActive(!isModalActive);
+    setActiveItem(!isModalActive ? item : null);
   };
 
-  closeModal = () => {
-    this.setState({
-      isModalActive: false,
-      activeItem: null,
-    });
+  const closeModal = () => {
+    setIsModalActive(false);
+    setActiveItem(null);
   };
 
-  render() {
-    const { error, isLoaded, items } = this.state;
-    if (error) {
-      return <p> Error {error.message}</p>;
-    } else if (!isLoaded) {
-      return <img src={loader} alt="Loader" />;
-    } else {
-      return (
-        <>
-          <h1 className={style.title} data-testid="api-title">
-            API Page
-          </h1>
-          <APISearchBar
-            onKeyPress={this.getSearch}
-            onChange={this.handleInputChange}
-            value={this.state.searchQuery}
-          />
-          {items ? (
-            <ul className={style.card__list}>
-              {items.map((item) => (
-                <APICard
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  image={item.image}
-                  status={item.status}
-                  gender={item.gender}
-                  species={item.species}
-                  origin={item.origin}
-                  location={item.location}
-                  type={item.type}
-                  episode={item.episode}
-                  created={item.created}
-                  url={item.url}
-                  isModalActive={this.state.isModalActive}
-                  activeItem={this.state.activeItem}
-                  onClick={() => this.handleClick(item)}
-                />
-              ))}
-            </ul>
-          ) : (
-            <APIErrorMessage />
-          )}
-          <APIModal
-            isModalActive={this.state.isModalActive}
-            activeItem={this.state.activeItem}
-            onClick={() => this.closeModal()}
-          />
-        </>
-      );
-    }
+  if (error) {
+    return <p> Error {error.message}</p>;
+  } else if (!isLoaded) {
+    return <img src={loader} alt="Loader" />;
+  } else {
+    return (
+      <>
+        <h1 className={style.title} data-testid="api-title">
+          API Page
+        </h1>
+        <APISearchBar onKeyPress={getSearch} onChange={handleInputChange} value={searchQuery} />
+        {items ? (
+          <ul className={style.card__list}>
+            {items.map((item) => (
+              <APICard
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                image={item.image}
+                status={item.status}
+                gender={item.gender}
+                species={item.species}
+                origin={item.origin}
+                location={item.location}
+                type={item.type}
+                episode={item.episode}
+                created={item.created}
+                url={item.url}
+                isModalActive={isModalActive}
+                activeItem={activeItem}
+                onClick={() => handleClick(item)}
+              />
+            ))}
+          </ul>
+        ) : (
+          <APIErrorMessage />
+        )}
+        <APIModal isModalActive={isModalActive} activeItem={activeItem} onClick={closeModal} />
+      </>
+    );
   }
-}
+};
+
+export default APIComponent;

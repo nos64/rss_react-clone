@@ -23,7 +23,7 @@ const APIModal = (props: IAPIModal) => {
         <button className={style.modalClose} onClick={() => props.onClick()}>
           <img src={closeBtn} alt="close Btn" />
         </button>
-        {props.activeItem ? <APIModalInside activeCard={props.activeItem} /> : ''}
+        {!!props.activeItem && <APIModalInside activeCard={props.activeItem} />}
       </div>
     </div>
   );

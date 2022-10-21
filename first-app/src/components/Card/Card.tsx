@@ -1,5 +1,4 @@
 import React from 'react';
-import { Component } from 'react';
 import { ICard } from 'types/types';
 import style from './Card.module.scss';
 import CardSimpleText from '../CardSimpleText';
