@@ -90,8 +90,12 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
   }
 
   componentDidMount(): void {
-    const { searchQuery } = this.state;
-    this.fetchData(searchQuery);
+    this.setState({ searchQuery: localStorage.getItem('searchString') || '' });
+    this.fetchData(localStorage.getItem('searchString') || '');
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('searchString', this.state.searchQuery);
   }
 
   fetchData = (searchQuery: string) => {
