@@ -1,9 +1,9 @@
 export const ROUTES = {
   LAYOUT: '/',
-  HOMEPAGE: '',
+  API: '',
   ABOUTUS: '/about',
   FORM: '/form',
-  API: '/API',
+  FIRSTPAGE: '/firstPage',
   NOTFOUND: '/404',
   REDIRECT: '*',
 };

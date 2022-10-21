@@ -12,12 +12,7 @@ export default class Header extends Component {
           <ul className={style.link__list}>
             <li className={style.link__item}>
               <Link className={style.link} to="/">
-                Homepage
-              </Link>
-            </li>
-            <li className={style.link__item}>
-              <Link className={style.link} to="/about">
-                About Us
+                API
               </Link>
             </li>
             <li className={style.link__item}>
@@ -26,8 +21,13 @@ export default class Header extends Component {
               </Link>
             </li>
             <li className={style.link__item}>
-              <Link className={style.link} to="/API">
-                API
+              <Link className={style.link} to="/firstPage">
+                First Page
+              </Link>
+            </li>
+            <li className={style.link__item}>
+              <Link className={style.link} to="/about">
+                About Us
               </Link>
             </li>
           </ul>

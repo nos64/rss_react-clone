@@ -7,6 +7,8 @@ import AboutUsPage from 'pages/AboutUsPage/AboutUsPage';
 import HomePage from 'pages/HomePage/HomePage';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import { ROUTES } from 'variables/routes';
+import API from 'pages/APIPage';
+import FormPage from 'pages/FormPage';
 
 describe('App', () => {
   it('render App component', async () => {
@@ -16,7 +18,7 @@ describe('App', () => {
       </MemoryRouter>
     );
     // screen.debug();
-    expect(screen.getByText(/Homepage/i)).toBeInTheDocument();
+    expect(screen.getByText(/API Page/i)).toBeInTheDocument();
     expect(screen.getByText(/About us/i)).toBeInTheDocument();
   });
 
@@ -30,7 +32,7 @@ describe('App', () => {
     await user.click(screen.getByText(/about/i));
     expect(screen.getByText(/about/i)).toBeInTheDocument();
 
-    await user.click(screen.getByText(/Homepage/i));
+    await user.click(screen.getByText(/API Page/i));
     expect(screen.getByText(/home/i)).toBeInTheDocument();
   });
 
@@ -39,8 +41,10 @@ describe('App', () => {
       <MemoryRouter initialEntries={['/uncorrectedLink']}>
         <Routes>
           <Route path={ROUTES.LAYOUT} element={<App />}>
-            <Route path={ROUTES.HOMEPAGE} element={<HomePage />} />;
+            <Route path={ROUTES.API} element={<API />} />;
             <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
+            <Route path={ROUTES.FORM} element={<FormPage />} />;
+            <Route path={ROUTES.FIRSTPAGE} element={<HomePage />} />;
             <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
             <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOTFOUND} />} />;
           </Route>
