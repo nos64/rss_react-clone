@@ -1,5 +1,5 @@
 import Container from 'components/Container';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Form from '../../components/Form';
 import FormCard from '../../components/FormCard';
 import style from './FormPage.module.scss';
@@ -16,35 +16,21 @@ export interface IFormCard {
   keyID?: string;
 }
 
-interface FormPageState {
-  formCards: IFormCard[];
-}
+const FormPage = () => {
+  const [formCards, setFormCards] = useState<IFormCard[]>([]);
 
-interface FormPageProps {
-  props?: string;
-}
-
-export default class FormPage extends Component<FormPageProps, FormPageState> {
-  constructor(props: FormPageProps) {
-    super(props);
-    this.state = {
-      formCards: [],
-    };
-  }
-
-  createCard = (formCard: IFormCard) => {
-    this.setState({ formCards: [...this.state.formCards, formCard] });
-    console.log(this.state.formCards);
+  const createCard = (formCard: IFormCard) => {
+    setFormCards([...formCards, formCard]);
   };
 
-  render() {
-    return (
-      <Container>
-        <div className={style.wrapper}>
-          <Form createCard={this.createCard} />
-          <FormCard formCards={this.state.formCards} />
-        </div>
-      </Container>
-    );
-  }
-}
+  return (
+    <Container>
+      <div className={style.wrapper}>
+        <Form createCard={createCard} />
+        <FormCard formCards={formCards} />
+      </div>
+    </Container>
+  );
+};
+
+export default FormPage;

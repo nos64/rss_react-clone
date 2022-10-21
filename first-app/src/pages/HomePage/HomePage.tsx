@@ -2,19 +2,18 @@ import CardList from 'components/CardList';
 import Container from 'components/Container';
 import SearchBar from 'components/SearchBar';
 import React from 'react';
-import { Component } from 'react';
 import style from './HomePage.module.scss';
 
-export default class HomePAge extends Component {
-  render() {
-    return (
-      <main>
-        <Container>
-          <h1 className={style.title}>Homepage</h1>
-          <SearchBar />
-          <CardList />
-        </Container>
-      </main>
-    );
-  }
-}
+const HomePage = () => {
+  return (
+    <main>
+      <Container>
+        <h1 className={style.title}>Homepage</h1>
+        <SearchBar />
+        <CardList />
+      </Container>
+    </main>
+  );
+};
+
+export default HomePage;

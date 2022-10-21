@@ -9,26 +9,46 @@ interface IAPICard extends ICharacter {
   onClick: () => void;
 }
 
-export default class APICard extends Component<IAPICard> {
-  render() {
-    return (
-      <li className={style.card} onClick={() => this.props.onClick()}>
-        <h3 className={style.card__title}>{this.props.name}</h3>
-        <div className={style.card__imageWrapper}>
-          <img
-            className={style.card__image}
-            src={`${this.props.image}`}
-            alt={`Image ${this.props.name}`}
-          />
-        </div>
-        <div>
-          <CardSimpleText description={'Status: '} param={this.props.status} />
-          <CardSimpleText description={'Species: '} param={this.props.species} />
-          <CardSimpleText description={'Gender: '} param={this.props.gender} />
-          <CardSimpleText description={'Origin: '} param={this.props.origin.name} />
-          <CardSimpleText description={'Location: '} param={this.props.location.name} />
-        </div>
-      </li>
-    );
-  }
-}
+// export default class APICard extends Component<IAPICard> {
+//   render() {
+//     return (
+//       <li className={style.card} onClick={() => this.props.onClick()}>
+//         <h3 className={style.card__title}>{this.props.name}</h3>
+//         <div className={style.card__imageWrapper}>
+//           <img
+//             className={style.card__image}
+//             src={`${this.props.image}`}
+//             alt={`Image ${this.props.name}`}
+//           />
+//         </div>
+//         <div>
+//           <CardSimpleText description={'Status: '} param={this.props.status} />
+//           <CardSimpleText description={'Species: '} param={this.props.species} />
+//           <CardSimpleText description={'Gender: '} param={this.props.gender} />
+//           <CardSimpleText description={'Origin: '} param={this.props.origin.name} />
+//           <CardSimpleText description={'Location: '} param={this.props.location.name} />
+//         </div>
+//       </li>
+//     );
+//   }
+// }
+
+const APICard = (props: IAPICard) => {
+  return (
+    <li className={style.card} onClick={() => props.onClick()}>
+      <h3 className={style.card__title}>{props.name}</h3>
+      <div className={style.card__imageWrapper}>
+        <img className={style.card__image} src={`${props.image}`} alt={`Image ${props.name}`} />
+      </div>
+      <div>
+        <CardSimpleText description={'Status: '} param={props.status} />
+        <CardSimpleText description={'Species: '} param={props.species} />
+        <CardSimpleText description={'Gender: '} param={props.gender} />
+        <CardSimpleText description={'Origin: '} param={props.origin.name} />
+        <CardSimpleText description={'Location: '} param={props.location.name} />
+      </div>
+    </li>
+  );
+};
+
+export default APICard;
