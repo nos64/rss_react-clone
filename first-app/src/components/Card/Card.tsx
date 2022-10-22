@@ -1,7 +1,18 @@
 import React from 'react';
-import { ICard } from 'types/types';
 import style from './Card.module.scss';
 import CardSimpleText from '../CardSimpleText';
+
+export interface ICard {
+  image: string;
+  brand: string;
+  model: string;
+  year: string;
+  color: string;
+  doors: string;
+  volume: string;
+  owners: string;
+  inBasket?: boolean;
+}
 
 const Card = (props: ICard) => {
   return (

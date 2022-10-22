@@ -1,316 +1,414 @@
 import Container from 'components/Container';
-import React, { Component } from 'react';
+import React, {
+  Component,
+  createRef,
+  LegacyRef,
+  MutableRefObject,
+  RefObject,
+  useState,
+} from 'react';
 import style from './Form.module.scss';
 import { IFormCard } from './../../pages/FormPage/FormPage';
 import FormErrorMessage from '../FormErrorMessage';
+import { FormFields, IFormError } from 'types/types';
+import FormInputField from 'components/FormInputField';
 interface IFormState {
   disableBtn: boolean;
-  errors: IFormError;
+  errors: Partial<IFormError>;
 }
 
 interface IFormPropsCreate {
   createCard: (data: IFormCard) => void;
 }
 
-interface IFormError {
-  firstName?: string;
-  surname?: string;
-  dateOfBirth?: string;
-  gender?: string;
-  email?: string;
-  country?: string;
-  picture?: string;
-  rule?: string;
-}
+const Form = (props: IFormPropsCreate) => {
+  const firstName = createRef<HTMLInputElement>();
+  const surname = createRef<HTMLInputElement>();
+  const dateOfBirth = createRef<HTMLInputElement>();
+  const genderMale = createRef<HTMLInputElement>();
+  const genderFemale = createRef<HTMLInputElement>();
+  const email = createRef<HTMLInputElement>();
+  const country = createRef<HTMLSelectElement>();
+  const picture = createRef<HTMLInputElement>();
+  const rule = createRef<HTMLInputElement>();
 
-type FormFields = {
-  firstName: HTMLInputElement;
-  surname: HTMLInputElement;
-  dateOfBirth: HTMLInputElement;
-  gender: HTMLInputElement;
+  const [disableBtn, setDisableBtn] = useState(true);
+  const [errors, setErrors] = useState<Partial<IFormError>>();
 
-  email: HTMLInputElement;
-  country: HTMLSelectElement;
-  picture: HTMLInputElement;
-  rule: HTMLInputElement;
-};
-export default class Form extends Component<IFormPropsCreate, IFormState> {
-  readonly firstName: React.RefObject<HTMLInputElement>;
-  readonly surname: React.RefObject<HTMLInputElement>;
-  readonly dateOfBirth: React.RefObject<HTMLInputElement>;
-  readonly genderMale: React.RefObject<HTMLInputElement>;
-  readonly genderFemale: React.RefObject<HTMLInputElement>;
-  readonly email: React.RefObject<HTMLInputElement>;
-  readonly country: React.RefObject<HTMLSelectElement>;
-  readonly picture: React.RefObject<HTMLInputElement>;
-  readonly rule: React.RefObject<HTMLInputElement>;
-
-  constructor(props: IFormPropsCreate) {
-    super(props);
-    this.firstName = React.createRef();
-    this.surname = React.createRef();
-    this.dateOfBirth = React.createRef();
-    this.genderMale = React.createRef();
-    this.genderFemale = React.createRef();
-    this.email = React.createRef();
-    this.country = React.createRef();
-    this.picture = React.createRef();
-    this.rule = React.createRef();
-    this.state = {
-      disableBtn: true,
-      errors: {},
-    };
-  }
-
-  handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
+  const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
     if (
-      (this.firstName.current && this.firstName.current.value.length) ||
-      (this.surname.current && this.surname.current.value.length) ||
-      (this.dateOfBirth.current && this.dateOfBirth.current.value.length) ||
-      (this.email.current && this.email.current.value.length) ||
-      (this.genderMale.current && this.genderMale.current.checked) ||
-      (this.genderFemale.current && this.genderFemale.current.checked) ||
-      (this.country.current && this.country.current.value.length) ||
-      (this.picture.current && this.picture.current.value.length)
+      (firstName.current && firstName.current.value.length) ||
+      (surname.current && surname.current.value.length) ||
+      (dateOfBirth.current && dateOfBirth.current.value.length) ||
+      (email.current && email.current.value.length) ||
+      (genderMale.current && genderMale.current.checked) ||
+      (genderFemale.current && genderFemale.current.checked) ||
+      (country.current && country.current.value.length) ||
+      (picture.current && picture.current.value.length)
     ) {
-      this.setState({ disableBtn: false });
-    } else this.setState({ disableBtn: true });
+      setDisableBtn(false);
+    } else {
+      setDisableBtn(true);
+    }
   };
 
-  handleSubmit: React.FocusEventHandler<HTMLFormElement & FormFields> = (e) => {
+  const handleSubmit: React.FocusEventHandler<HTMLFormElement & FormFields> = (e) => {
     e.preventDefault();
-    if (!this.validateForm()) {
-      this.setState({ disableBtn: true });
+    if (!validateForm()) {
+      setDisableBtn(true);
       return;
     }
     if (
-      this.firstName.current &&
-      this.surname.current &&
-      this.dateOfBirth.current &&
-      this.genderMale.current &&
-      this.genderFemale.current &&
-      this.email.current &&
-      this.country.current &&
-      this.picture.current &&
-      this.picture.current.files &&
-      this.rule.current
+      firstName.current &&
+      surname.current &&
+      dateOfBirth.current &&
+      genderMale.current &&
+      genderFemale.current &&
+      email.current &&
+      country.current &&
+      picture.current &&
+      picture.current.files &&
+      rule.current
     ) {
       const formObj = {
-        firstName: this.firstName.current.value,
-        surname: this.surname.current.value,
-        dateOfBirth: this.dateOfBirth.current.value,
-        gender: this.genderMale.current.checked
-          ? this.genderMale.current.value
-          : this.genderFemale.current.value,
-        email: this.email.current.value,
-        country: this.country.current.value,
-        picture: URL.createObjectURL(this.picture.current.files[0]),
-        rule: this.rule.current.checked,
+        firstName: firstName.current.value,
+        surname: surname.current.value,
+        dateOfBirth: dateOfBirth.current.value,
+        gender: genderMale.current.checked ? genderMale.current.value : genderFemale.current.value,
+        email: email.current.value,
+        country: country.current.value,
+        picture: URL.createObjectURL(picture.current.files[0]),
+        rule: rule.current.checked,
         keyID: new Date().getTime().toString(),
       };
-      this.props.createCard(formObj);
-      console.log('formObj: ', formObj);
+      console.log(formObj);
+      props.createCard(formObj);
     }
     e.target.reset();
-    this.setState({ disableBtn: true });
+    setDisableBtn(true);
   };
 
-  validateForm = () => {
+  const validateForm = () => {
     let isValidForm = true;
-    const errorMessage: IFormError = {};
-    if (this.firstName.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.firstName.current.value)) {
+    const errorMessage: Partial<IFormError> = {};
+    if (firstName.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(firstName.current.value)) {
       isValidForm = false;
       errorMessage.firstName = 'Please enter your correct first name';
     }
-    if (this.surname.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current.value)) {
+    if (surname.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(surname.current.value)) {
       isValidForm = false;
       errorMessage.surname = 'Please enter your correct surname name';
     }
-    if (this.dateOfBirth.current) {
-      if (
-        !this.dateOfBirth.current.value ||
-        new Date(this.dateOfBirth.current.value) > new Date()
-      ) {
+    if (dateOfBirth.current) {
+      if (!dateOfBirth.current.value || new Date(dateOfBirth.current.value) > new Date()) {
         isValidForm = false;
         errorMessage.dateOfBirth = 'Please select your correct date of birth';
       }
     }
-    if (this.genderMale.current && this.genderFemale.current) {
-      if (!this.genderMale.current.checked && !this.genderFemale.current.checked) {
+    if (genderMale.current && genderFemale.current) {
+      if (!genderMale.current.checked && !genderFemale.current.checked) {
         isValidForm = false;
         errorMessage.gender = 'Please select your gender';
       }
     }
-    if (this.email.current && !/.+@.+\..+/i.test(this.email.current.value)) {
+    if (email.current && !/.+@.+\..+/i.test(email.current.value)) {
       isValidForm = false;
       errorMessage.email = 'Please enter correct E-mail';
     }
-    if (this.country.current && !this.country.current.value) {
+    if (country.current && !country.current.value) {
       isValidForm = false;
       errorMessage.country = 'Please select your country';
     }
-    if (this.picture.current && !this.picture.current.value) {
+    if (picture.current && !picture.current.value) {
       isValidForm = false;
       errorMessage.picture = 'Please input you avatar';
     }
-    if (this.rule.current && !this.rule.current.checked) {
+    if (rule.current && !rule.current.checked) {
       isValidForm = false;
       errorMessage.rule = 'Please select this';
     }
-    this.setState({
-      errors: errorMessage,
-    });
+    setErrors(errorMessage);
     if (isValidForm) {
-      this.setState({ errors: {} });
+      setErrors(errors);
     }
     return isValidForm;
   };
 
-  resetErrorOnFocus = (input: string) => {
-    this.setState({
-      errors: {
-        ...this.state.errors,
-        [input]: '',
-      },
+  const resetErrorOnFocus = (input: string) => {
+    setErrors({
+      ...errors,
+      [input]: '',
     });
   };
 
-  render() {
-    return (
-      <Container>
-        <form className={style.form} action="" onSubmit={this.handleSubmit} data-testid="form">
-          <h2 className={style.title}>Registration form</h2>
+  return (
+    // <Container>
+    //   <form className={style.form} action="" onSubmit={handleSubmit} data-testid="form">
+    //     <h2 className={style.title}>Registration form</h2>
+    //     <FormInputField
+    //       description={'First Name:'}
+    //       inputType={'text'}
+    //       inputName={'firstName'}
+    //       // inputValue={''}
+    //       // inputRef={firstName}
+    //       onChange={(e) => handleChange(e)}
+    //       inputTestId={'firstName'}
+    //       onFocus={() => resetErrorOnFocus('firstName')}
+    //     />
+    //     {/* <FormErrorMessage message={errors.firstName} /> */}
+    //     {/* <FormInputField
+    //       description={'Surname:'}
+    //       inputType={'text'}
+    //       inputName={'surname'}
+    //       // inputValue={''}
+    //       // inputRef={surname}
+    //       onChange={(e) => handleChange(e)}
+    //       inputTestId={'firstName'}
+    //       onFocus={() => resetErrorOnFocus('surname')}
+    //     /> */}
+    //     {/* <FormErrorMessage message={errors.surname} /> */}
+    //     {/* <div className={style.dateWrapper}>
+    //       <FormInputField
+    //         description={'Date of birth:'}
+    //         inputType={'date'}
+    //         inputName={'dateOfBirth'}
+    //         // inputValue={''}
+    //         // inputRef={dateOfBirth}
+    //         onChange={(e) => handleChange(e)}
+    //         inputTestId={'firstName'}
+    //         onFocus={() => resetErrorOnFocus('dateOfBirth')}
+    //       />
+    //     </div> */}
+    //     {/* <FormErrorMessage message={errors.dateOfBirth} /> */}
+    //     {/* <div className={style.genderWrapper} onFocus={() => resetErrorOnFocus('gender')}>
+    //       Gender:
+    //       <label className={style.radioLabel}>
+    //         <FormInputField
+    //           description={'Male'}
+    //           inputType={'radio'}
+    //           inputName={'gender'}
+    //           // inputValue={'Male'}
+    //           // inputRef={genderMale}
+    //           onChange={(e) => handleChange(e)}
+    //           inputTestId={'firstName'}
+    //           onFocus={() => resetErrorOnFocus('gender')}
+    //         />
+    //       </label>
+    //       <label className={style.radioLabel}>
+    //         <FormInputField
+    //           description={'Male'}
+    //           inputType={'radio'}
+    //           inputName={'gender'}
+    //           // inputValue={'Female'}
+    //           // inputRef={genderFemale}
+    //           onChange={(e) => handleChange(e)}
+    //           inputTestId={'male'}
+    //           onFocus={() => resetErrorOnFocus('gender')}
+    //         />
+    //       </label>
+    //     </div> */}
+    //     {/* <FormErrorMessage message={state.errors.gender} /> */}
+    //     {/* <label className={style.label}>
+    //       <FormInputField
+    //         description={'E-mail:'}
+    //         inputType={'text'}
+    //         inputName={'gender'}
+    //         // inputValue={'Female'}
+    //         // inputRef={email}
+    //         onChange={(e) => handleChange(e)}
+    //         inputTestId={'female'}
+    //         onFocus={() => resetErrorOnFocus('email')}
+    //       />
+    //     </label> */}
+    //     {/* <FormErrorMessage message={state.errors.email} /> */}
+    //     <label className={style.label}>
+    //       Country:
+    //       <select
+    //         className={style.textField}
+    //         name="country"
+    //         ref={country}
+    //         onChange={handleChange}
+    //         onFocus={() => resetErrorOnFocus('country')}
+    //       >
+    //         <option value="">--Please choose a country--</option>
+    //         <option value="Russia">Russia</option>
+    //         <option value="Belarus">Belarus</option>
+    //         <option value="Ukrane">Ukrane</option>
+    //         <option value="Kazakhstan">Kazakhstan</option>
+    //       </select>
+    //     </label>
+    //     {/* <FormErrorMessage message={state.errors.country} /> */}
+    //     {/* <label className={style.label}>
+    //       <FormInputField
+    //         description={'Avatart:'}
+    //         inputType={'file'}
+    //         inputName={'picture'}
+    //         // inputValue={''}
+    //         // inputRef={picture}
+    //         onChange={(e) => handleChange(e)}
+    //         inputTestId={'picture'}
+    //         onFocus={() => resetErrorOnFocus('picture')}
+    //       />
+    //     </label> */}
+    //     {/* <FormErrorMessage message={errors.picture} /> */}
+    //     {/* <label>
+    //       <FormInputField
+    //         description={'I consent to my personal data'}
+    //         inputType={'checkbox'}
+    //         inputName={'rule'}
+    //         // inputValue={''}
+    //         // inputRef={rule}
+    //         onChange={(e) => handleChange(e)}
+    //         inputTestId={'rule'}
+    //         onFocus={() => resetErrorOnFocus('rule')}
+    //       />
+    //     </label> */}
+    //     {/* <FormErrorMessage message={errors.rule} /> */}
+    //     <button
+    //       className={style.button}
+    //       type="submit"
+    //       disabled={!!disableBtn}
+    //       data-testid="form-button"
+    //     >
+    //       Registration
+    //     </button>
+    //   </form>
+    // </Container>
+
+    <Container>
+      <form className={style.form} action="" onSubmit={handleSubmit} data-testid="form">
+        <h2 className={style.title}>Registration form</h2>
+        <label className={style.label}>
+          First Name:
+          <input
+            className={style.textField}
+            type="text"
+            name="firstName"
+            ref={firstName}
+            onChange={handleChange}
+            data-testid="firstName"
+            onFocus={() => resetErrorOnFocus('firstName')}
+          />
+        </label>
+        {/* <FormErrorMessage message={errors.firstName} /> */}
+        <label className={style.label}>
+          Surname:
+          <input
+            className={style.textField}
+            type="text"
+            name="surname"
+            ref={surname}
+            onChange={handleChange}
+            onFocus={() => resetErrorOnFocus('surname')}
+          />
+        </label>
+        {/* <FormErrorMessage message={errors.surname} /> */}
+        <div className={style.dateWrapper}>
           <label className={style.label}>
-            First Name:
+            Date of birth:
             <input
-              className={style.textField}
-              type="text"
-              name="firstName"
-              ref={this.firstName}
-              onChange={this.handleChange}
-              data-testid="firstName"
-              onFocus={() => this.resetErrorOnFocus('firstName')}
+              className={style.dateField}
+              type="date"
+              name="dateOfBirth"
+              ref={dateOfBirth}
+              onChange={handleChange}
+              onFocus={() => resetErrorOnFocus('dateOfBirth')}
             />
           </label>
-          <FormErrorMessage message={this.state.errors.firstName} />
-          <label className={style.label}>
-            Surname:
+        </div>
+        {/* <FormErrorMessage message={errors.dateOfBirth} /> */}
+        <div className={style.genderWrapper} onFocus={() => resetErrorOnFocus('gender')}>
+          Gender:
+          <label className={style.radioLabel}>
             <input
-              className={style.textField}
-              type="text"
-              name="surname"
-              ref={this.surname}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('surname')}
+              className={style.radio}
+              type="radio"
+              name="gender"
+              value="Male"
+              ref={genderMale}
+              onChange={handleChange}
             />
+            Male
           </label>
-          <FormErrorMessage message={this.state.errors.surname} />
-          <div className={style.dateWrapper}>
-            <label className={style.label}>
-              Date of birth:
-              <input
-                className={style.dateField}
-                type="date"
-                name="dateOfBirth"
-                ref={this.dateOfBirth}
-                onChange={this.handleChange}
-                onFocus={() => this.resetErrorOnFocus('dateOfBirth')}
-              />
-            </label>
-          </div>
-          <FormErrorMessage message={this.state.errors.dateOfBirth} />
-          <div className={style.genderWrapper} onFocus={() => this.resetErrorOnFocus('gender')}>
-            Gender:
-            <label className={style.radioLabel}>
-              <input
-                className={style.radio}
-                type="radio"
-                name="gender"
-                value="Male"
-                ref={this.genderMale}
-                onChange={this.handleChange}
-              />
-              Male
-            </label>
-            <label className={style.radioLabel}>
-              <input
-                className={style.radio}
-                type="radio"
-                name="gender"
-                value="Female"
-                ref={this.genderFemale}
-                onChange={this.handleChange}
-              />
-              Female
-            </label>
-          </div>
-          <FormErrorMessage message={this.state.errors.gender} />
-          <label className={style.label}>
-            E-mail:
+          <label className={style.radioLabel}>
             <input
-              className={style.textField}
-              type="text"
-              title="Enter your e-mail"
-              ref={this.email}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('email')}
+              className={style.radio}
+              type="radio"
+              name="gender"
+              value="Female"
+              ref={genderFemale}
+              onChange={handleChange}
             />
+            Female
           </label>
-          <FormErrorMessage message={this.state.errors.email} />
-          <label className={style.label}>
-            Country:
-            <select
-              className={style.textField}
-              name="country"
-              ref={this.country}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('country')}
-            >
-              <option value="">--Please choose a country--</option>
-              <option value="Russia">Russia</option>
-              <option value="Belarus">Belarus</option>
-              <option value="Ukrane">Ukrane</option>
-              <option value="Kazakhstan">Kazakhstan</option>
-            </select>
-          </label>
-          <FormErrorMessage message={this.state.errors.country} />
-          <label className={style.label}>
-            Avatart:
-            <input
-              className={style.textField}
-              type="file"
-              name="picture"
-              ref={this.picture}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('picture')}
-            />
-          </label>
-          <FormErrorMessage message={this.state.errors.picture} />
-          <label>
-            <input
-              className={style.checkbox}
-              type="checkbox"
-              name="rule"
-              ref={this.rule}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('rule')}
-            />
-            I consent to my personal data
-          </label>
-          <FormErrorMessage message={this.state.errors.rule} />
-          <button
-            className={style.button}
-            type="submit"
-            disabled={this.state.disableBtn ? true : false}
-            data-testid="form-button"
+        </div>
+        {/* <FormErrorMessage message={state.errors.gender} /> */}
+        <label className={style.label}>
+          E-mail:
+          <input
+            className={style.textField}
+            type="text"
+            title="Enter your e-mail"
+            ref={email}
+            onChange={handleChange}
+            onFocus={() => resetErrorOnFocus('email')}
+          />
+        </label>
+        {/* <FormErrorMessage message={errors.email} /> */}
+        <label className={style.label}>
+          Country:
+          <select
+            className={style.textField}
+            name="country"
+            ref={country}
+            onChange={handleChange}
+            onFocus={() => resetErrorOnFocus('country')}
           >
-            Registration
-          </button>
-        </form>
-      </Container>
-    );
-  }
-}
+            <option value="">--Please choose a country--</option>
+            <option value="Russia">Russia</option>
+            <option value="Belarus">Belarus</option>
+            <option value="Ukrane">Ukrane</option>
+            <option value="Kazakhstan">Kazakhstan</option>
+          </select>
+        </label>
+        {/* <FormErrorMessage message={state.errors.country} /> */}
+        <label className={style.label}>
+          Avatart:
+          <input
+            className={style.textField}
+            type="file"
+            name="picture"
+            ref={picture}
+            onChange={handleChange}
+            onFocus={() => resetErrorOnFocus('picture')}
+          />
+        </label>
+        {/* <FormErrorMessage message={errors.picture} /> */}
+        <label>
+          <input
+            className={style.checkbox}
+            type="checkbox"
+            name="rule"
+            ref={rule}
+            onFocus={() => resetErrorOnFocus('rule')}
+          />
+          I consent to my personal data
+        </label>
+        {/* <FormErrorMessage message={errors.rule} /> */}
+        <button
+          className={style.button}
+          type="submit"
+          disabled={!!disableBtn}
+          data-testid="form-button"
+        >
+          Registration
+        </button>
+      </form>
+    </Container>
+  );
+};
+
+export default Form;

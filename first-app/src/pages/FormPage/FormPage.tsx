@@ -21,6 +21,7 @@ const FormPage = () => {
 
   const createCard = (formCard: IFormCard) => {
     setFormCards([...formCards, formCard]);
+    console.log(formCards);
   };
 
   return (
