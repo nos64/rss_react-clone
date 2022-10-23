@@ -1,15 +1,21 @@
-export interface ICard {
-  image: string;
-  brand: string;
-  model: string;
-  year: string;
-  color: string;
-  doors: string;
-  volume: string;
-  owners: string;
-  inBasket?: boolean;
+export interface IFormError {
+  firstName?: string;
+  surname?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  email?: string;
+  country?: string;
+  picture?: string;
+  rule?: string;
 }
 
-export interface IChildren {
-  children?: React.ReactNode;
-}
+export type FormFields = {
+  firstName: HTMLInputElement;
+  surname: HTMLInputElement;
+  dateOfBirth: HTMLInputElement;
+  gender: HTMLInputElement;
+  email: HTMLInputElement;
+  country: HTMLSelectElement;
+  picture: HTMLInputElement;
+  rule: HTMLInputElement;
+};

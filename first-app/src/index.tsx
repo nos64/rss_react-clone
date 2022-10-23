@@ -16,10 +16,10 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.LAYOUT} element={<App />}>
-          <Route path={ROUTES.HOMEPAGE} element={<HomePage />} />;
+          <Route path={ROUTES.API} element={<API />} />;
           <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
           <Route path={ROUTES.FORM} element={<FormPage />} />;
-          <Route path={ROUTES.API} element={<API />} />;
+          <Route path={ROUTES.FIRSTPAGE} element={<HomePage />} />;
           <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
           <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOTFOUND} />} />;
         </Route>

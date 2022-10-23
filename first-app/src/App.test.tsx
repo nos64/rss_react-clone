@@ -3,10 +3,12 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import AboutUsPage from 'pages/AboutUsPage/AboutUsPage';
-import HomePage from 'pages/HomePage/HomePage';
-import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
-import { ROUTES } from 'variables/routes';
+import AboutUsPage from './pages/AboutUsPage';
+import API from './pages/APIPage';
+import FormPage from './pages/FormPage';
+import HomePage from './pages/HomePage/HomePage';
+import NotFoundPage from './pages/NotFoundPage/';
+import { ROUTES } from './variables/routes';
 
 describe('App', () => {
   it('render App component', async () => {
@@ -39,8 +41,10 @@ describe('App', () => {
       <MemoryRouter initialEntries={['/uncorrectedLink']}>
         <Routes>
           <Route path={ROUTES.LAYOUT} element={<App />}>
-            <Route path={ROUTES.HOMEPAGE} element={<HomePage />} />;
+            <Route path={ROUTES.API} element={<API />} />;
             <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
+            <Route path={ROUTES.FORM} element={<FormPage />} />;
+            <Route path={ROUTES.FIRSTPAGE} element={<HomePage />} />;
             <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
             <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOTFOUND} />} />;
           </Route>

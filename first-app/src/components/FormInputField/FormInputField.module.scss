@@ -1,0 +1,37 @@
+.textField {
+  width: 100%;
+  padding: 5px 10px;
+  margin: 0px 0;
+  border: 2px solid transparent;
+  transition: all .3s ease-in-out;
+}
+
+.dateWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.dateField {
+  margin-left: 20px;
+  padding: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid transparent;
+  transition: all .3s ease-in-out;
+}
+
+.button:hover,
+.dateField:hover,
+.textField:hover,
+.textField:focus {
+  color: #ffd901;
+  background-color:#4a4950;
+  border-color:#ffd901;
+}
+.genderWrapper,
+.label {
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 700;
+}
