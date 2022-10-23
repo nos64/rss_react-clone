@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import style from './SearchBar.module.scss';
 
-type SearchProps = {
+type SearchBarProps = {
   props?: string;
 };
 
-type SearchState = {
+type ISearchBarState = {
   searchString: string;
 };
 
-export default class SearchBar extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
+export default class SearchBar extends Component<SearchBarProps, ISearchBarState> {
+  constructor(props: SearchBarProps) {
     super(props);
     this.state = {
       searchString: '',

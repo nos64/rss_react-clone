@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import style from './Form.module.scss';
 import { IFormCard } from './../../pages/FormPage/FormPage';
 import FormErrorMessage from '../FormErrorMessage';
+import { IFormError, FormFields } from 'types/types';
+import FormInputField from 'components/FormInputField';
+import FormInputFieldRadioCheck from 'components/FormInputFieldRadioCheck';
 interface IFormState {
   disableBtn: boolean;
   errors: IFormError;
@@ -12,28 +15,6 @@ interface IFormPropsCreate {
   createCard: (data: IFormCard) => void;
 }
 
-interface IFormError {
-  firstName?: string;
-  surname?: string;
-  dateOfBirth?: string;
-  gender?: string;
-  email?: string;
-  country?: string;
-  picture?: string;
-  rule?: string;
-}
-
-type FormFields = {
-  firstName: HTMLInputElement;
-  surname: HTMLInputElement;
-  dateOfBirth: HTMLInputElement;
-  gender: HTMLInputElement;
-
-  email: HTMLInputElement;
-  country: HTMLSelectElement;
-  picture: HTMLInputElement;
-  rule: HTMLInputElement;
-};
 export default class Form extends Component<IFormPropsCreate, IFormState> {
   readonly firstName: React.RefObject<HTMLInputElement>;
   readonly surname: React.RefObject<HTMLInputElement>;
@@ -183,82 +164,69 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
       <Container>
         <form className={style.form} action="" onSubmit={this.handleSubmit} data-testid="form">
           <h2 className={style.title}>Registration form</h2>
-          <label className={style.label}>
-            First Name:
-            <input
-              className={style.textField}
-              type="text"
-              name="firstName"
-              ref={this.firstName}
-              onChange={this.handleChange}
-              data-testid="firstName"
-              onFocus={() => this.resetErrorOnFocus('firstName')}
-            />
-          </label>
+          <FormInputField
+            description={'First Name:'}
+            inputType={'text'}
+            inputName={'firstName'}
+            inputRef={this.firstName}
+            onChange={this.handleChange}
+            inputTestId={'firstName'}
+            onFocus={() => this.resetErrorOnFocus('firstName')}
+          />
           <FormErrorMessage message={this.state.errors.firstName} />
-          <label className={style.label}>
-            Surname:
-            <input
-              className={style.textField}
-              type="text"
-              name="surname"
-              ref={this.surname}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('surname')}
-            />
-          </label>
+          <FormInputField
+            description={'Surname:'}
+            inputType={'text'}
+            inputName={'surname'}
+            inputRef={this.surname}
+            onChange={this.handleChange}
+            inputTestId={'surname'}
+            onFocus={() => this.resetErrorOnFocus('surname')}
+          />
           <FormErrorMessage message={this.state.errors.surname} />
           <div className={style.dateWrapper}>
-            <label className={style.label}>
-              Date of birth:
-              <input
-                className={style.dateField}
-                type="date"
-                name="dateOfBirth"
-                ref={this.dateOfBirth}
-                onChange={this.handleChange}
-                onFocus={() => this.resetErrorOnFocus('dateOfBirth')}
-              />
-            </label>
+            <FormInputField
+              description={'Date of birth:'}
+              inputType={'date'}
+              inputName={'dateOfBirth'}
+              inputRef={this.dateOfBirth}
+              onChange={this.handleChange}
+              inputTestId={'dateOfBirth'}
+              onFocus={() => this.resetErrorOnFocus('dateOfBirth')}
+            />
           </div>
           <FormErrorMessage message={this.state.errors.dateOfBirth} />
           <div className={style.genderWrapper} onFocus={() => this.resetErrorOnFocus('gender')}>
             Gender:
-            <label className={style.radioLabel}>
-              <input
-                className={style.radio}
-                type="radio"
-                name="gender"
-                value="Male"
-                ref={this.genderMale}
-                onChange={this.handleChange}
-              />
-              Male
-            </label>
-            <label className={style.radioLabel}>
-              <input
-                className={style.radio}
-                type="radio"
-                name="gender"
-                value="Female"
-                ref={this.genderFemale}
-                onChange={this.handleChange}
-              />
-              Female
-            </label>
+            <FormInputFieldRadioCheck
+              description={'Male'}
+              inputType={'radio'}
+              inputName={'gender'}
+              inputValue={'Male'}
+              inputRef={this.genderMale}
+              onChange={this.handleChange}
+              inputTestId={'male'}
+            />
+            <FormInputFieldRadioCheck
+              description={'Male'}
+              inputType={'radio'}
+              inputName={'gender'}
+              inputValue={'Female'}
+              inputRef={this.genderFemale}
+              onChange={this.handleChange}
+              inputTestId={'female'}
+            />
           </div>
           <FormErrorMessage message={this.state.errors.gender} />
-          <label className={style.label}>
-            E-mail:
-            <input
-              className={style.textField}
-              type="text"
-              title="Enter your e-mail"
-              ref={this.email}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('email')}
-            />
-          </label>
+          <FormInputField
+            description={'E-mail:'}
+            inputType={'text'}
+            inputName={'email'}
+            inputRef={this.email}
+            onChange={this.handleChange}
+            inputTestId={'email'}
+            onFocus={() => this.resetErrorOnFocus('email')}
+          />
           <FormErrorMessage message={this.state.errors.email} />
           <label className={style.label}>
             Country:
@@ -277,33 +245,30 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
             </select>
           </label>
           <FormErrorMessage message={this.state.errors.country} />
-          <label className={style.label}>
-            Avatart:
-            <input
-              className={style.textField}
-              type="file"
-              name="picture"
-              ref={this.picture}
-              onChange={this.handleChange}
-              onFocus={() => this.resetErrorOnFocus('picture')}
-            />
-          </label>
+          <FormInputField
+            description={'Avatart:'}
+            inputType={'file'}
+            inputName={'picture'}
+            inputRef={this.picture}
+            onChange={this.handleChange}
+            inputTestId={'picture'}
+            onFocus={() => this.resetErrorOnFocus('picture')}
+          />
           <FormErrorMessage message={this.state.errors.picture} />
-          <label>
-            <input
-              className={style.checkbox}
-              type="checkbox"
-              name="rule"
-              ref={this.rule}
-              onFocus={() => this.resetErrorOnFocus('rule')}
-            />
-            I consent to my personal data
-          </label>
+          <FormInputFieldRadioCheck
+            description={'I consent to my personal data'}
+            inputType={'checkbox'}
+            inputName={'rule'}
+            inputValue={'rule'}
+            inputRef={this.rule}
+            onChange={this.handleChange}
+            inputTestId={'rule'}
+          />
           <FormErrorMessage message={this.state.errors.rule} />
           <button
             className={style.button}
             type="submit"
-            disabled={this.state.disableBtn ? true : false}
+            disabled={!!this.state.disableBtn}
             data-testid="form-button"
           >
             Registration
