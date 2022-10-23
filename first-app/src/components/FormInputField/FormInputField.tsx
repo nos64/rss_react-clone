@@ -1,14 +1,10 @@
 import React, { forwardRef } from 'react';
-import FormCardInstance from '../FormCardInstance';
-import { IFormCard } from '../../pages/FormPage/FormPage';
 import style from './FormInputField.module.scss';
 
 interface IFormInputField {
   description: string;
   inputType: string;
   inputName: string;
-  // inputValue: string;
-  // inputRef: MutableRefObject<HTMLInputElement | undefined>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputTestId: string;
   onFocus: (inputName: string) => void;

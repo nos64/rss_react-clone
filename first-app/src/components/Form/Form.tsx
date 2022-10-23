@@ -1,17 +1,11 @@
 import Container from 'components/Container';
-import React, {
-  Component,
-  createRef,
-  LegacyRef,
-  MutableRefObject,
-  RefObject,
-  useState,
-} from 'react';
+import React, { createRef, useState } from 'react';
 import style from './Form.module.scss';
 import { IFormCard } from './../../pages/FormPage/FormPage';
 import FormErrorMessage from '../FormErrorMessage';
 import { FormFields, IFormError } from 'types/types';
 import FormInputField from 'components/FormInputField';
+import FormInputFieldRadioCheck from 'components/FormInputFieldRadioCheck';
 interface IFormState {
   disableBtn: boolean;
   errors: Partial<IFormError>;
@@ -181,28 +175,26 @@ const Form = (props: IFormPropsCreate) => {
         <FormErrorMessage message={errors.dateOfBirth} />
         <div className={style.genderWrapper} onFocus={() => resetErrorOnFocus('gender')}>
           Gender:
-          <label className={style.radioLabel}>
-            <input
-              className={style.radio}
-              type="radio"
-              name="gender"
-              value="Male"
-              ref={genderMale}
-              onChange={handleChange}
-            />
-            Male
-          </label>
-          <label className={style.radioLabel}>
-            <input
-              className={style.radio}
-              type="radio"
-              name="gender"
-              value="Female"
-              ref={genderFemale}
-              onChange={handleChange}
-            />
-            Female
-          </label>
+          <FormInputFieldRadioCheck
+            description={'Male'}
+            inputType={'radio'}
+            inputName={'gender'}
+            value={'Male'}
+            ref={genderMale}
+            onChange={(e) => handleChange(e)}
+            inputTestId={'male'}
+            onFocus={() => resetErrorOnFocus('gender')}
+          />
+          <FormInputFieldRadioCheck
+            description={'Female'}
+            inputType={'radio'}
+            inputName={'gender'}
+            value={'Female'}
+            ref={genderFemale}
+            onChange={(e) => handleChange(e)}
+            inputTestId={'female'}
+            onFocus={() => resetErrorOnFocus('gender')}
+          />
         </div>
         <FormErrorMessage message={errors.gender} />
         <FormInputField
@@ -242,16 +234,16 @@ const Form = (props: IFormPropsCreate) => {
           onFocus={() => resetErrorOnFocus('picture')}
         />
         <FormErrorMessage message={errors.picture} />
-        <label>
-          <input
-            className={style.checkbox}
-            type="checkbox"
-            name="rule"
-            ref={rule}
-            onFocus={() => resetErrorOnFocus('rule')}
-          />
-          I consent to my personal data
-        </label>
+        <FormInputFieldRadioCheck
+          description={'I consent to my personal data'}
+          inputType={'checkbox'}
+          inputName={'rule'}
+          value={'rule'}
+          ref={rule}
+          onChange={(e) => handleChange(e)}
+          inputTestId={'female'}
+          onFocus={() => resetErrorOnFocus('rule')}
+        />
         <FormErrorMessage message={errors.rule} />
         <button
           className={style.button}

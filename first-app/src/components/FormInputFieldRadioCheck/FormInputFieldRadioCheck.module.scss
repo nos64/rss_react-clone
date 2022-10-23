@@ -1,0 +1,95 @@
+.form, 
+.fieldset {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #d1d2d3;
+  border: 5px solid transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.form:hover {
+  border-color: #ffd901;
+}
+
+.title {
+  text-align: center;
+}
+
+.textField {
+  width: 100%;
+  padding: 5px 10px;
+  margin: 0px 0;
+  border: 2px solid transparent;
+  transition: all .3s ease-in-out;
+}
+
+.dateWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.dateField {
+  margin-left: 20px;
+  padding: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid transparent;
+  transition: all .3s ease-in-out;
+}
+
+.button:hover,
+.dateField:hover,
+.textField:hover,
+.textField:focus {
+  color: #ffd901;
+  background-color:#4a4950;
+  border-color:#ffd901;
+}
+.genderWrapper,
+.label {
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.selectField {
+  cursor: pointer;
+}
+
+.genderWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.radioLabel {
+  cursor: pointer;
+}
+
+.radio {
+  transform: scale(1.5);
+  margin-right: 10px;
+}
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.button {
+  width: 50%;
+  margin: 10px auto 0 auto;
+  padding: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all .3s ease-in-out;
+}
+
+.button[disabled]:hover {
+  border: 2px solid transparent;
+  color: rgba(16, 16, 16, 0.3);
+  background-color:rgba(239, 239, 239, 0.3);
+  cursor: not-allowed;
+}
