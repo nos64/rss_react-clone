@@ -33,7 +33,7 @@ const Form = (props: IFormPropsCreate) => {
   const rule = createRef<HTMLInputElement>();
 
   const [disableBtn, setDisableBtn] = useState(true);
-  const [errors, setErrors] = useState<Partial<IFormError>>();
+  const [errors, setErrors] = useState<Partial<IFormError>>({});
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -84,7 +84,6 @@ const Form = (props: IFormPropsCreate) => {
         rule: rule.current.checked,
         keyID: new Date().getTime().toString(),
       };
-      console.log(formObj);
       props.createCard(formObj);
     }
     e.target.reset();
@@ -145,181 +144,41 @@ const Form = (props: IFormPropsCreate) => {
   };
 
   return (
-    // <Container>
-    //   <form className={style.form} action="" onSubmit={handleSubmit} data-testid="form">
-    //     <h2 className={style.title}>Registration form</h2>
-    //     <FormInputField
-    //       description={'First Name:'}
-    //       inputType={'text'}
-    //       inputName={'firstName'}
-    //       // inputValue={''}
-    //       // inputRef={firstName}
-    //       onChange={(e) => handleChange(e)}
-    //       inputTestId={'firstName'}
-    //       onFocus={() => resetErrorOnFocus('firstName')}
-    //     />
-    //     {/* <FormErrorMessage message={errors.firstName} /> */}
-    //     {/* <FormInputField
-    //       description={'Surname:'}
-    //       inputType={'text'}
-    //       inputName={'surname'}
-    //       // inputValue={''}
-    //       // inputRef={surname}
-    //       onChange={(e) => handleChange(e)}
-    //       inputTestId={'firstName'}
-    //       onFocus={() => resetErrorOnFocus('surname')}
-    //     /> */}
-    //     {/* <FormErrorMessage message={errors.surname} /> */}
-    //     {/* <div className={style.dateWrapper}>
-    //       <FormInputField
-    //         description={'Date of birth:'}
-    //         inputType={'date'}
-    //         inputName={'dateOfBirth'}
-    //         // inputValue={''}
-    //         // inputRef={dateOfBirth}
-    //         onChange={(e) => handleChange(e)}
-    //         inputTestId={'firstName'}
-    //         onFocus={() => resetErrorOnFocus('dateOfBirth')}
-    //       />
-    //     </div> */}
-    //     {/* <FormErrorMessage message={errors.dateOfBirth} /> */}
-    //     {/* <div className={style.genderWrapper} onFocus={() => resetErrorOnFocus('gender')}>
-    //       Gender:
-    //       <label className={style.radioLabel}>
-    //         <FormInputField
-    //           description={'Male'}
-    //           inputType={'radio'}
-    //           inputName={'gender'}
-    //           // inputValue={'Male'}
-    //           // inputRef={genderMale}
-    //           onChange={(e) => handleChange(e)}
-    //           inputTestId={'firstName'}
-    //           onFocus={() => resetErrorOnFocus('gender')}
-    //         />
-    //       </label>
-    //       <label className={style.radioLabel}>
-    //         <FormInputField
-    //           description={'Male'}
-    //           inputType={'radio'}
-    //           inputName={'gender'}
-    //           // inputValue={'Female'}
-    //           // inputRef={genderFemale}
-    //           onChange={(e) => handleChange(e)}
-    //           inputTestId={'male'}
-    //           onFocus={() => resetErrorOnFocus('gender')}
-    //         />
-    //       </label>
-    //     </div> */}
-    //     {/* <FormErrorMessage message={state.errors.gender} /> */}
-    //     {/* <label className={style.label}>
-    //       <FormInputField
-    //         description={'E-mail:'}
-    //         inputType={'text'}
-    //         inputName={'gender'}
-    //         // inputValue={'Female'}
-    //         // inputRef={email}
-    //         onChange={(e) => handleChange(e)}
-    //         inputTestId={'female'}
-    //         onFocus={() => resetErrorOnFocus('email')}
-    //       />
-    //     </label> */}
-    //     {/* <FormErrorMessage message={state.errors.email} /> */}
-    //     <label className={style.label}>
-    //       Country:
-    //       <select
-    //         className={style.textField}
-    //         name="country"
-    //         ref={country}
-    //         onChange={handleChange}
-    //         onFocus={() => resetErrorOnFocus('country')}
-    //       >
-    //         <option value="">--Please choose a country--</option>
-    //         <option value="Russia">Russia</option>
-    //         <option value="Belarus">Belarus</option>
-    //         <option value="Ukrane">Ukrane</option>
-    //         <option value="Kazakhstan">Kazakhstan</option>
-    //       </select>
-    //     </label>
-    //     {/* <FormErrorMessage message={state.errors.country} /> */}
-    //     {/* <label className={style.label}>
-    //       <FormInputField
-    //         description={'Avatart:'}
-    //         inputType={'file'}
-    //         inputName={'picture'}
-    //         // inputValue={''}
-    //         // inputRef={picture}
-    //         onChange={(e) => handleChange(e)}
-    //         inputTestId={'picture'}
-    //         onFocus={() => resetErrorOnFocus('picture')}
-    //       />
-    //     </label> */}
-    //     {/* <FormErrorMessage message={errors.picture} /> */}
-    //     {/* <label>
-    //       <FormInputField
-    //         description={'I consent to my personal data'}
-    //         inputType={'checkbox'}
-    //         inputName={'rule'}
-    //         // inputValue={''}
-    //         // inputRef={rule}
-    //         onChange={(e) => handleChange(e)}
-    //         inputTestId={'rule'}
-    //         onFocus={() => resetErrorOnFocus('rule')}
-    //       />
-    //     </label> */}
-    //     {/* <FormErrorMessage message={errors.rule} /> */}
-    //     <button
-    //       className={style.button}
-    //       type="submit"
-    //       disabled={!!disableBtn}
-    //       data-testid="form-button"
-    //     >
-    //       Registration
-    //     </button>
-    //   </form>
-    // </Container>
-
     <Container>
       <form className={style.form} action="" onSubmit={handleSubmit} data-testid="form">
         <h2 className={style.title}>Registration form</h2>
-        <label className={style.label}>
-          First Name:
-          <input
-            className={style.textField}
-            type="text"
-            name="firstName"
-            ref={firstName}
-            onChange={handleChange}
-            data-testid="firstName"
-            onFocus={() => resetErrorOnFocus('firstName')}
-          />
-        </label>
-        {/* <FormErrorMessage message={errors.firstName} /> */}
-        <label className={style.label}>
-          Surname:
-          <input
-            className={style.textField}
-            type="text"
-            name="surname"
-            ref={surname}
-            onChange={handleChange}
-            onFocus={() => resetErrorOnFocus('surname')}
-          />
-        </label>
-        {/* <FormErrorMessage message={errors.surname} /> */}
+        <FormInputField
+          description={'First Name:'}
+          inputType={'text'}
+          inputName={'firstName'}
+          ref={firstName}
+          onChange={(e) => handleChange(e)}
+          inputTestId={'firstName'}
+          onFocus={() => resetErrorOnFocus('firstName')}
+        />
+        <FormErrorMessage message={errors.firstName} />
+        <FormInputField
+          description={'Surname:'}
+          inputType={'text'}
+          inputName={'surname'}
+          ref={surname}
+          onChange={(e) => handleChange(e)}
+          inputTestId={'surname'}
+          onFocus={() => resetErrorOnFocus('surname')}
+        />
+        <FormErrorMessage message={errors.surname} />
         <div className={style.dateWrapper}>
-          <label className={style.label}>
-            Date of birth:
-            <input
-              className={style.dateField}
-              type="date"
-              name="dateOfBirth"
-              ref={dateOfBirth}
-              onChange={handleChange}
-              onFocus={() => resetErrorOnFocus('dateOfBirth')}
-            />
-          </label>
+          <FormInputField
+            description={'Date of birth:'}
+            inputType={'date'}
+            inputName={'dateOfBirth'}
+            ref={dateOfBirth}
+            onChange={(e) => handleChange(e)}
+            inputTestId={'dateOfBirth'}
+            onFocus={() => resetErrorOnFocus('dateOfBirth')}
+          />
         </div>
-        {/* <FormErrorMessage message={errors.dateOfBirth} /> */}
+        <FormErrorMessage message={errors.dateOfBirth} />
         <div className={style.genderWrapper} onFocus={() => resetErrorOnFocus('gender')}>
           Gender:
           <label className={style.radioLabel}>
@@ -345,19 +204,17 @@ const Form = (props: IFormPropsCreate) => {
             Female
           </label>
         </div>
-        {/* <FormErrorMessage message={state.errors.gender} /> */}
-        <label className={style.label}>
-          E-mail:
-          <input
-            className={style.textField}
-            type="text"
-            title="Enter your e-mail"
-            ref={email}
-            onChange={handleChange}
-            onFocus={() => resetErrorOnFocus('email')}
-          />
-        </label>
-        {/* <FormErrorMessage message={errors.email} /> */}
+        <FormErrorMessage message={errors.gender} />
+        <FormInputField
+          description={'E-mail:'}
+          inputType={'text'}
+          inputName={'email'}
+          ref={email}
+          onChange={(e) => handleChange(e)}
+          inputTestId={'email'}
+          onFocus={() => resetErrorOnFocus('email')}
+        />
+        <FormErrorMessage message={errors.email} />
         <label className={style.label}>
           Country:
           <select
@@ -374,19 +231,17 @@ const Form = (props: IFormPropsCreate) => {
             <option value="Kazakhstan">Kazakhstan</option>
           </select>
         </label>
-        {/* <FormErrorMessage message={state.errors.country} /> */}
-        <label className={style.label}>
-          Avatart:
-          <input
-            className={style.textField}
-            type="file"
-            name="picture"
-            ref={picture}
-            onChange={handleChange}
-            onFocus={() => resetErrorOnFocus('picture')}
-          />
-        </label>
-        {/* <FormErrorMessage message={errors.picture} /> */}
+        <FormErrorMessage message={errors.country} />
+        <FormInputField
+          description={'Avatart:'}
+          inputType={'file'}
+          inputName={'picture'}
+          ref={picture}
+          onChange={(e) => handleChange(e)}
+          inputTestId={'picture'}
+          onFocus={() => resetErrorOnFocus('picture')}
+        />
+        <FormErrorMessage message={errors.picture} />
         <label>
           <input
             className={style.checkbox}
@@ -397,7 +252,7 @@ const Form = (props: IFormPropsCreate) => {
           />
           I consent to my personal data
         </label>
-        {/* <FormErrorMessage message={errors.rule} /> */}
+        <FormErrorMessage message={errors.rule} />
         <button
           className={style.button}
           type="submit"
