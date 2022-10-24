@@ -108,7 +108,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
     }
     if (this.surname.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(this.surname.current.value)) {
       isValidForm = false;
-      errorMessage.surname = 'Please enter your correct surname name';
+      errorMessage.surname = 'Please enter your correct surname';
     }
     if (this.dateOfBirth.current) {
       if (
@@ -208,7 +208,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               inputTestId={'male'}
             />
             <FormInputFieldRadioCheck
-              description={'Male'}
+              description={'Female'}
               inputType={'radio'}
               inputName={'gender'}
               inputValue={'Female'}
@@ -234,6 +234,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
               className={style.textField}
               name="country"
               ref={this.country}
+              data-testid={'country'}
               onChange={this.handleChange}
               onFocus={() => this.resetErrorOnFocus('country')}
             >
@@ -246,7 +247,7 @@ export default class Form extends Component<IFormPropsCreate, IFormState> {
           </label>
           <FormErrorMessage message={this.state.errors.country} />
           <FormInputField
-            description={'Avatart:'}
+            description={'Avatar:'}
             inputType={'file'}
             inputName={'picture'}
             inputRef={this.picture}
