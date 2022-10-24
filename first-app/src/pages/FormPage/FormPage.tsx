@@ -34,7 +34,6 @@ export default class FormPage extends Component<FormPageProps, FormPageState> {
 
   createCard = (formCard: IFormCard) => {
     this.setState({ formCards: [...this.state.formCards, formCard] });
-    console.log(this.state.formCards);
   };
 
   render() {
