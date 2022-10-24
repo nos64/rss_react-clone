@@ -1,4 +1,4 @@
-import CardSimpleText from 'components/CardSimpleText';
+import CardSimpleText from '../CardSimpleText';
 import React, { Component } from 'react';
 import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APICard.module.scss';

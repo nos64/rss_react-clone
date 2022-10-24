@@ -1,4 +1,4 @@
-import Container from 'components/Container';
+import Container from '../../components/Container';
 import React, { Component } from 'react';
 import Form from '../../components/Form';
 import FormCard from '../../components/FormCard';

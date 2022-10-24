@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import style from './APIComponent.module.scss';
-import APIErrorMessage from 'components/APIErrorMessage';
-import APIModal from 'components/APIModal';
-import APISearchBar from 'components/APISearchBar';
-import loader from '../..//assets/images/oval.svg';
-import APICard from 'components/APICard';
+import APIErrorMessage from '../APIErrorMessage';
+import APIModal from '../APIModal';
+import APISearchBar from '../APISearchBar';
+import loader from '../../assets/images/oval.svg';
+import APICard from '../APICard';
 
 interface IPropsAPI {
   props?: string;

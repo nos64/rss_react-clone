@@ -1,4 +1,4 @@
-import Container from 'components/Container';
+import Container from '../../components/Container';
 import React from 'react';
 import { Component } from 'react';
 import style from './AboutUsPage.module.scss';

@@ -1,8 +1,7 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import style from './CardList.module.scss';
 import { cardDB } from '../../variables/cardDB';
-import Card from 'components/Card';
+import Card from '../Card';
 
 export default class CardList extends Component {
   render() {

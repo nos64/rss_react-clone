@@ -1,9 +1,8 @@
-import CardSimpleText from 'components/CardSimpleText';
 import React, { Component } from 'react';
 import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APIModal.module.scss';
 import closeBtn from '../../assets/images/closeBtn.svg';
-import APIModalInside from 'components/APIModalInside';
+import APIModalInside from '../APIModalInside';
 
 interface IAPIModal {
   isModalActive: boolean;

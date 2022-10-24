@@ -1,4 +1,4 @@
-import FormCardInstanceField from 'components/FormCardInstanceField';
+import FormCardInstanceField from '../FormCardInstanceField';
 import React, { Component } from 'react';
 import { IFormCard } from './../../pages/FormPage/FormPage';
 import style from './FormCardInstance.module.scss';

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import style from './Header.module.scss';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import Container from 'components/Container';
+import Container from '../Container';
 
 export default class Header extends Component {
   render() {

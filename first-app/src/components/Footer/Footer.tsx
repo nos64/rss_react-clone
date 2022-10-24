@@ -1,8 +1,7 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import style from './Footer.module.scss';
 import rsLogo from '../../assets/images/rs_school_js.svg';
-import React from 'react';
-import Container from 'components/Container';
+import Container from '../Container';
 
 export default class Footer extends Component {
   render() {
