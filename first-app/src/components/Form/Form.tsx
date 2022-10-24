@@ -213,6 +213,7 @@ const Form = (props: IFormPropsCreate) => {
             className={style.textField}
             name="country"
             ref={country}
+            data-testid={'country'}
             onChange={handleChange}
             onFocus={() => resetErrorOnFocus('country')}
           >
@@ -225,7 +226,7 @@ const Form = (props: IFormPropsCreate) => {
         </label>
         <FormErrorMessage message={errors.country} />
         <FormInputField
-          description={'Avatart:'}
+          description={'Avatar:'}
           inputType={'file'}
           inputName={'picture'}
           ref={picture}
@@ -241,7 +242,7 @@ const Form = (props: IFormPropsCreate) => {
           value={'rule'}
           ref={rule}
           onChange={(e) => handleChange(e)}
-          inputTestId={'female'}
+          inputTestId={'rule'}
           onFocus={() => resetErrorOnFocus('rule')}
         />
         <FormErrorMessage message={errors.rule} />
