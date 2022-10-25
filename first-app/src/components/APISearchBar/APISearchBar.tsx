@@ -5,7 +5,7 @@ import style from './APISearchBar.module.scss';
 // onChange={this.handleInputChange}
 // onKeyPress={this.getSearch}
 
-type SearchProps = {
+type APISearchBarProps = {
   value: string;
   onChange: (e: { target: { value: string } }) => void;
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -15,8 +15,8 @@ type SearchState = {
   searchString: string;
 };
 
-export default class APISearchBar extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
+export default class APISearchBar extends Component<APISearchBarProps, SearchState> {
+  constructor(props: APISearchBarProps) {
     super(props);
     this.state = {
       searchString: this.props.value,

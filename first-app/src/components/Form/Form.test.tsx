@@ -1,5 +1,5 @@
 import React from 'react';
-import { findByTestId, render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Form from './Form';
 import userEvent from '@testing-library/user-event';
 
@@ -279,7 +279,6 @@ describe('Form', () => {
     expect(screen.getByLabelText(/Country/i)).toBeInTheDocument();
     await userEvent.type(screen.getByTestId('country'), 'Russia');
     expect(screen.getByLabelText(/Avatar/i)).toBeInTheDocument();
-    await userEvent.type(screen.getByTestId('picture'), 'Russia');
     const fakeFile = new File(['hello'], 'hello.png', { type: 'image/png' });
     const inputFile: HTMLInputElement = screen.getByTestId(/picture/i);
     expect(screen.getByTestId(/picture/i)).toBeInTheDocument();
