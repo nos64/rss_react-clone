@@ -25,7 +25,7 @@ describe('localStorage', () => {
 
     rerender(
       <APISearchBar
-        value={localStorage.getItem('searchString')}
+        value={localStorage.getItem('searchString') as string}
         onChange={function (): void {}}
         onKeyPress={function (): void {}}
       />
