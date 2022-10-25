@@ -5,17 +5,16 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Header', () => {
-  it('render Header component', () => {
+  it('render Header component', async () => {
     render(
       <MemoryRouter>
         <Header />
       </MemoryRouter>
     );
-    // screen.debug();
-    const homepageLink = screen.getByText(/Homepage/i);
-    expect(homepageLink).toBeInTheDocument();
-    userEvent.click(homepageLink);
-    expect(screen.getByText(/Homepage/i)).toBeInTheDocument();
+    const formLink = screen.findByText(/Form/i);
+    expect(await formLink).toBeInTheDocument();
+    userEvent.click(await screen.findByText(/Form/i));
+    expect(await screen.findByText(/Form/i)).toBeInTheDocument();
 
     const aboutusLink = screen.getByText(/About us/i);
     expect(aboutusLink).toBeInTheDocument();

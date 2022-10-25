@@ -17,9 +17,8 @@ describe('App', () => {
         <App />
       </MemoryRouter>
     );
-    // screen.debug();
-    expect(screen.getByText(/Homepage/i)).toBeInTheDocument();
-    expect(screen.getByText(/About us/i)).toBeInTheDocument();
+    expect(await screen.findByText(/API/i)).toBeInTheDocument();
+    expect(await screen.findByText(/About us/i)).toBeInTheDocument();
   });
 
   it('click buttons', async () => {
@@ -32,8 +31,8 @@ describe('App', () => {
     await user.click(screen.getByText(/about/i));
     expect(screen.getByText(/about/i)).toBeInTheDocument();
 
-    await user.click(screen.getByText(/Homepage/i));
-    expect(screen.getByText(/home/i)).toBeInTheDocument();
+    await user.click(screen.getByText(/First Page/i));
+    expect(screen.getByText(/First/i)).toBeInTheDocument();
   });
 
   it('page not found', () => {
