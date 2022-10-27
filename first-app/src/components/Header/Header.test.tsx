@@ -12,10 +12,10 @@ describe('Header', () => {
       </MemoryRouter>
     );
     // screen.debug();
-    const homepageLink = screen.getByText(/Homepage/i);
-    expect(homepageLink).toBeInTheDocument();
-    userEvent.click(homepageLink);
-    expect(screen.getByText(/Homepage/i)).toBeInTheDocument();
+    const apiLink = screen.getByText(/API/i);
+    expect(apiLink).toBeInTheDocument();
+    userEvent.click(apiLink);
+    expect(screen.getByText(/API/i)).toBeInTheDocument();
 
     const aboutusLink = screen.getByText(/About us/i);
     expect(aboutusLink).toBeInTheDocument();
