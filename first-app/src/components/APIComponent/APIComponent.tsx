@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import style from './APIComponent.module.scss';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
+import APIPagination from '../APIPagination';
+
 interface IError {
   message: string;
   fileName: string;
@@ -63,10 +65,10 @@ interface IEpisode {
 
 const BASE_PATH = 'https://rickandmortyapi.com/api';
 const CHARACTERS = `${BASE_PATH}/character`;
-const LOCATIONS = `${BASE_PATH}/location`;
-const EPISODES = `${BASE_PATH}/episode`;
+// const LOCATIONS = `${BASE_PATH}/location`;
+// const EPISODES = `${BASE_PATH}/episode`;
 const SEARCH_PATH = '?name=';
-const SEARCH_PARAM = 'query=';
+const PAGE_PARAM = 'page=';
 
 const APIComponent = () => {
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
@@ -75,21 +77,26 @@ const APIComponent = () => {
   const [items, setItems] = useState<ICharacter[]>([]);
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<ICharacter | null>(null);
+  const [activePage, setActivePage] = useState(0);
+  const [response, setResponse] = useState<IItems | null>(null);
 
   useEffect(() => {
     setSearchQuery(localStorage.getItem('searchQuery') || '');
-    fetchData(localStorage.getItem('searchQuery') || '');
+    fetchData(localStorage.getItem('searchQuery') || '', activePage);
   }, []);
 
   useEffect(() => {
     localStorage.setItem('searchQuery', searchQuery);
   }, [searchQuery]);
 
-  const fetchData = (searchQuery: string) => {
-    fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
+  const fetchData = (searchQuery: string, activePage: number) => {
+    fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}&${PAGE_PARAM}${activePage}`)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
+          if (result) {
+            setResponse(result);
+          }
           if (result.results) {
             setIsLoaded(true);
             setItems(result.results);
@@ -112,7 +119,8 @@ const APIComponent = () => {
 
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      fetchData(searchQuery);
+      setActivePage(0);
+      fetchData(searchQuery, activePage);
     }
   };
 
@@ -126,6 +134,26 @@ const APIComponent = () => {
     setActiveItem(null);
   };
 
+  const handlePageChange = (e: { target: MouseEventHandler<HTMLButtonElement> }) => {
+    const target: MouseEventHandler<HTMLButtonElement> = e.target;
+    const BtnType = target.getAttribute('data-name');
+    switch (BtnType) {
+      case 'next':
+        updatePage(activePage + 1);
+        break;
+      case 'prev':
+        updatePage(activePage - 1);
+        break;
+      default:
+        null;
+    }
+  };
+
+  const updatePage = (numberPage: number) => {
+    setActivePage(numberPage);
+    fetchData(searchQuery, numberPage);
+  };
+
   if (error) {
     return <p> Error {error.message}</p>;
   } else if (!isLoaded) {
@@ -137,29 +165,36 @@ const APIComponent = () => {
           API Page
         </h1>
         <APISearchBar onKeyPress={getSearch} onChange={handleInputChange} value={searchQuery} />
-        {items ? (
-          <ul className={style.card__list}>
-            {items.map((item) => (
-              <APICard
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                image={item.image}
-                status={item.status}
-                gender={item.gender}
-                species={item.species}
-                origin={item.origin}
-                location={item.location}
-                type={item.type}
-                episode={item.episode}
-                created={item.created}
-                url={item.url}
-                isModalActive={isModalActive}
-                activeItem={activeItem}
-                onClick={() => handleClick(item)}
-              />
-            ))}
-          </ul>
+        {items && response ? (
+          <>
+            <APIPagination
+              onClick={handlePageChange}
+              page={activePage}
+              lastPage={response.info.pages / 20}
+            />
+            <ul className={style.card__list}>
+              {items.map((item) => (
+                <APICard
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  image={item.image}
+                  status={item.status}
+                  gender={item.gender}
+                  species={item.species}
+                  origin={item.origin}
+                  location={item.location}
+                  type={item.type}
+                  episode={item.episode}
+                  created={item.created}
+                  url={item.url}
+                  isModalActive={isModalActive}
+                  activeItem={activeItem}
+                  onClick={() => handleClick(item)}
+                />
+              ))}
+            </ul>
+          </>
         ) : (
           <APIErrorMessage />
         )}
