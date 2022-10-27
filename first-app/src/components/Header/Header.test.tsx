@@ -11,12 +11,10 @@ describe('Header', () => {
         <Header />
       </MemoryRouter>
     );
-    // screen.debug();
     const apiLink = screen.getByText(/API/i);
     expect(apiLink).toBeInTheDocument();
     userEvent.click(apiLink);
     expect(await screen.findByText(/API/i)).toBeInTheDocument();
-
     const aboutusLink = screen.getByText(/About us/i);
     expect(aboutusLink).toBeInTheDocument();
     userEvent.click(aboutusLink);
