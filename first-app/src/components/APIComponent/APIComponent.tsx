@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './APIComponent.module.scss';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APIModal from 'components/APIModal';
@@ -211,73 +211,36 @@ interface IError {
   fileName: string;
   lineNumber: string;
 }
-interface IItems {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: null | number;
-  };
-  results: ICharacter[];
-}
 
-export interface ICharacter {
+export interface IItems {
   id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: {
+  created_at: string;
+  urls: { large: string; regular: string; raw: string; small: string };
+  color: string | null;
+  user: {
+    // bio: string;
+    username: string;
     name: string;
-    url: string;
   };
-  location: {
-    name: string;
-    url: string;
-  };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
 }
 
-interface ILocation {
-  id: number;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: string[];
-  url: string;
-  created: string;
-}
-
-interface IEpisode {
-  id: number;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
-  url: string;
-  created: string;
-}
-
-const BASE_PATH = 'https://rickandmortyapi.com/api';
-const CHARACTERS = `${BASE_PATH}/character`;
-// const LOCATIONS = `${BASE_PATH}/location`;
-// const EPISODES = `${BASE_PATH}/episode`;
-const SEARCH_PATH = '?name=';
-const PAGE_PARAM = 'page=';
+const API_KEY = '0qCl5TCnXtw3VtKF8YW6k2Rp-9f30yX8uic7VAOYkZE';
+const BASE_PATH = 'https://api.unsplash.com';
+const PHOTO = '/photos';
+const SEARCH_PATH = '/search/photos?';
+const SEARCH_PARAM = '&query=';
+const PAGE_PARAM = '&page=';
+const PER_PAGE = '&per_page=';
 
 const APIComponent = () => {
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
   const [error, setError] = useState<Partial<IError>>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [items, setItems] = useState<ICharacter[]>([]);
+  const [items, setItems] = useState<IItems[]>([]);
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
-  const [activeItem, setActiveItem] = useState<ICharacter | null>(null);
-  const [activePage, setActivePage] = useState(0);
-  const [response, setResponse] = useState<IItems | null>(null);
+  const [activeItem, setActiveItem] = useState<IItems | null>(null);
+  const [activePage, setActivePage] = useState(1);
+  const [response, setResponse] = useState<IItems[] | null>(null);
 
   useEffect(() => {
     setSearchQuery(localStorage.getItem('searchQuery') || '');
@@ -289,19 +252,24 @@ const APIComponent = () => {
   }, [searchQuery]);
 
   const fetchData = (searchQuery: string, activePage: number) => {
-    fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}&${PAGE_PARAM}${activePage}`)
-      .then((res): Promise<IItems> => res.json())
+    let url = '';
+    localStorage.getItem('searchQuery')
+      ? (url = `${BASE_PATH}${SEARCH_PATH}${PAGE_PARAM}${activePage}${SEARCH_PARAM}${searchQuery}&client_id=${API_KEY}`)
+      : (url = `${BASE_PATH}${PHOTO}?${PAGE_PARAM}${activePage}&client_id=${API_KEY}`);
+    fetch(url)
+      .then((res): Promise<IItems[]> => res.json())
       .then(
-        (result: IItems) => {
+        (result: IItems[]) => {
+          console.log(result);
           if (result) {
             setResponse(result);
           }
-          if (result.results) {
+          if (result) {
             setIsLoaded(true);
-            setItems(result.results);
+            setItems(result);
           } else {
             setIsLoaded(true);
-            setItems(result.results);
+            setItems(result);
             setSearchQuery('');
           }
         },
@@ -323,7 +291,7 @@ const APIComponent = () => {
     }
   };
 
-  const handleClick = (item: ICharacter | null) => {
+  const handleClick = (item: IItems | null) => {
     setIsModalActive(!isModalActive);
     setActiveItem(!isModalActive ? item : null);
   };
@@ -371,24 +339,15 @@ const APIComponent = () => {
             <APIPagination
               onClick={handlePageChange}
               page={activePage}
-              lastPage={response.info.pages / 20}
+              lastPage={response.length}
             />
             <ul className={style.card__list}>
               {items.map((item) => (
                 <APICard
                   key={item.id}
                   id={item.id}
-                  name={item.name}
-                  image={item.image}
-                  status={item.status}
-                  gender={item.gender}
-                  species={item.species}
-                  origin={item.origin}
-                  location={item.location}
-                  type={item.type}
-                  episode={item.episode}
-                  created={item.created}
-                  url={item.url}
+                  name={item.user.name}
+                  image={item.urls.regular}
                   isModalActive={isModalActive}
                   activeItem={activeItem}
                   onClick={() => handleClick(item)}
