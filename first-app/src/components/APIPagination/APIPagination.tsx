@@ -2,13 +2,13 @@ import React, { MouseEventHandler } from 'react';
 import style from './APIPagination.module.scss';
 
 interface IAPIPaginationProps {
-  onClick: (e: { target: MouseEventHandler<HTMLButtonElement> }) => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   page: number;
   lastPage: number;
 }
 
 const renderPaginationBtns = (
-  onClick: (e: { target: MouseEventHandler<HTMLButtonElement> }) => void,
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
   page: number,
   lastPage: number
 ) => {
