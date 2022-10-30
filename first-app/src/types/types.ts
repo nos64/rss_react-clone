@@ -35,7 +35,7 @@ export interface IAPIGlobalState {
 
 export interface IAPIGlobalAction {
   type: string;
-  payload?: null | boolean | ICharacter | ICharacter[] | IItems | string;
+  payload?: null | boolean | ICharacter | ICharacter[] | IItems | IError | string;
 }
 
 export type ContextType = {

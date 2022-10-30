@@ -70,18 +70,19 @@ const SEARCH_PATH = '?name=';
 const SEARCH_PARAM = 'query=';
 
 const APIComponent = () => {
-  const state = useContext(APIContext);
+  const { state, dispatch } = useContext(APIContext);
+  const { searchQuery, error, items, responseFromServer } = state;
 
-  const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
-  const [error, setError] = useState<Partial<IError>>();
+  // const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
+  // const [error, setError] = useState<Partial<IError>>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [items, setItems] = useState<ICharacter[]>([]);
+  // const [items, setItems] = useState<ICharacter[]>([]);
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<ICharacter | null>(null);
-  const [responseFromServer, setResponseFromServer] = useState<IItems | null>(null);
+  // const [responseFromServer, setResponseFromServer] = useState<IItems | null>(null);
 
   useEffect(() => {
-    setSearchQuery(localStorage.getItem('searchQuery') || '');
+    // setSearchQuery(localStorage.getItem('searchQuery') || '');
     fetchData(localStorage.getItem('searchQuery') || '');
   }, []);
 
@@ -96,22 +97,27 @@ const APIComponent = () => {
         (result: IItems) => {
           if (result.results) {
             setIsLoaded(true);
-            setItems(result.results);
+            // setItems(result.results);
+            dispatch({ type: 'items', payload: result.results });
           } else {
             setIsLoaded(true);
-            setItems(result.results);
-            setSearchQuery('');
+            // setItems(result.results);
+            dispatch({ type: 'items', payload: result.results });
+            dispatch({ type: 'searchQuery', payload: '' });
+            // setSearchQuery('');
           }
         },
         (error: IError) => {
           setIsLoaded(true);
-          setError(error);
+          // setError(error);
+          dispatch({ type: 'error', payload: error });
         }
       );
   };
 
   const handleInputChange = (e: { target: { value: string } }) => {
-    setSearchQuery(e.target.value);
+    // setSearchQuery(e.target.value);
+    dispatch({ type: 'searchQuery', payload: e.target.value });
   };
 
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -130,9 +136,10 @@ const APIComponent = () => {
     setActiveItem(null);
   };
 
-  if (error) {
-    return <p> Error {error.message}</p>;
-  } else if (!isLoaded) {
+  // if (error) {
+  //   return <p> Error {error.message}</p>;
+  // }
+  if (!isLoaded) {
     return <img src={loader} alt="Loader" />;
   } else {
     return (
