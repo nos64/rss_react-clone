@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './APISearchBar.module.scss';
+import { APIContext } from 'contexts/APIContext';
 
 type SearchProps = {
-  value: string;
-  onChange: (e: { target: { value: string } }) => void;
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const APISearchBar = (props: SearchProps) => {
+  const { state, dispatch } = useContext(APIContext);
+  const { searchQuery } = state;
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+  };
+
+  const handleInputChange = (e: { target: { value: string } }) => {
+    dispatch({ type: 'searchQuery', payload: e.target.value });
   };
 
   return (
@@ -20,9 +26,11 @@ const APISearchBar = (props: SearchProps) => {
           type="search"
           name="searchString"
           placeholder="Enter name you character"
-          onChange={props.onChange}
+          // onChange={props.onChange}
+          onChange={handleInputChange}
           onKeyPress={props.onKeyPress}
-          value={props.value}
+          // value={props.value}
+          value={searchQuery}
         />
       </label>
     </form>

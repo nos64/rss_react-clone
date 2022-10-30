@@ -74,14 +74,6 @@ const APIComponent = () => {
   const { searchQuery, isLoaded, isModalActive, activeItem, error, items, responseFromServer } =
     state;
 
-  // const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
-  // const [error, setError] = useState<Partial<IError>>();
-  // const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  // const [items, setItems] = useState<ICharacter[]>([]);
-  // const [isModalActive, setIsModalActive] = useState<boolean>(false);
-  // const [activeItem, setActiveItem] = useState<ICharacter | null>(null);
-  // const [responseFromServer, setResponseFromServer] = useState<IItems | null>(null);
-
   useEffect(() => {
     // setSearchQuery(localStorage.getItem('searchQuery') || '');
     fetchData(localStorage.getItem('searchQuery') || '');
@@ -97,31 +89,19 @@ const APIComponent = () => {
       .then(
         (result: IItems) => {
           if (result.results) {
-            // setIsLoaded(true);
             dispatch({ type: 'isLoaded', payload: true });
-            // setItems(result.results);
             dispatch({ type: 'items', payload: result.results });
           } else {
-            // setIsLoaded(true);
             dispatch({ type: 'isLoaded', payload: true });
-            // setItems(result.results);
             dispatch({ type: 'items', payload: result.results });
             dispatch({ type: 'searchQuery', payload: '' });
-            // setSearchQuery('');
           }
         },
         (error: IError) => {
-          // setIsLoaded(true);
           dispatch({ type: 'isLoaded', payload: true });
-          // setError(error);
           dispatch({ type: 'error', payload: error });
         }
       );
-  };
-
-  const handleInputChange = (e: { target: { value: string } }) => {
-    // setSearchQuery(e.target.value);
-    dispatch({ type: 'searchQuery', payload: e.target.value });
   };
 
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -131,17 +111,8 @@ const APIComponent = () => {
   };
 
   const handleClick = (item: ICharacter | null) => {
-    // setIsModalActive(!isModalActive);
     dispatch({ type: 'isModalActive', payload: !isModalActive });
     dispatch({ type: 'activeItem', payload: !isModalActive ? item : null });
-    // setActiveItem(!isModalActive ? item : null);
-  };
-
-  const closeModal = () => {
-    // setIsModalActive(false);
-    dispatch({ type: 'isModalActive', payload: false });
-    // setActiveItem(null);
-    dispatch({ type: 'activeItem', payload: null });
   };
 
   // if (error) {
@@ -155,7 +126,7 @@ const APIComponent = () => {
         <h1 className={style.title} data-testid="api-title">
           API Page
         </h1>
-        <APISearchBar onKeyPress={getSearch} onChange={handleInputChange} value={searchQuery} />
+        <APISearchBar onKeyPress={getSearch} />
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (
@@ -182,7 +153,7 @@ const APIComponent = () => {
         ) : (
           <APIErrorMessage />
         )}
-        <APIModal isModalActive={isModalActive} activeItem={activeItem} onClick={closeModal} />
+        <APIModal />
       </>
     );
   }
