@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import style from './APIComponent.module.scss';
 import APIErrorMessage from 'components/APIErrorMessage';
 import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
-interface IError {
+import { APIContext } from 'contexts/APIContext';
+export interface IError {
   message: string;
   fileName: string;
   lineNumber: string;
 }
-interface IItems {
+export interface IItems {
   info: {
     count: number;
     pages: number;
@@ -69,12 +70,15 @@ const SEARCH_PATH = '?name=';
 const SEARCH_PARAM = 'query=';
 
 const APIComponent = () => {
+  const state = useContext(APIContext);
+
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
   const [error, setError] = useState<Partial<IError>>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [items, setItems] = useState<ICharacter[]>([]);
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
   const [activeItem, setActiveItem] = useState<ICharacter | null>(null);
+  const [responseFromServer, setResponseFromServer] = useState<IItems | null>(null);
 
   useEffect(() => {
     setSearchQuery(localStorage.getItem('searchQuery') || '');
@@ -99,7 +103,7 @@ const APIComponent = () => {
             setSearchQuery('');
           }
         },
-        (error) => {
+        (error: IError) => {
           setIsLoaded(true);
           setError(error);
         }
