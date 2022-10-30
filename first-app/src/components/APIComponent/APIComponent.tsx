@@ -71,11 +71,10 @@ const SEARCH_PARAM = 'query=';
 
 const APIComponent = () => {
   const { state, dispatch } = useContext(APIContext);
-  const { searchQuery, isLoaded, isModalActive, activeItem, error, items, responseFromServer } =
-    state;
-
+  const { searchQuery, isLoaded, isModalActive, activeItem, items, responseFromServer } = state;
+  const [error, setError] = useState<Partial<IError>>();
   useEffect(() => {
-    // setSearchQuery(localStorage.getItem('searchQuery') || '');
+    dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
     fetchData(localStorage.getItem('searchQuery') || '');
   }, []);
 
@@ -99,7 +98,8 @@ const APIComponent = () => {
         },
         (error: IError) => {
           dispatch({ type: 'isLoaded', payload: true });
-          dispatch({ type: 'error', payload: error });
+          // dispatch({ type: 'error', payload: error });
+          setError(error);
         }
       );
   };
@@ -115,10 +115,9 @@ const APIComponent = () => {
     dispatch({ type: 'activeItem', payload: !isModalActive ? item : null });
   };
 
-  // if (error) {
-  //   return <p> Error {error.message}</p>;
-  // }
-  if (!isLoaded) {
+  if (error) {
+    return <p> Error {error.message}</p>;
+  } else if (!isLoaded) {
     return <img src={loader} alt="Loader" />;
   } else {
     return (

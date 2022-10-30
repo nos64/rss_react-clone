@@ -26,10 +26,8 @@ const APISearchBar = (props: SearchProps) => {
           type="search"
           name="searchString"
           placeholder="Enter name you character"
-          // onChange={props.onChange}
           onChange={handleInputChange}
           onKeyPress={props.onKeyPress}
-          // value={props.value}
           value={searchQuery}
         />
       </label>
