@@ -6,7 +6,7 @@ import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
 import { GlobalContext } from 'contexts/GlobalContext';
-import APISortSelect from 'components/APISortSelect';
+import APISortByGender from 'components/APISortByGender';
 export interface IError {
   message: string;
   fileName: string;
@@ -99,7 +99,6 @@ const APIComponent = () => {
     localStorage.setItem('searchQuery', searchQuery);
   }, [searchQuery]);
   const fetchData = (searchQuery: string, genderParam?: string, statusParam?: string) => {
-    // let url = `${BASE_PATH}${CHARACTERS}${SEARCH_PATH}${searchQuery}${PAGE}${defaultPage}${FILTER_BY_STATUS}${FILTER_BY_GENDER}`;
     let url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${FILTER_BY_STATUS}${SEARCH_PATH}${searchQuery}`;
     if (statusParam) {
       url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
@@ -121,6 +120,9 @@ const APIComponent = () => {
             dispatch({ type: 'isLoaded', payload: true });
             dispatch({ type: 'items', payload: result.results });
             dispatch({ type: 'searchQuery', payload: '' });
+            // dispatch({ type: 'currentPage', payload: currentPage });
+            // dispatch({ type: 'genderParam', payload: genderParam });
+            // dispatch({ type: 'statusParam', payload: statusParam });
           }
         },
         (error: IError) => {
@@ -140,6 +142,7 @@ const APIComponent = () => {
   const sortByGender = (genderParam: string) => {
     if (genderParam) {
       fetchData(searchQuery, genderParam);
+      dispatch({ type: 'genderParam', payload: genderParam });
     }
   };
 
@@ -159,7 +162,7 @@ const APIComponent = () => {
           API Page
         </h1>
         <APISearchBar onKeyPress={getSearch} />
-        <APISortSelect sortByGender={sortByGender} />
+        <APISortByGender sortByGender={sortByGender} />
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (
