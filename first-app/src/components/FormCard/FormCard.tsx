@@ -1,15 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import FormCardInstance from '../FormCardInstance';
-import { IFormCard } from './../../pages/FormPage/FormPage';
+// import { IFormCard } from './../../pages/FormPage/FormPage';
 import style from './FormCard.module.scss';
-interface FormPageState {
-  formCards: IFormCard[];
-}
+import { APIContext } from 'contexts/APIContext';
+// interface FormPageState {
+//   formCards: IFormCard[];
+// }
 
-const FormCard = (props: FormPageState) => {
+const FormCard = () => {
+  const { state } = useContext(APIContext);
+  const { formCards } = state;
+
   return (
     <ul className={style.list}>
-      {props.formCards.map((card) => (
+      {formCards.map((card) => (
         <FormCardInstance
           key={card.keyID}
           firstName={card.firstName}

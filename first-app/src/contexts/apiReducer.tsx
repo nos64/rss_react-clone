@@ -1,5 +1,6 @@
 import { ICharacter, IError, IItems } from 'components/APIComponent/APIComponent';
-import { IAPIGlobalState, IAPIGlobalAction } from '../types/types';
+// import { IFormCard } from 'pages/FormPage/FormPage';
+import { IAPIGlobalState, IAPIGlobalAction, IFormCard } from '../types/types';
 
 const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
   const { type, payload } = action;
@@ -18,6 +19,12 @@ const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
       return { ...state, activeItem: payload as ICharacter };
     case 'responseFromServer':
       return { ...state, responseFromServer: payload as IItems };
+    case 'formCards':
+      return { ...state, formCards: payload as IFormCard[] };
+    case 'formCard':
+      return { ...state, formCard: payload as IFormCard };
+    // case 'createFormCard':
+    //   return { ...state, }
     default:
       return state;
   }

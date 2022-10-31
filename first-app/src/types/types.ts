@@ -23,19 +23,42 @@ export interface IFormError {
   rule: string;
 }
 
+export interface IFormCard {
+  firstName: string;
+  surname: string;
+  dateOfBirth: string;
+  gender: string;
+  email: string;
+  country: string;
+  picture: string;
+  rule: boolean;
+  keyID?: string;
+}
+
 export interface IAPIGlobalState {
   searchQuery: string;
   error: Partial<IError>;
   isLoaded: boolean;
-  items: ICharacter[] | null;
+  items: ICharacter[] | [];
   isModalActive: boolean;
   activeItem: ICharacter | null;
   responseFromServer: IItems | null;
+  formCards: IFormCard[] | [];
+  formCard: IFormCard | null;
 }
 
 export interface IAPIGlobalAction {
   type: string;
-  payload?: null | boolean | ICharacter | ICharacter[] | IItems | IError | string;
+  payload?:
+    | null
+    | boolean
+    | ICharacter
+    | ICharacter[]
+    | IItems
+    | IFormCard
+    | IFormCard[]
+    | IError
+    | string;
 }
 
 export type ContextType = {

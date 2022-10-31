@@ -6,10 +6,12 @@ export const initialState = {
   searchQuery: localStorage.getItem('searchQuery') || '',
   error: {},
   isLoaded: false,
-  items: null,
+  items: [],
   isModalActive: false,
   activeItem: null,
   responseFromServer: null,
+  formCards: [],
+  formCard: null,
 };
 
 export const APIContext = createContext<ContextType>({

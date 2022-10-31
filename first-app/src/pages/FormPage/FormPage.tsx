@@ -1,34 +1,20 @@
 import Container from 'components/Container';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Form from '../../components/Form';
 import FormCard from '../../components/FormCard';
 import style from './FormPage.module.scss';
-
-export interface IFormCard {
-  firstName: string;
-  surname: string;
-  dateOfBirth: string;
-  gender: string;
-  email: string;
-  country: string;
-  picture: string;
-  rule: boolean;
-  keyID?: string;
-}
+import { APIContext } from 'contexts/APIContext';
 
 const FormPage = () => {
-  const [formCards, setFormCards] = useState<IFormCard[]>([]);
+  const { state, dispatch } = useContext(APIContext);
+  const { formCards, formCard } = state;
 
-  const createCard = (formCard: IFormCard) => {
-    setFormCards([...formCards, formCard]);
-    console.log(formCards);
-  };
 
   return (
     <Container>
       <div className={style.wrapper}>
-        <Form createCard={createCard} />
-        <FormCard formCards={formCards} />
+        <Form />
+        <FormCard />
       </div>
     </Container>
   );

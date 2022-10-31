@@ -1,21 +1,18 @@
 import Container from 'components/Container';
-import React, { createRef, useState } from 'react';
+import React, { createRef, useContext, useState } from 'react';
 import style from './Form.module.scss';
-import { IFormCard } from './../../pages/FormPage/FormPage';
+// import { IFormCard } from './../../pages/FormPage/FormPage';
 import FormErrorMessage from '../FormErrorMessage';
 import { FormFields, IFormError } from 'types/types';
 import FormInputField from 'components/FormInputField';
 import FormInputFieldRadioCheck from 'components/FormInputFieldRadioCheck';
-interface IFormState {
-  disableBtn: boolean;
-  errors: Partial<IFormError>;
-}
+import { APIContext } from 'contexts/APIContext';
+// interface IFormState {
+//   disableBtn: boolean;
+//   errors: Partial<IFormError>;
+// }
 
-interface IFormPropsCreate {
-  createCard: (data: IFormCard) => void;
-}
-
-const Form = (props: IFormPropsCreate) => {
+const Form = () => {
   const firstName = createRef<HTMLInputElement>();
   const surname = createRef<HTMLInputElement>();
   const dateOfBirth = createRef<HTMLInputElement>();
@@ -28,6 +25,9 @@ const Form = (props: IFormPropsCreate) => {
 
   const [disableBtn, setDisableBtn] = useState(true);
   const [errors, setErrors] = useState<Partial<IFormError>>({});
+
+  const { state, dispatch } = useContext(APIContext);
+  const { formCards, formCard } = state;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -78,7 +78,11 @@ const Form = (props: IFormPropsCreate) => {
         rule: rule.current.checked,
         keyID: new Date().getTime().toString(),
       };
-      props.createCard(formObj);
+      // props.createCard(formObj);
+      dispatch({ type: 'formCards', payload: [...state.formCards, formObj] });
+      dispatch({ type: 'formCard', payload: formObj });
+      console.log(formCards);
+      console.log(formCard);
     }
     e.target.reset();
     setDisableBtn(true);

@@ -1,6 +1,6 @@
 import FormCardInstanceField from 'components/FormCardInstanceField';
 import React from 'react';
-import { IFormCard } from './../../pages/FormPage/FormPage';
+import { IFormCard } from '../../types/types';
 import style from './FormCardInstance.module.scss';
 
 const FormCardInstance = (props: IFormCard) => {
