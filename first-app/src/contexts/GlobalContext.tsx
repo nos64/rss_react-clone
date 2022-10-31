@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, PropsWithChildren, FC, Reducer } from 'react';
 import { ContextType, IAPIGlobalAction, IAPIGlobalState } from 'types/types';
-import apiReducer from './apiReducer';
+import apiReducer from './GlobalReducer';
 
 export const initialState = {
   searchQuery: localStorage.getItem('searchQuery') || '',
@@ -12,6 +12,9 @@ export const initialState = {
   responseFromServer: null,
   formCards: [],
   formCard: null,
+  statusParam: null,
+  genderParam: null,
+  currentPage: 1,
 };
 
 export const GlobalContext = createContext<ContextType>({
@@ -19,7 +22,7 @@ export const GlobalContext = createContext<ContextType>({
   dispatch: () => {},
 });
 
-export const APIProvider: FC<PropsWithChildren> = ({ children }) => {
+export const GlobalProvider: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer<Reducer<IAPIGlobalState, IAPIGlobalAction>>(
     apiReducer,
     initialState

@@ -1,14 +1,29 @@
+@font-face {
+  font-family: 'Get Schwifty Regular', sans-serif;
+  font-weight: 400;
+  src: url('fonts/get_schwifty.ttf') format('ttf'),
+}
+
+@font-face {
+  font-family: 'Abril Fatface';
+  font-weight: 400;
+  src: url('fonts/abril-fatface-v19-latin-regular.woff2') format('woff2'),
+    url('fonts//abril-fatface-v19-latin-regular.woff') format('woff');
+}
+
+html {
+  box-sizing: border-box;
+}
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Abril Fatface', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #dddddd;
@@ -18,4 +33,30 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button {
+  cursor: pointer;
+  padding: 0;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin: 0;
 }

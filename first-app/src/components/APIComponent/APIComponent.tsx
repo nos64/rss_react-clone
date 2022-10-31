@@ -5,7 +5,8 @@ import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
-import { GlobalContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/GlobalContext';
+import APISortSelect from 'components/APISortSelect';
 export interface IError {
   message: string;
   fileName: string;
@@ -61,17 +62,33 @@ interface IEpisode {
   url: string;
   created: string;
 }
-
-const BASE_PATH = 'https://rickandmortyapi.com/api';
-const CHARACTERS = `${BASE_PATH}/character`;
-const LOCATIONS = `${BASE_PATH}/location`;
-const EPISODES = `${BASE_PATH}/episode`;
-const SEARCH_PATH = '?name=';
-const SEARCH_PARAM = 'query=';
+// ${BASE_PATH}${CHARACTERS}${PAGE}${defaultPage}&{FILTER_BY_GENDER}${FILTER_BY_STATUS}${SEARCH_PATH}${searchQuery}
+//https://rickandmortyapi.com/api/character/?page=1&gender=female&status=&name=
+const BASE_PATH = 'https://rickandmortyapi.com/api/';
+const CHARACTERS = `character/`;
+const LOCATIONS = `/location`;
+const EPISODES = `/episode`;
+const SEARCH_PATH = '&name=';
+const PAGE = '?page=';
+const defaultPage = 10;
+const FILTER_BY_STATUS = '&status='; //alive, dead, unknown
+// let statusParam: null | 'alive' | 'dead' | 'unknown';
+const FILTER_BY_GENDER = '&gender='; //female, male, genderless, unknown
+// let genderParam: null | 'female' | 'male' | 'genderless' | 'unknown';
 
 const APIComponent = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { searchQuery, isLoaded, isModalActive, activeItem, items, responseFromServer } = state;
+  const {
+    searchQuery,
+    isLoaded,
+    isModalActive,
+    activeItem,
+    items,
+    currentPage,
+    responseFromServer,
+    statusParam,
+    genderParam,
+  } = state;
   const [error, setError] = useState<Partial<IError>>();
   useEffect(() => {
     dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
@@ -81,9 +98,19 @@ const APIComponent = () => {
   useEffect(() => {
     localStorage.setItem('searchQuery', searchQuery);
   }, [searchQuery]);
-
-  const fetchData = (searchQuery: string) => {
-    fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
+  const fetchData = (searchQuery: string, genderParam?: string, statusParam?: string) => {
+    // let url = `${BASE_PATH}${CHARACTERS}${SEARCH_PATH}${searchQuery}${PAGE}${defaultPage}${FILTER_BY_STATUS}${FILTER_BY_GENDER}`;
+    let url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${FILTER_BY_STATUS}${SEARCH_PATH}${searchQuery}`;
+    if (statusParam) {
+      url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
+    }
+    if (genderParam) {
+      url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${SEARCH_PATH}${searchQuery}`;
+    }
+    if (statusParam && genderParam) {
+      url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
+    }
+    fetch(url)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
@@ -110,6 +137,12 @@ const APIComponent = () => {
     }
   };
 
+  const sortByGender = (genderParam: string) => {
+    if (genderParam) {
+      fetchData(searchQuery, genderParam);
+    }
+  };
+
   const handleClick = (item: ICharacter | null) => {
     dispatch({ type: 'isModalActive', payload: !isModalActive });
     dispatch({ type: 'activeItem', payload: !isModalActive ? item : null });
@@ -126,6 +159,7 @@ const APIComponent = () => {
           API Page
         </h1>
         <APISearchBar onKeyPress={getSearch} />
+        <APISortSelect sortByGender={sortByGender} />
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (

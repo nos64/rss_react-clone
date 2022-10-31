@@ -1,12 +1,11 @@
 import Container from 'components/Container';
 import React, { createRef, useContext, useState } from 'react';
 import style from './Form.module.scss';
-// import { IFormCard } from './../../pages/FormPage/FormPage';
 import FormErrorMessage from '../FormErrorMessage';
 import { FormFields, IFormError } from 'types/types';
 import FormInputField from 'components/FormInputField';
 import FormInputFieldRadioCheck from 'components/FormInputFieldRadioCheck';
-import { GlobalContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/GlobalContext';
 
 const Form = () => {
   const firstName = createRef<HTMLInputElement>();

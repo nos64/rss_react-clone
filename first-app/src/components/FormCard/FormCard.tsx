@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import FormCardInstance from '../FormCardInstance';
 import style from './FormCard.module.scss';
-import { GlobalContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/GlobalContext';
 
 const FormCard = () => {
   const { state } = useContext(GlobalContext);

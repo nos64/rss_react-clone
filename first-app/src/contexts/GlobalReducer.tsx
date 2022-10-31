@@ -1,6 +1,11 @@
 import { ICharacter, IError, IItems } from 'components/APIComponent/APIComponent';
-// import { IFormCard } from 'pages/FormPage/FormPage';
-import { IAPIGlobalState, IAPIGlobalAction, IFormCard } from '../types/types';
+import {
+  IAPIGlobalState,
+  IAPIGlobalAction,
+  IFormCard,
+  statusSortType,
+  genderSortType,
+} from '../types/types';
 
 const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
   const { type, payload } = action;
@@ -23,8 +28,12 @@ const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
       return { ...state, formCards: payload as IFormCard[] };
     case 'formCard':
       return { ...state, formCard: payload as IFormCard };
-    // case 'createFormCard':
-    //   return { ...state, }
+    case 'statusParam':
+      return { ...state, statusParam: payload as statusSortType };
+    case 'genderParam':
+      return { ...state, genderParam: payload as genderSortType };
+    case 'currentPage':
+      return { ...state, currentPage: payload as number };
     default:
       return state;
   }

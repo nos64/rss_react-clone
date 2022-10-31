@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import style from './APISearchBar.module.scss';
-import { GlobalContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/GlobalContext';
 
 type SearchProps = {
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
