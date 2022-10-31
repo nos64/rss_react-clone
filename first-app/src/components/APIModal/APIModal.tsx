@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import style from './APIModal.module.scss';
 import closeBtn from '../../assets/images/closeBtn.svg';
 import APIModalInside from 'components/APIModalInside';
-import { APIContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/APIContext';
 
 const APIModal = () => {
-  const { state, dispatch } = useContext(APIContext);
+  const { state, dispatch } = useContext(GlobalContext);
   const { isModalActive, activeItem } = state;
 
   const closeModal = () => {

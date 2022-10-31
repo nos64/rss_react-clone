@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import style from './APISearchBar.module.scss';
-import { APIContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/APIContext';
 
 type SearchProps = {
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const APISearchBar = (props: SearchProps) => {
-  const { state, dispatch } = useContext(APIContext);
+  const { state, dispatch } = useContext(GlobalContext);
   const { searchQuery } = state;
 
   const handleSubmit = (e: React.SyntheticEvent) => {

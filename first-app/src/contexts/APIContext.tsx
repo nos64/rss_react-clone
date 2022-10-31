@@ -14,7 +14,7 @@ export const initialState = {
   formCard: null,
 };
 
-export const APIContext = createContext<ContextType>({
+export const GlobalContext = createContext<ContextType>({
   state: initialState,
   dispatch: () => {},
 });
@@ -24,5 +24,5 @@ export const APIProvider: FC<PropsWithChildren> = ({ children }) => {
     apiReducer,
     initialState
   );
-  return <APIContext.Provider value={{ state, dispatch }}>{children}</APIContext.Provider>;
+  return <GlobalContext.Provider value={{ state, dispatch }}>{children}</GlobalContext.Provider>;
 };

@@ -5,7 +5,7 @@ import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
-import { APIContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/APIContext';
 export interface IError {
   message: string;
   fileName: string;
@@ -70,7 +70,7 @@ const SEARCH_PATH = '?name=';
 const SEARCH_PARAM = 'query=';
 
 const APIComponent = () => {
-  const { state, dispatch } = useContext(APIContext);
+  const { state, dispatch } = useContext(GlobalContext);
   const { searchQuery, isLoaded, isModalActive, activeItem, items, responseFromServer } = state;
   const [error, setError] = useState<Partial<IError>>();
   useEffect(() => {

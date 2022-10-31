@@ -6,11 +6,7 @@ import FormErrorMessage from '../FormErrorMessage';
 import { FormFields, IFormError } from 'types/types';
 import FormInputField from 'components/FormInputField';
 import FormInputFieldRadioCheck from 'components/FormInputFieldRadioCheck';
-import { APIContext } from 'contexts/APIContext';
-// interface IFormState {
-//   disableBtn: boolean;
-//   errors: Partial<IFormError>;
-// }
+import { GlobalContext } from 'contexts/APIContext';
 
 const Form = () => {
   const firstName = createRef<HTMLInputElement>();
@@ -26,7 +22,7 @@ const Form = () => {
   const [disableBtn, setDisableBtn] = useState(true);
   const [errors, setErrors] = useState<Partial<IFormError>>({});
 
-  const { state, dispatch } = useContext(APIContext);
+  const { state, dispatch } = useContext(GlobalContext);
   const { formCards, formCard } = state;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
@@ -78,11 +74,8 @@ const Form = () => {
         rule: rule.current.checked,
         keyID: new Date().getTime().toString(),
       };
-      // props.createCard(formObj);
       dispatch({ type: 'formCards', payload: [...state.formCards, formObj] });
       dispatch({ type: 'formCard', payload: formObj });
-      console.log(formCards);
-      console.log(formCard);
     }
     e.target.reset();
     setDisableBtn(true);

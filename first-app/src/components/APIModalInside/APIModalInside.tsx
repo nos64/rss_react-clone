@@ -2,10 +2,10 @@ import CardSimpleText from 'components/CardSimpleText';
 import React, { useContext } from 'react';
 import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APIModalInside.module.scss';
-import { APIContext } from 'contexts/APIContext';
+import { GlobalContext } from 'contexts/APIContext';
 
 const APICard = () => {
-  const { state, dispatch } = useContext(APIContext);
+  const { state, dispatch } = useContext(GlobalContext);
   const { activeItem } = state;
   if (activeItem !== null) {
     return (

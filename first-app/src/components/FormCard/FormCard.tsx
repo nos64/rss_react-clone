@@ -1,14 +1,10 @@
-import React, { Component, useContext } from 'react';
+import React, { useContext } from 'react';
 import FormCardInstance from '../FormCardInstance';
-// import { IFormCard } from './../../pages/FormPage/FormPage';
 import style from './FormCard.module.scss';
-import { APIContext } from 'contexts/APIContext';
-// interface FormPageState {
-//   formCards: IFormCard[];
-// }
+import { GlobalContext } from 'contexts/APIContext';
 
 const FormCard = () => {
-  const { state } = useContext(APIContext);
+  const { state } = useContext(GlobalContext);
   const { formCards } = state;
 
   return (
