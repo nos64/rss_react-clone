@@ -11,6 +11,8 @@ import APIFilterByStatus from 'components/APIFilterByStatus';
 import APISortByName from 'components/APISortByName';
 import APIPagination from 'components/APIPagination';
 import APIInformationPanel from 'components/APIInformationPanel';
+import APIErrLoader from 'components/APIErrLoader';
+import { Navigate } from 'react-router-dom';
 export interface IError {
   message: string;
   fileName: string;
@@ -66,7 +68,7 @@ interface IEpisode {
   url: string;
   created: string;
 }
-// ${BASE_PATH}${CHARACTERS}${PAGE}${defaultPage}&{FILTER_BY_GENDER}${FILTER_BY_STATUS}${SEARCH_PATH}${searchQuery}
+
 //https://rickandmortyapi.com/api/character/?page=1&gender=female&status=&name=
 const BASE_PATH = 'https://rickandmortyapi.com/api/';
 const CHARACTERS = `character/`;
@@ -75,8 +77,8 @@ const EPISODES = `/episode`;
 const SEARCH_PATH = '&name=';
 const PAGE = '?page=';
 const defaultPage = 10;
-const FILTER_BY_STATUS = '&status='; //alive, dead, unknown
-const FILTER_BY_GENDER = '&gender='; //female, male, genderless, unknown
+const FILTER_BY_STATUS = '&status=';
+const FILTER_BY_GENDER = '&gender=';
 
 const APIComponent = () => {
   const { state, dispatch } = useContext(GlobalContext);
@@ -91,6 +93,7 @@ const APIComponent = () => {
     statusParam,
     genderParam,
     sortByName,
+    // responseErr,
   } = state;
   const [error, setError] = useState<Partial<IError>>();
   useEffect(() => {
@@ -107,10 +110,23 @@ const APIComponent = () => {
   }, [genderParam, statusParam, sortByName, currentPage]);
 
   const fetchData = () => {
+    // dispatch({ type: 'responseErr', payload: false });
     const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
-    // console.log(url);
     fetch(url)
-      .then((res): Promise<IItems> => res.json())
+      .then((res): Promise<IItems> => {
+        // if (!res.ok) {
+        //   if (res.status === 404) {
+        //     dispatch({ type: 'currentPage', payload: 1 });
+        //     dispatch({ type: 'genderParam', payload: '' });
+        //     dispatch({ type: 'statusParam', payload: '' });
+        //     dispatch({ type: 'responseErr', payload: true });
+        //     localStorage.removeItem('searchQuery');
+        //     console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
+        //     // throw Error(res.statusText);
+        //   }
+        // }
+        return res.json();
+      })
       .then(
         (result: IItems) => {
           dispatch({ type: 'responseFromServer', payload: result });
@@ -137,9 +153,9 @@ const APIComponent = () => {
 
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      fetchData();
       dispatch({ type: 'searchQuery', payload: searchQuery });
       dispatch({ type: 'currentPage', payload: 1 });
-      fetchData();
     }
   };
 
@@ -170,20 +186,28 @@ const APIComponent = () => {
     return <p> Error {error.message}</p>;
   } else if (!isLoaded) {
     return <img src={loader} alt="Loader" />;
+    // } else if (responseErr) {
+    // return <Navigate replace to="/" />;
   } else {
     return (
       <>
-        <APIInformationPanel />
         <h1 className={style.title} data-testid="api-title">
           Rick and Morty API
         </h1>
         <APISearchBar onKeyPress={getSearch} />
-        <div className={style.sortAndFilter}>
-          <APIFilterByGender filterByGender={filterByGender} />
-          <APIFilterByStatus filterByStatus={filterByStatus} />
-          <APISortByName />
-        </div>
-        {responseFromServer && <APIPagination />}
+        {items && (
+          <>
+            <APIInformationPanel />
+            <div className={style.sortAndFilter}>
+              <APIFilterByGender filterByGender={filterByGender} />
+              <APIFilterByStatus filterByStatus={filterByStatus} />
+              <APISortByName />
+            </div>
+            <APIPagination />
+          </>
+          // ) : (
+          // <Navigate replace to="/" />
+        )}
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (

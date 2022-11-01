@@ -6,6 +6,7 @@ import {
   statusSortType,
   genderSortType,
 } from '../types/types';
+import { initialState } from './GlobalContext';
 
 const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
   const { type, payload } = action;
@@ -36,6 +37,10 @@ const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
       return { ...state, currentPage: payload as number };
     case 'sortByName':
       return { ...state, sortByName: payload as string };
+    case 'responseErr':
+      return { ...state, responseErr: payload as boolean };
+    case 'reset':
+      return initialState;
     default:
       return state;
   }

@@ -50,6 +50,7 @@ export interface IAPIGlobalState {
   genderParam: string;
   currentPage: number;
   sortByName: string;
+  responseErr: boolean;
 }
 
 export interface IAPIGlobalAction {
