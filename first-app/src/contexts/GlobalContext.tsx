@@ -16,6 +16,7 @@ export const initialState = {
   genderParam: '',
   currentPage: 1,
   sortByName: '',
+  // itemsByNameObj: [],
 };
 
 export const GlobalContext = createContext<ContextType>({

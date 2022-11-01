@@ -90,6 +90,8 @@ const APIComponent = () => {
     responseFromServer,
     statusParam,
     genderParam,
+    // itemsByNameObj,
+    sortByName,
   } = state;
   const [error, setError] = useState<Partial<IError>>();
 
@@ -104,7 +106,7 @@ const APIComponent = () => {
 
   useEffect(() => {
     fetchData();
-  }, [genderParam, statusParam]);
+  }, [genderParam, statusParam, sortByName]);
 
   const fetchData = () => {
     const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
@@ -114,9 +116,11 @@ const APIComponent = () => {
       .then(
         (result: IItems) => {
           if (result.results) {
+            if (sortByName) sortyngByName(result.results);
             dispatch({ type: 'isLoaded', payload: true });
             dispatch({ type: 'items', payload: result.results });
           } else {
+            if (sortByName) sortyngByName(result.results);
             dispatch({ type: 'isLoaded', payload: true });
             dispatch({ type: 'items', payload: result.results });
             dispatch({ type: 'searchQuery', payload: '' });
@@ -139,14 +143,19 @@ const APIComponent = () => {
     }
   };
 
-  // const sortByName = () => {
-  //   const itemsByNameObj = items.sort((a, b) => {
-  //     if (a.name > b.name) return 1;
-  //     if (a.name < b.name) return -1;
-  //     return 0;
-  //   });
-  //   dispatch({ type: 'items', payload: itemsByNameObj });
-  // };
+  const sortyngByName = (items: ICharacter[]) => {
+    items.sort((a, b) => {
+      const nameA: string = a.name?.toLocaleLowerCase() || '';
+      const nameB: string = b.name?.toLocaleLowerCase() || '';
+      if (sortByName && sortByName === 'nameAZ') {
+        return nameA === nameB ? 0 : nameA > nameB ? 1 : -1;
+      }
+      if (sortByName && sortByName === 'nameZA') {
+        return nameA === nameB ? 0 : nameA < nameB ? 1 : -1;
+      }
+      return 0;
+    });
+  };
 
   const filterByGender = () => fetchData();
 
