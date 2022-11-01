@@ -166,41 +166,6 @@ const APIComponent = () => {
     dispatch({ type: 'activeItem', payload: !isModalActive ? item : null });
   };
 
-  // const handlePageChange = (e: { target: { value: string } }) => {
-  const handlePageChange = (e: React.SyntheticEvent) => {
-    if (e.target && e.target instanceof HTMLElement) {
-      console.log(currentPage);
-      console.log(e.target);
-      const btnType: string | null = e.target.getAttribute('data-name');
-      if (btnType) {
-        if (!isNaN(+btnType)) {
-          updatePage(+btnType);
-        } else {
-          switch (btnType) {
-            case 'first':
-              updatePage(1);
-              break;
-            case 'next':
-              updatePage(currentPage + 1);
-              break;
-            case 'prev':
-              updatePage(currentPage - 1);
-              break;
-            case 'last':
-              updatePage(responseFromServer!.info.pages);
-              break;
-            default:
-              null;
-          }
-        }
-      }
-    }
-  };
-
-  const updatePage = (pageNumber: number) => {
-    dispatch({ type: 'currentPage', payload: pageNumber });
-  };
-
   if (error) {
     return <p> Error {error.message}</p>;
   } else if (!isLoaded) {
@@ -218,13 +183,7 @@ const APIComponent = () => {
           <APIFilterByStatus filterByStatus={filterByStatus} />
           <APISortByName />
         </div>
-        {responseFromServer && (
-          <APIPagination
-            onClick={handlePageChange}
-            page={currentPage}
-            lastPage={responseFromServer.info.pages}
-          />
-        )}
+        {responseFromServer && <APIPagination />}
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (
