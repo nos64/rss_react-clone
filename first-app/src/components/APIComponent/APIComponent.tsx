@@ -8,6 +8,7 @@ import APICard from 'components/APICard';
 import { GlobalContext } from 'contexts/GlobalContext';
 import APIFilterByGender from 'components/APIFilterByGender';
 import APIFilterByStatus from 'components/APIFilterByStatus';
+import APISortByName from 'components/APISortByName';
 export interface IError {
   message: string;
   fileName: string;
@@ -138,13 +139,18 @@ const APIComponent = () => {
     }
   };
 
-  const sortByGender = (genderParam: string) => {
-    fetchData();
-  };
+  // const sortByName = () => {
+  //   const itemsByNameObj = items.sort((a, b) => {
+  //     if (a.name > b.name) return 1;
+  //     if (a.name < b.name) return -1;
+  //     return 0;
+  //   });
+  //   dispatch({ type: 'items', payload: itemsByNameObj });
+  // };
 
-  const filterByStatus = (statusParam: string) => {
-    fetchData();
-  };
+  const filterByGender = () => fetchData();
+
+  const filterByStatus = () => fetchData();
 
   const handleClick = (item: ICharacter | null) => {
     dispatch({ type: 'isModalActive', payload: !isModalActive });
@@ -162,8 +168,9 @@ const APIComponent = () => {
           API Page
         </h1>
         <APISearchBar onKeyPress={getSearch} />
-        <APIFilterByGender filterByGender={sortByGender} />
+        <APIFilterByGender filterByGender={filterByGender} />
         <APIFilterByStatus filterByStatus={filterByStatus} />
+        <APISortByName />
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (

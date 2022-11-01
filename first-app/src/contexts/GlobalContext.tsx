@@ -15,6 +15,7 @@ export const initialState = {
   statusParam: '',
   genderParam: '',
   currentPage: 1,
+  sortByName: '',
 };
 
 export const GlobalContext = createContext<ContextType>({

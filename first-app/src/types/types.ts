@@ -46,11 +46,10 @@ export interface IAPIGlobalState {
   responseFromServer: IItems | null;
   formCards: IFormCard[] | [];
   formCard: IFormCard | null;
-  // statusParam: statusSortType;
   statusParam: string;
-  // genderParam: genderSortType;
   genderParam: string;
   currentPage: number;
+  sortByName: string;
 }
 
 export interface IAPIGlobalAction {

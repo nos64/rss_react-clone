@@ -15,7 +15,7 @@ const APIFilterByGender = (props: IfilterByGenderProps) => {
   };
   return (
     <label className={style.label}>
-      Sort by Gender:
+      Filter by Gender:
       <select
         className={style.textField}
         name="gender"

@@ -15,7 +15,7 @@ const APIFilterByStatus = (props: IfilterByStatusProps) => {
   };
   return (
     <label className={style.label}>
-      Sort by Status:
+      Filter by Status:
       <select
         className={style.textField}
         name="gender"

@@ -34,6 +34,8 @@ const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
       return { ...state, genderParam: payload as genderSortType };
     case 'currentPage':
       return { ...state, currentPage: payload as number };
+    case 'sortByName':
+      return { ...state, sortByName: payload as string };
     default:
       return state;
   }
