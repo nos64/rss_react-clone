@@ -12,6 +12,7 @@ const APIFilterByStatus = (props: IfilterByStatusProps) => {
   const handleFilterStatus = (e: { target: { value: string } }) => {
     dispatch({ type: 'statusParam', payload: e.target.value });
     props.filterByStatus(e.target.value);
+    dispatch({ type: 'currentPage', payload: 1 });
   };
   return (
     <label className={style.label}>
