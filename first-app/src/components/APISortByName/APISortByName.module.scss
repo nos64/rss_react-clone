@@ -1,0 +1,19 @@
+.label {
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  
+}
+
+.textField {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.textField:hover,
+.textField:focus {
+  color: #ffd901;
+  background-color:#4a4950;
+  border-color:#ffd901;
+}

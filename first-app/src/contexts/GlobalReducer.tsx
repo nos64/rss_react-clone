@@ -36,8 +36,6 @@ const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
       return { ...state, currentPage: payload as number };
     case 'sortByName':
       return { ...state, sortByName: payload as string };
-    // case 'itemsByNameObj':
-    //   return { ...state, itemsByNameObj: payload as ICharacter[] };
     default:
       return state;
   }

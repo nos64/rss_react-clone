@@ -50,7 +50,6 @@ export interface IAPIGlobalState {
   genderParam: string;
   currentPage: number;
   sortByName: string;
-  // itemsByNameObj: ICharacter[] | [];
 }
 
 export interface IAPIGlobalAction {

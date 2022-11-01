@@ -9,6 +9,7 @@ import { GlobalContext } from 'contexts/GlobalContext';
 import APIFilterByGender from 'components/APIFilterByGender';
 import APIFilterByStatus from 'components/APIFilterByStatus';
 import APISortByName from 'components/APISortByName';
+import APIPagination from 'components/APIPagination';
 export interface IError {
   message: string;
   fileName: string;
@@ -74,9 +75,7 @@ const SEARCH_PATH = '&name=';
 const PAGE = '?page=';
 const defaultPage = 10;
 const FILTER_BY_STATUS = '&status='; //alive, dead, unknown
-// let statusParam: null | 'alive' | 'dead' | 'unknown';
 const FILTER_BY_GENDER = '&gender='; //female, male, genderless, unknown
-// let genderParam: null | 'female' | 'male' | 'genderless' | 'unknown';
 
 const APIComponent = () => {
   const { state, dispatch } = useContext(GlobalContext);
@@ -90,7 +89,6 @@ const APIComponent = () => {
     responseFromServer,
     statusParam,
     genderParam,
-    // itemsByNameObj,
     sortByName,
   } = state;
   const [error, setError] = useState<Partial<IError>>();
@@ -177,9 +175,12 @@ const APIComponent = () => {
           API Page
         </h1>
         <APISearchBar onKeyPress={getSearch} />
-        <APIFilterByGender filterByGender={filterByGender} />
-        <APIFilterByStatus filterByStatus={filterByStatus} />
-        <APISortByName />
+        <div className={style.sortAndFilter}>
+          <APIFilterByGender filterByGender={filterByGender} />
+          <APIFilterByStatus filterByStatus={filterByStatus} />
+          <APISortByName />
+        </div>
+        <APIPagination />
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (
