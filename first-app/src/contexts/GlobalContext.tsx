@@ -12,8 +12,8 @@ export const initialState = {
   responseFromServer: null,
   formCards: [],
   formCard: null,
-  statusParam: null,
-  genderParam: null,
+  statusParam: '',
+  genderParam: '',
   currentPage: 1,
 };
 

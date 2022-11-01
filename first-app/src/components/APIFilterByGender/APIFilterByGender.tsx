@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from 'contexts/GlobalContext';
-import style from './APISortByGender.module.scss';
+import style from './APIFilterByGender.module.scss';
 
-interface ISortByGenderProps {
-  sortByGender: (statusParam: string) => void;
+interface IfilterByGenderProps {
+  filterByGender: (statusParam: string) => void;
 }
-const APISortByGender = (props: ISortByGenderProps) => {
+const APIFilterByGender = (props: IfilterByGenderProps) => {
   const { state, dispatch } = useContext(GlobalContext);
   const { genderParam } = state;
 
   const handleFilterGender = (e: { target: { value: string } }) => {
     dispatch({ type: 'genderParam', payload: e.target.value });
-    props.sortByGender(e.target.value);
+    props.filterByGender(e.target.value);
   };
   return (
     <label className={style.label}>
@@ -20,8 +20,9 @@ const APISortByGender = (props: ISortByGenderProps) => {
         className={style.textField}
         name="gender"
         onChange={handleFilterGender}
-        value={genderParam ? genderParam : ''}
+        value={genderParam}
       >
+        <option value="">--Select gender--</option>
         <option value="female">female</option>
         <option value="male">male</option>
         <option value="genderless">genderless</option>
@@ -31,4 +32,4 @@ const APISortByGender = (props: ISortByGenderProps) => {
   );
 };
 
-export default APISortByGender;
+export default APIFilterByGender;

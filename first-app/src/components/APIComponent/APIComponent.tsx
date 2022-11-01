@@ -6,7 +6,8 @@ import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
 import { GlobalContext } from 'contexts/GlobalContext';
-import APISortByGender from 'components/APISortByGender';
+import APIFilterByGender from 'components/APIFilterByGender';
+import APIFilterByStatus from 'components/APIFilterByStatus';
 export interface IError {
   message: string;
   fileName: string;
@@ -90,25 +91,23 @@ const APIComponent = () => {
     genderParam,
   } = state;
   const [error, setError] = useState<Partial<IError>>();
+
   useEffect(() => {
     dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
-    fetchData(localStorage.getItem('searchQuery') || '');
+    fetchData();
   }, []);
 
   useEffect(() => {
     localStorage.setItem('searchQuery', searchQuery);
   }, [searchQuery]);
-  const fetchData = (searchQuery: string, genderParam?: string, statusParam?: string) => {
-    let url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${FILTER_BY_STATUS}${SEARCH_PATH}${searchQuery}`;
-    if (statusParam) {
-      url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
-    }
-    if (genderParam) {
-      url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${SEARCH_PATH}${searchQuery}`;
-    }
-    if (statusParam && genderParam) {
-      url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
-    }
+
+  useEffect(() => {
+    fetchData();
+  }, [genderParam, statusParam]);
+
+  const fetchData = () => {
+    const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
+    console.log('url: ', url);
     fetch(url)
       .then((res): Promise<IItems> => res.json())
       .then(
@@ -120,14 +119,13 @@ const APIComponent = () => {
             dispatch({ type: 'isLoaded', payload: true });
             dispatch({ type: 'items', payload: result.results });
             dispatch({ type: 'searchQuery', payload: '' });
-            // dispatch({ type: 'currentPage', payload: currentPage });
-            // dispatch({ type: 'genderParam', payload: genderParam });
-            // dispatch({ type: 'statusParam', payload: statusParam });
+            dispatch({ type: 'currentPage', payload: currentPage });
+            dispatch({ type: 'genderParam', payload: genderParam });
+            dispatch({ type: 'statusParam', payload: statusParam });
           }
         },
         (error: IError) => {
           dispatch({ type: 'isLoaded', payload: true });
-          // dispatch({ type: 'error', payload: error });
           setError(error);
         }
       );
@@ -135,15 +133,17 @@ const APIComponent = () => {
 
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      fetchData(searchQuery);
+      dispatch({ type: 'searchQuery', payload: searchQuery });
+      fetchData();
     }
   };
 
   const sortByGender = (genderParam: string) => {
-    if (genderParam) {
-      fetchData(searchQuery, genderParam);
-      dispatch({ type: 'genderParam', payload: genderParam });
-    }
+    fetchData();
+  };
+
+  const filterByStatus = (statusParam: string) => {
+    fetchData();
   };
 
   const handleClick = (item: ICharacter | null) => {
@@ -162,7 +162,8 @@ const APIComponent = () => {
           API Page
         </h1>
         <APISearchBar onKeyPress={getSearch} />
-        <APISortByGender sortByGender={sortByGender} />
+        <APIFilterByGender filterByGender={sortByGender} />
+        <APIFilterByStatus filterByStatus={filterByStatus} />
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (

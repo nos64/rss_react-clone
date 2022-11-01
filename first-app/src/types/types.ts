@@ -34,8 +34,8 @@ export interface IFormCard {
   rule: boolean;
   keyID?: string;
 }
-export type statusSortType = 'alive' | 'dead' | 'unknown';
-export type genderSortType = 'female' | 'male' | 'genderless' | 'unknown';
+export type statusSortType = 'alive' | 'dead' | 'unknown' | '';
+export type genderSortType = 'female' | 'male' | 'genderless' | 'unknown' | '';
 export interface IAPIGlobalState {
   searchQuery: string;
   error: Partial<IError>;
@@ -46,8 +46,10 @@ export interface IAPIGlobalState {
   responseFromServer: IItems | null;
   formCards: IFormCard[] | [];
   formCard: IFormCard | null;
-  statusParam: statusSortType | null;
-  genderParam: genderSortType | null;
+  // statusParam: statusSortType;
+  statusParam: string;
+  // genderParam: genderSortType;
+  genderParam: string;
   currentPage: number;
 }
 
