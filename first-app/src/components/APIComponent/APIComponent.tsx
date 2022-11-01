@@ -93,7 +93,6 @@ const APIComponent = () => {
     sortByName,
   } = state;
   const [error, setError] = useState<Partial<IError>>();
-  console.log('responseFromServer: ', responseFromServer);
   useEffect(() => {
     dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
     fetchData();
@@ -105,10 +104,11 @@ const APIComponent = () => {
 
   useEffect(() => {
     fetchData();
-  }, [genderParam, statusParam, sortByName]);
+  }, [genderParam, statusParam, sortByName, currentPage]);
 
   const fetchData = () => {
     const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
+    // console.log(url);
     fetch(url)
       .then((res): Promise<IItems> => res.json())
       .then(
@@ -138,6 +138,7 @@ const APIComponent = () => {
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       dispatch({ type: 'searchQuery', payload: searchQuery });
+      dispatch({ type: 'currentPage', payload: 1 });
       fetchData();
     }
   };
@@ -165,6 +166,41 @@ const APIComponent = () => {
     dispatch({ type: 'activeItem', payload: !isModalActive ? item : null });
   };
 
+  // const handlePageChange = (e: { target: { value: string } }) => {
+  const handlePageChange = (e: React.SyntheticEvent) => {
+    if (e.target && e.target instanceof HTMLElement) {
+      console.log(currentPage);
+      console.log(e.target);
+      const btnType: string | null = e.target.getAttribute('data-name');
+      if (btnType) {
+        if (!isNaN(+btnType)) {
+          updatePage(+btnType);
+        } else {
+          switch (btnType) {
+            case 'first':
+              updatePage(1);
+              break;
+            case 'next':
+              updatePage(currentPage + 1);
+              break;
+            case 'prev':
+              updatePage(currentPage - 1);
+              break;
+            case 'last':
+              updatePage(responseFromServer!.info.pages);
+              break;
+            default:
+              null;
+          }
+        }
+      }
+    }
+  };
+
+  const updatePage = (pageNumber: number) => {
+    dispatch({ type: 'currentPage', payload: pageNumber });
+  };
+
   if (error) {
     return <p> Error {error.message}</p>;
   } else if (!isLoaded) {
@@ -182,7 +218,13 @@ const APIComponent = () => {
           <APIFilterByStatus filterByStatus={filterByStatus} />
           <APISortByName />
         </div>
-        {/* <APIPagination onClick={} page={} lastPage={}/> */}
+        {responseFromServer && (
+          <APIPagination
+            onClick={handlePageChange}
+            page={currentPage}
+            lastPage={responseFromServer.info.pages}
+          />
+        )}
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (

@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './APIPagination.module.scss';
-
+import { GlobalContext } from 'contexts/GlobalContext';
 interface IAPIPaginationProps {
-  onClick: () => void;
+  onClick: (e: React.SyntheticEvent) => void;
   page: number;
   lastPage: number;
 }
 
-const renderPaginationBtns = (onClick: () => void, page: number, lastPage: number) => {
+// Пагинацию взял: https://www.youtube.com/watch?v=d2Z1D5Jvajc
+const renderPaginationBtns = (
+  onClick: (e: React.SyntheticEvent) => void,
+  page: number,
+  lastPage: number
+) => {
   const startBtns = [page, page + 1, page + 2];
   const gapBtns = [page - 2, page - 1, page];
   const middleBtn = ['...'];
-  const lastBtns = [lastPage - 3, lastPage - 2, lastPage - 1];
+  const lastBtns = [lastPage - 2, lastPage - 1, lastPage];
 
   let btnsArr: (string | number)[] = [];
 
@@ -29,7 +34,12 @@ const renderPaginationBtns = (onClick: () => void, page: number, lastPage: numbe
     return num === '...' ? (
       num
     ) : (
-      <button key={num} onClick={onClick} data-name={num} className={num === page ? 'active' : ''}>
+      <button
+        key={num}
+        onClick={onClick}
+        data-name={num}
+        className={num === page ? style.active : ''}
+      >
         {num}
       </button>
     );
@@ -37,18 +47,30 @@ const renderPaginationBtns = (onClick: () => void, page: number, lastPage: numbe
 };
 
 const APIPagination = ({ onClick, page, lastPage }: IAPIPaginationProps) => {
+  const { state, dispatch } = useContext(GlobalContext);
+  const { currentPage, responseFromServer } = state;
   return (
-    <div className="paginationWrapper">
-      {page !== 0 && (
-        <button onClick={onClick} data-name="prev">
-          {'<<'}
-        </button>
+    <div className={style.paginationWrapper}>
+      {page !== 1 && (
+        <>
+          <button onClick={onClick} data-name="first">
+            {'<<'}
+          </button>
+          <button onClick={onClick} data-name="prev">
+            {'<'}
+          </button>
+        </>
       )}
       {renderPaginationBtns(onClick, page, lastPage)}
-      {page !== lastPage - 1 && (
-        <button onClick={onClick} data-name="next">
-          {'>>'}
-        </button>
+      {page !== lastPage && (
+        <>
+          <button onClick={onClick} data-name="next">
+            {'>'}
+          </button>
+          <button onClick={onClick} data-name="last">
+            {'>'}
+          </button>
+        </>
       )}
     </div>
   );
