@@ -10,6 +10,7 @@ import APIFilterByGender from 'components/APIFilterByGender';
 import APIFilterByStatus from 'components/APIFilterByStatus';
 import APISortByName from 'components/APISortByName';
 import APIPagination from 'components/APIPagination';
+import APIInformationPanel from 'components/APIInformationPanel';
 export interface IError {
   message: string;
   fileName: string;
@@ -92,7 +93,7 @@ const APIComponent = () => {
     sortByName,
   } = state;
   const [error, setError] = useState<Partial<IError>>();
-
+  console.log('responseFromServer: ', responseFromServer);
   useEffect(() => {
     dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
     fetchData();
@@ -108,11 +109,11 @@ const APIComponent = () => {
 
   const fetchData = () => {
     const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
-    console.log('url: ', url);
     fetch(url)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
+          dispatch({ type: 'responseFromServer', payload: result });
           if (result.results) {
             if (sortByName) sortyngByName(result.results);
             dispatch({ type: 'isLoaded', payload: true });
@@ -171,8 +172,9 @@ const APIComponent = () => {
   } else {
     return (
       <>
+        <APIInformationPanel />
         <h1 className={style.title} data-testid="api-title">
-          API Page
+          Rick and Morty API
         </h1>
         <APISearchBar onKeyPress={getSearch} />
         <div className={style.sortAndFilter}>
@@ -180,7 +182,7 @@ const APIComponent = () => {
           <APIFilterByStatus filterByStatus={filterByStatus} />
           <APISortByName />
         </div>
-        <APIPagination />
+        {/* <APIPagination onClick={} page={} lastPage={}/> */}
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (
