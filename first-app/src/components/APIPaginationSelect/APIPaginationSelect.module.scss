@@ -1,0 +1,17 @@
+.textField {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 18px;
+  transition: all .3s ease-in-out;
+}
+
+.textField:hover,
+.textField:focus {
+  color: #ffd901;
+  background-color:#4a4950;
+  border-color:#ffd901;
+  box-shadow: 0px 0px 10px 5px #ffd901;
+}

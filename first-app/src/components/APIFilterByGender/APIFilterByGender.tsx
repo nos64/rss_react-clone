@@ -11,7 +11,6 @@ const APIFilterByGender = (props: IfilterByGenderProps) => {
 
   const handleFilterGender = (e: { target: { value: string } }) => {
     dispatch({ type: 'genderParam', payload: e.target.value });
-    // dispatch({ type: 'searchQuery', payload: '' });
     dispatch({ type: 'currentPage', payload: 1 });
     props.filterByGender(e.target.value);
   };

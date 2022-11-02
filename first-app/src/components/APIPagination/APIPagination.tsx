@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import style from './APIPagination.module.scss';
 import { GlobalContext } from 'contexts/GlobalContext';
+import APIPaginationSelect from 'components/APIPaginationSelect';
 
 const APIPagination = () => {
   const { state, dispatch } = useContext(GlobalContext);
@@ -83,6 +84,7 @@ const APIPagination = () => {
           </button>
         </>
       </div>
+      <APIPaginationSelect />
     </div>
   );
 };

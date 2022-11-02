@@ -13,6 +13,7 @@ import APIPagination from 'components/APIPagination';
 import APIInformationPanel from 'components/APIInformationPanel';
 import APIErrLoader from 'components/APIErrLoader';
 import { Navigate } from 'react-router-dom';
+import APIPaginationSelect from 'components/APIPaginationSelect';
 export interface IError {
   message: string;
   fileName: string;
@@ -153,9 +154,9 @@ const APIComponent = () => {
 
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      fetchData();
       dispatch({ type: 'searchQuery', payload: searchQuery });
       dispatch({ type: 'currentPage', payload: 1 });
+      fetchData();
     }
   };
 
