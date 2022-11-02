@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.770a2e99.css",
-    "main.js": "/static/js/main.f03e8418.js",
+    "main.css": "/static/css/main.b32587df.css",
+    "main.js": "/static/js/main.59a00afd.js",
     "static/media/mercedes-benz-180.jpg": "/static/media/mercedes-benz-180.fd674bec3ba190353fd8.jpg",
     "static/media/ferrari-365.jpg": "/static/media/ferrari-365.a180f9d0a79a4396c72f.jpg",
     "static/media/aston-martin-DB.jpg": "/static/media/aston-martin-DB.106578b189af19a15960.jpg",
@@ -24,13 +24,18 @@
     "static/media/porsche-911.jpg": "/static/media/porsche-911.4940fbb0765ab87d6c21.jpg",
     "static/media/chevrolet-camaro.jpg": "/static/media/chevrolet-camaro.137ac66fb8ea50c0d6ff.jpg",
     "static/media/triumph-tr3a.jpg": "/static/media/triumph-tr3a.5be6064b49254a7170ca.jpg",
+    "static/media/get_schwifty.ttf": "/static/media/get_schwifty.c3d1dfc692e3547fed16.ttf",
+    "static/media/abril-fatface-v19-latin-regular.woff": "/static/media/abril-fatface-v19-latin-regular.77e21841a0d8f12af2f6.woff",
+    "static/media/abril-fatface-v19-latin-regular.woff2": "/static/media/abril-fatface-v19-latin-regular.e28de833ee7ea7791eba.woff2",
     "static/media/rs_school_js.svg": "/static/media/rs_school_js.ad178c0df28bc133be34b982d62f431d.svg",
+    "static/media/closeBtn.svg": "/static/media/closeBtn.b758d4c7383265423a9a36ce2b0d3654.svg",
+    "static/media/oval.svg": "/static/media/oval.67cad507439a0c68fee20a3ed8e4c320.svg",
     "index.html": "/index.html",
-    "main.770a2e99.css.map": "/static/css/main.770a2e99.css.map",
-    "main.f03e8418.js.map": "/static/js/main.f03e8418.js.map"
+    "main.b32587df.css.map": "/static/css/main.b32587df.css.map",
+    "main.59a00afd.js.map": "/static/js/main.59a00afd.js.map"
   },
   "entrypoints": [
-    "static/css/main.770a2e99.css",
-    "static/js/main.f03e8418.js"
+    "static/css/main.b32587df.css",
+    "static/js/main.59a00afd.js"
   ]
 }

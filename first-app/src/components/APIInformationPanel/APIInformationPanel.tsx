@@ -6,9 +6,15 @@ const APIInformationPanel = () => {
   const { currentPage, responseFromServer } = state;
   return (
     <div className={style.topPanel}>
-      <p>Find {responseFromServer?.info.count} characters</p>
-      <p>Current page: {currentPage}</p>
-      <p>Pages: {responseFromServer?.info.pages}</p>
+      <p>
+        Find <span className={style.results}>{responseFromServer?.info.count}</span> characters
+      </p>
+      <p>
+        Current page: <span className={style.results}>{currentPage}</span>
+      </p>
+      <p>
+        Pages: <span className={style.results}>{responseFromServer?.info.pages}</span>
+      </p>
     </div>
   );
 };

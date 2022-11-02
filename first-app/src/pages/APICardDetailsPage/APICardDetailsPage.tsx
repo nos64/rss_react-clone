@@ -25,31 +25,34 @@ const APICardDetailsPage = () => {
 
   const handleClick = () => {
     dispatch({ type: 'activeItem', payload: null });
+    return redirect('/');
   };
 
   return (
     <Container>
       {activeItem && (
-        <div className={style.wrapper}>
-          <button onClick={handleClick}>
-            <Link to={'/'}>Back</Link>
+        <>
+          <button className={style.button} onClick={handleClick}>
+            <Link to={'/'}>Back to characters list</Link>
           </button>
-          <div className={style.card__imageWrapper}>
-            <img
-              className={style.card__image}
-              src={`${activeItem.image}`}
-              alt={`Image ${activeItem.name}`}
-            />
+          <h1 className={style.cardTitle}>{activeItem.name}</h1>
+          <div className={style.wrapper}>
+            <div className={style.imageWrapper}>
+              <img
+                className={style.image}
+                src={`${activeItem.image}`}
+                alt={`Image ${activeItem.name}`}
+              />
+            </div>
+            <div className={style.textWrapper}>
+              <CardSimpleText description={'Status: '} param={activeItem.status} />
+              <CardSimpleText description={'Species: '} param={activeItem.species} />
+              <CardSimpleText description={'Gender: '} param={activeItem.gender} />
+              <CardSimpleText description={'Origin: '} param={activeItem.origin.name} />
+              <CardSimpleText description={'Location: '} param={activeItem.location.name} />
+            </div>
           </div>
-          <div>
-            <h3 className={style.card__title}>{activeItem.name}</h3>
-            <CardSimpleText description={'Status: '} param={activeItem.status} />
-            <CardSimpleText description={'Species: '} param={activeItem.species} />
-            <CardSimpleText description={'Gender: '} param={activeItem.gender} />
-            <CardSimpleText description={'Origin: '} param={activeItem.origin.name} />
-            <CardSimpleText description={'Location: '} param={activeItem.location.name} />
-          </div>
-        </div>
+        </>
       )}
     </Container>
   );

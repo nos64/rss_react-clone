@@ -7,7 +7,7 @@ interface IfilterByGenderProps {
 }
 const APIFilterByGender = (props: IfilterByGenderProps) => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { items, genderParam } = state;
+  const { genderParam } = state;
 
   const handleFilterGender = (e: { target: { value: string } }) => {
     dispatch({ type: 'genderParam', payload: e.target.value });
