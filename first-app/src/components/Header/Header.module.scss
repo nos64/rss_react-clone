@@ -1,10 +1,8 @@
 .header {
   background-color: #4a4950;
-  height: 50px;
+  height: 90px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  // margin-bottom: 30px;
+
 }
 
 .link__list {
@@ -13,6 +11,7 @@
   align-items: center;
   list-style: none;
   gap: 50px;
+  padding-top: 20px;
 }
 
 .link {
@@ -28,4 +27,16 @@
   color: #ffd901;
   border: 5px solid #ffd901;
   outline: none;
+}
+
+.about {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 24px;
+  color:#d1d2d3;
+}
+
+.aboutText {
+  font-size: 24px;
+  color: #ffd901;
 }

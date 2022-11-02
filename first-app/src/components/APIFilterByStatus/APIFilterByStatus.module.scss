@@ -7,9 +7,13 @@
 
 .textField {
   cursor: pointer;
+  height: 35px;
+  font-weight: 700;
   margin-left: 10px;
   font-size: 18px;
   transition: all .3s ease-in-out;
+  background-color: transparent;
+  text-align: center;
 }
 
 .textField:hover,

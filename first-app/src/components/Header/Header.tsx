@@ -1,5 +1,5 @@
 import style from './Header.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import React, { useContext } from 'react';
 import Container from 'components/Container';
 import { GlobalContext } from 'contexts/GlobalContext';
@@ -11,26 +11,31 @@ const Header = () => {
       <Container>
         <ul className={style.link__list}>
           <li className={style.link__item}>
-            <Link className={style.link} to="/">
+            <NavLink className={style.link} to="">
               API
-            </Link>
+            </NavLink>
           </li>
           <li className={style.link__item}>
-            <Link className={style.link} to="/form">
+            <NavLink className={style.link} to="/form">
               Form
-            </Link>
+            </NavLink>
           </li>
           <li className={style.link__item}>
-            <Link className={style.link} to="/firstPage">
+            <NavLink className={style.link} to="/firstPage">
               First Page
-            </Link>
+            </NavLink>
           </li>
           <li className={style.link__item}>
-            <Link className={style.link} to="/about">
+            <NavLink className={style.link} to="/about">
               About Us
-            </Link>
+            </NavLink>
           </li>
         </ul>
+        {activeItem && (
+          <p className={style.about}>
+            About: <span className={style.aboutText}>{activeItem?.name}</span>
+          </p>
+        )}
       </Container>
     </header>
   );

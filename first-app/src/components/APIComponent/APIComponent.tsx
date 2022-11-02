@@ -11,9 +11,8 @@ import APIFilterByStatus from 'components/APIFilterByStatus';
 import APISortByName from 'components/APISortByName';
 import APIPagination from 'components/APIPagination';
 import APIInformationPanel from 'components/APIInformationPanel';
-import APIErrLoader from 'components/APIErrLoader';
-import { Navigate } from 'react-router-dom';
-import APIPaginationSelect from 'components/APIPaginationSelect';
+import { Link } from 'react-router-dom';
+
 export interface IError {
   message: string;
   fileName: string;
@@ -212,30 +211,32 @@ const APIComponent = () => {
         {items ? (
           <ul className={style.card__list}>
             {items.map((item) => (
-              <APICard
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                image={item.image}
-                status={item.status}
-                gender={item.gender}
-                species={item.species}
-                origin={item.origin}
-                location={item.location}
-                type={item.type}
-                episode={item.episode}
-                created={item.created}
-                url={item.url}
-                isModalActive={isModalActive}
-                activeItem={activeItem}
-                onClick={() => handleClick(item)}
-              />
+              <Link key={item.id} to={`${item.id}`}>
+                <APICard
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  image={item.image}
+                  status={item.status}
+                  gender={item.gender}
+                  species={item.species}
+                  origin={item.origin}
+                  location={item.location}
+                  type={item.type}
+                  episode={item.episode}
+                  created={item.created}
+                  url={item.url}
+                  isModalActive={isModalActive}
+                  activeItem={activeItem}
+                  onClick={() => handleClick(item)}
+                />
+              </Link>
             ))}
           </ul>
         ) : (
           <APIErrorMessage />
         )}
-        <APIModal />
+        {/* <APIModal /> */}
       </>
     );
   }
