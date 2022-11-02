@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import style from './APIComponent.module.scss';
 import APIErrorMessage from 'components/APIErrorMessage';
-import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
@@ -76,7 +75,6 @@ const LOCATIONS = `/location`;
 const EPISODES = `/episode`;
 const SEARCH_PATH = '&name=';
 const PAGE = '?page=';
-const defaultPage = 10;
 const FILTER_BY_STATUS = '&status=';
 const FILTER_BY_GENDER = '&gender=';
 
@@ -85,11 +83,8 @@ const APIComponent = () => {
   const {
     searchQuery,
     isLoaded,
-    isModalActive,
-    activeItem,
     items,
     currentPage,
-    responseFromServer,
     statusParam,
     genderParam,
     sortByName,
@@ -110,23 +105,9 @@ const APIComponent = () => {
   }, [genderParam, statusParam, sortByName, currentPage]);
 
   const fetchData = () => {
-    // dispatch({ type: 'responseErr', payload: false });
     const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
     fetch(url)
-      .then((res): Promise<IItems> => {
-        // if (!res.ok) {
-        //   if (res.status === 404) {
-        //     dispatch({ type: 'currentPage', payload: 1 });
-        //     dispatch({ type: 'genderParam', payload: '' });
-        //     dispatch({ type: 'statusParam', payload: '' });
-        //     dispatch({ type: 'responseErr', payload: true });
-        //     localStorage.removeItem('searchQuery');
-        //     console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
-        //     // throw Error(res.statusText);
-        //   }
-        // }
-        return res.json();
-      })
+      .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
           dispatch({ type: 'responseFromServer', payload: result });
@@ -177,17 +158,10 @@ const APIComponent = () => {
 
   const filterByStatus = () => fetchData();
 
-  const handleClick = (item: ICharacter | null) => {
-    dispatch({ type: 'isModalActive', payload: !isModalActive });
-    dispatch({ type: 'activeItem', payload: !isModalActive ? item : null });
-  };
-
   if (error) {
     return <p> Error {error.message}</p>;
   } else if (!isLoaded) {
     return <img src={loader} alt="Loader" />;
-    // } else if (responseErr) {
-    // return <Navigate replace to="/" />;
   } else {
     return (
       <>
@@ -205,8 +179,6 @@ const APIComponent = () => {
             </div>
             <APIPagination />
           </>
-          // ) : (
-          // <Navigate replace to="/" />
         )}
         {items ? (
           <ul className={style.card__list}>
@@ -226,9 +198,6 @@ const APIComponent = () => {
                   episode={item.episode}
                   created={item.created}
                   url={item.url}
-                  isModalActive={isModalActive}
-                  activeItem={activeItem}
-                  onClick={() => handleClick(item)}
                 />
               </Link>
             ))}
@@ -236,7 +205,6 @@ const APIComponent = () => {
         ) : (
           <APIErrorMessage />
         )}
-        {/* <APIModal /> */}
       </>
     );
   }
