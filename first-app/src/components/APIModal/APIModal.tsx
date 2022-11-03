@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APIModal.module.scss';
 import closeBtn from '../../assets/images/closeBtn.svg';
 import APIModalInside from '../APIModalInside';
+import { ICharacter } from 'types/types';
 
 interface IAPIModal {
   isModalActive: boolean;

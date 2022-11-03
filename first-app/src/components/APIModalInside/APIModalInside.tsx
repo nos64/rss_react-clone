@@ -1,7 +1,7 @@
 import CardSimpleText from '../CardSimpleText';
 import React, { Component } from 'react';
-import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APIModalInside.module.scss';
+import { ICharacter } from 'types/types';
 
 interface IProps {
   activeCard: ICharacter;

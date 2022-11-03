@@ -1,6 +1,6 @@
 export const ROUTES = {
   LAYOUT: '/',
-  API: '',
+  HOME: '/',
   ABOUTUS: '/about',
   FORM: '/form',
   FIRSTPAGE: '/firstPage',

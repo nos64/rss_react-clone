@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import APICard from './APICard';
-import { ICharacter } from 'components/APIComponent/APIComponent';
+import { ICharacter } from 'types/types';
 
 const cards = [
   {
@@ -30,7 +30,7 @@ const cards = [
 interface IAPICard extends ICharacter {
   isModalActive: boolean;
   activeItem: null | ICharacter;
-  onClick: () => void;
+  onCardClick: () => void;
 }
 
 describe('APICard', () => {
@@ -58,7 +58,7 @@ describe('APICard', () => {
         url={cards[0].url}
         isModalActive={true}
         activeItem={null}
-        onClick={() => handleClick()}
+        onCardClick={() => handleClick()}
       />
     );
     screen.debug();

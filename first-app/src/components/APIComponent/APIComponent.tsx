@@ -5,6 +5,8 @@ import APIModal from '../APIModal';
 import APISearchBar from '../APISearchBar';
 import loader from '../../assets/images/oval.svg';
 import APICard from '../APICard';
+import { BASE_PATH, CHARACTERS, SEARCH_PATH } from 'utils/constants';
+import { ICharacter, IItems } from 'types/types';
 
 interface IPropsAPI {
   props?: string;
@@ -18,63 +20,6 @@ interface IStateAPI {
   isModalActive: boolean;
   activeItem: null | ICharacter;
 }
-interface IItems {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: null | number;
-  };
-  results: ICharacter[];
-}
-
-export interface ICharacter {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
-}
-
-interface ILocation {
-  id: number;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: string[];
-  url: string;
-  created: string;
-}
-
-interface IEpisode {
-  id: number;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
-  url: string;
-  created: string;
-}
-
-const BASE_PATH = 'https://rickandmortyapi.com/api';
-const CHARACTERS = `${BASE_PATH}/character`;
-const LOCATIONS = `${BASE_PATH}/location`;
-const EPISODES = `${BASE_PATH}/episode`;
-const SEARCH_PATH = '?name=';
-const SEARCH_PARAM = 'query=';
 
 export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
   constructor(props: IPropsAPI) {
@@ -99,7 +44,7 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
   }
 
   fetchData = (searchQuery: string) => {
-    fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
+    fetch(`${BASE_PATH}${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
@@ -171,22 +116,23 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
             <ul className={style.card__list}>
               {items.map((item) => (
                 <APICard
+                  {...item}
                   key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  image={item.image}
-                  status={item.status}
-                  gender={item.gender}
-                  species={item.species}
-                  origin={item.origin}
-                  location={item.location}
-                  type={item.type}
-                  episode={item.episode}
-                  created={item.created}
-                  url={item.url}
+                  // id={item.id}
+                  // name={item.name}
+                  // image={item.image}
+                  // status={item.status}
+                  // gender={item.gender}
+                  // species={item.species}
+                  // origin={item.origin}
+                  // location={item.location}
+                  // type={item.type}
+                  // episode={item.episode}
+                  // created={item.created}
+                  // url={item.url}
                   isModalActive={this.state.isModalActive}
                   activeItem={this.state.activeItem}
-                  onClick={() => this.handleClick(item)}
+                  onCardClick={() => this.handleClick(item)}
                 />
               ))}
             </ul>

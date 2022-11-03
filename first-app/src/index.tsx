@@ -16,7 +16,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.LAYOUT} element={<App />}>
-          <Route path={ROUTES.API} element={<API />} />;
+          <Route path={ROUTES.HOME} element={<API />} />;
           <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
           <Route path={ROUTES.FORM} element={<FormPage />} />;
           <Route path={ROUTES.FIRSTPAGE} element={<HomePage />} />;

@@ -1,18 +1,18 @@
 import CardSimpleText from '../CardSimpleText';
 import React, { Component } from 'react';
-import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APICard.module.scss';
+import { ICharacter } from 'types/types';
 
 interface IAPICard extends ICharacter {
   isModalActive: boolean;
   activeItem: null | ICharacter;
-  onClick: () => void;
+  onCardClick: () => void;
 }
 
 export default class APICard extends Component<IAPICard> {
   render() {
     return (
-      <li className={style.card} onClick={() => this.props.onClick()}>
+      <li className={style.card} onClick={() => this.props.onCardClick()}>
         <h3 className={style.card__title}>{this.props.name}</h3>
         <div className={style.card__imageWrapper}>
           <img
