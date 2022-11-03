@@ -8,18 +8,18 @@ const APIModal = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const { isModalActive, activeItem } = state;
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     dispatch({ type: 'isModalActive', payload: false });
     dispatch({ type: 'activeItem', payload: null });
   };
 
   return (
-    <div className={isModalActive ? style.active : style.modal} onClick={closeModal}>
+    <div className={isModalActive ? style.active : style.modal} onClick={handleCloseModal}>
       <div
         className={isModalActive ? style.modalContentActive : style.modalContent}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className={style.modalClose} onClick={closeModal}>
+        <button className={style.modalClose} onClick={handleCloseModal}>
           <img src={closeBtn} alt="close Btn" />
         </button>
         {!!activeItem && <APIModalInside />}

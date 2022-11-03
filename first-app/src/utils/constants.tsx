@@ -30,3 +30,17 @@ export const errorMessagesText = {
   picture: 'Please input you avatar',
   rule: 'Please select this',
 };
+
+export const cardDescription = {
+  status: 'Status: ',
+  species: 'Species: ',
+  gender: 'Gender: ',
+  origin: 'Origin: ',
+  location: 'Location: ',
+};
+
+export enum sortByNameEnum {
+  // 'nameAZ' = nameAZ,
+  nameAZ = 'nameAZ',
+  nameZA = 'nameZA',
+}

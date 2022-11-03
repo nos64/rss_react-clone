@@ -18,6 +18,7 @@ import {
   FILTER_BY_GENDER,
   FILTER_BY_STATUS,
   SEARCH_PATH,
+  sortByNameEnum,
 } from 'utils/constants';
 import { IError, IItems, ICharacter } from 'types/types';
 
@@ -69,10 +70,10 @@ const APIComponent = () => {
     items.sort((a, b) => {
       const nameA: string = a.name?.toLocaleLowerCase() || '';
       const nameB: string = b.name?.toLocaleLowerCase() || '';
-      if (sortByName && sortByName === 'nameAZ') {
+      if (sortByName && sortByName === sortByNameEnum.nameAZ) {
         return nameA === nameB ? 0 : nameA > nameB ? 1 : -1;
       }
-      if (sortByName && sortByName === 'nameZA') {
+      if (sortByName && sortByName === sortByNameEnum.nameZA) {
         return nameA === nameB ? 0 : nameA < nameB ? 1 : -1;
       }
       return 0;

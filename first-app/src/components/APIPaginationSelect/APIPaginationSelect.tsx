@@ -18,7 +18,7 @@ const APIPaginationSelect = () => {
 
   return (
     <label className={style.label}>
-      <select className={style.textField} name="gender" onChange={updatePage} value={currentPage}>
+      <select className={style.textField} name="pageNum" onChange={updatePage} value={currentPage}>
         {pages.map((page) => (
           <option key={page} value={page}>
             {page}

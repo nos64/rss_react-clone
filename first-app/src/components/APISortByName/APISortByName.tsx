@@ -15,7 +15,7 @@ const APISortByName = () => {
       Sort by Name:
       <select
         className={style.textField}
-        name="gender"
+        name="sotByName"
         onChange={(e) => sortyngByName(e)}
         value={sortByName}
       >

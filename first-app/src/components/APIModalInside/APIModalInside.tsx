@@ -2,6 +2,7 @@ import CardSimpleText from 'components/CardSimpleText';
 import React, { useContext } from 'react';
 import style from './APIModalInside.module.scss';
 import { GlobalContext } from 'contexts/GlobalContext';
+import { cardDescription } from 'utils/constants';
 
 const APICard = () => {
   const { state } = useContext(GlobalContext);
@@ -18,11 +19,11 @@ const APICard = () => {
         </div>
         <div>
           <h3 className={style.card__title}>{activeItem.name}</h3>
-          <CardSimpleText description={'Status: '} param={activeItem.status} />
-          <CardSimpleText description={'Species: '} param={activeItem.species} />
-          <CardSimpleText description={'Gender: '} param={activeItem.gender} />
-          <CardSimpleText description={'Origin: '} param={activeItem.origin.name} />
-          <CardSimpleText description={'Location: '} param={activeItem.location.name} />
+          <CardSimpleText description={cardDescription.status} param={activeItem.status} />
+          <CardSimpleText description={cardDescription.species} param={activeItem.species} />
+          <CardSimpleText description={cardDescription.gender} param={activeItem.gender} />
+          <CardSimpleText description={cardDescription.origin} param={activeItem.origin.name} />
+          <CardSimpleText description={cardDescription.location} param={activeItem.location.name} />
         </div>
       </>
     );
