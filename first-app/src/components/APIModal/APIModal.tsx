@@ -1,26 +1,26 @@
 import React from 'react';
-import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APIModal.module.scss';
 import closeBtn from '../../assets/images/closeBtn.svg';
 import APIModalInside from 'components/APIModalInside';
+import { ICharacter } from 'types/types';
 
 interface IAPIModal {
   isModalActive: boolean;
   activeItem: null | ICharacter;
-  onClick: () => void;
+  onCardClick: () => void;
 }
 
 const APIModal = (props: IAPIModal) => {
   return (
     <div
       className={props.isModalActive ? style.active : style.modal}
-      onClick={() => props.onClick()}
+      onClick={() => props.onCardClick()}
     >
       <div
         className={props.isModalActive ? style.modalContentActive : style.modalContent}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className={style.modalClose} onClick={() => props.onClick()}>
+        <button className={style.modalClose} onClick={() => props.onCardClick()}>
           <img src={closeBtn} alt="close Btn" />
         </button>
         {!!props.activeItem && <APIModalInside activeCard={props.activeItem} />}

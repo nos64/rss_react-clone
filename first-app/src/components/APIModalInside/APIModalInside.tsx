@@ -1,6 +1,6 @@
 import CardSimpleText from 'components/CardSimpleText';
 import React from 'react';
-import { ICharacter } from '../APIComponent/APIComponent';
+import { ICharacter } from 'types/types';
 import style from './APIModalInside.module.scss';
 
 interface IProps {

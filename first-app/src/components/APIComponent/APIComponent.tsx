@@ -5,68 +5,8 @@ import APIModal from 'components/APIModal';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
-interface IError {
-  message: string;
-  fileName: string;
-  lineNumber: string;
-}
-interface IItems {
-  info: {
-    count: number;
-    pages: number;
-    next: string;
-    prev: null | number;
-  };
-  results: ICharacter[];
-}
-
-export interface ICharacter {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
-}
-
-interface ILocation {
-  id: number;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: string[];
-  url: string;
-  created: string;
-}
-
-interface IEpisode {
-  id: number;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
-  url: string;
-  created: string;
-}
-
-const BASE_PATH = 'https://rickandmortyapi.com/api';
-const CHARACTERS = `${BASE_PATH}/character`;
-const LOCATIONS = `${BASE_PATH}/location`;
-const EPISODES = `${BASE_PATH}/episode`;
-const SEARCH_PATH = '?name=';
-const SEARCH_PARAM = 'query=';
+import { BASE_PATH, CHARACTERS, SEARCH_PATH } from 'utills/constants';
+import { IError, ICharacter, IItems } from 'types/types';
 
 const APIComponent = () => {
   const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('searchQuery') || '');
@@ -86,18 +26,13 @@ const APIComponent = () => {
   }, [searchQuery]);
 
   const fetchData = (searchQuery: string) => {
-    fetch(`${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
+    fetch(`${BASE_PATH}${CHARACTERS}${SEARCH_PATH}${searchQuery}`)
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
-          if (result.results) {
-            setIsLoaded(true);
-            setItems(result.results);
-          } else {
-            setIsLoaded(true);
-            setItems(result.results);
-            setSearchQuery('');
-          }
+          setIsLoaded(true);
+          setItems(result.results);
+          setSearchQuery(result.results ? searchQuery : '');
         },
         (error) => {
           setIsLoaded(true);
@@ -141,29 +76,18 @@ const APIComponent = () => {
           <ul className={style.card__list}>
             {items.map((item) => (
               <APICard
+                {...item}
                 key={item.id}
-                id={item.id}
-                name={item.name}
-                image={item.image}
-                status={item.status}
-                gender={item.gender}
-                species={item.species}
-                origin={item.origin}
-                location={item.location}
-                type={item.type}
-                episode={item.episode}
-                created={item.created}
-                url={item.url}
                 isModalActive={isModalActive}
                 activeItem={activeItem}
-                onClick={() => handleClick(item)}
+                onCardClick={() => handleClick(item)}
               />
             ))}
           </ul>
         ) : (
           <APIErrorMessage />
         )}
-        <APIModal isModalActive={isModalActive} activeItem={activeItem} onClick={closeModal} />
+        <APIModal isModalActive={isModalActive} activeItem={activeItem} onCardClick={closeModal} />
       </>
     );
   }
