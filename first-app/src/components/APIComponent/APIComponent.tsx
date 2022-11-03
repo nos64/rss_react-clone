@@ -48,18 +48,11 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
-          if (result.results) {
-            this.setState({
-              isLoaded: true,
-              items: result.results,
-            });
-          } else {
-            this.setState({
-              isLoaded: true,
-              items: result.results,
-              searchQuery: '',
-            });
-          }
+          this.setState({
+            isLoaded: true,
+            items: result.results,
+            searchQuery: result.results ? this.state.searchQuery : '',
+          });
         },
         (error) => {
           this.setState({
@@ -118,18 +111,6 @@ export default class APIComponent extends Component<IPropsAPI, IStateAPI> {
                 <APICard
                   {...item}
                   key={item.id}
-                  // id={item.id}
-                  // name={item.name}
-                  // image={item.image}
-                  // status={item.status}
-                  // gender={item.gender}
-                  // species={item.species}
-                  // origin={item.origin}
-                  // location={item.location}
-                  // type={item.type}
-                  // episode={item.episode}
-                  // created={item.created}
-                  // url={item.url}
                   isModalActive={this.state.isModalActive}
                   activeItem={this.state.activeItem}
                   onCardClick={() => this.handleClick(item)}
