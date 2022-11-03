@@ -56,7 +56,7 @@ const APIComponent = () => {
     setActiveItem(!isModalActive ? item : null);
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setIsModalActive(false);
     setActiveItem(null);
   };
@@ -87,7 +87,11 @@ const APIComponent = () => {
         ) : (
           <APIErrorMessage />
         )}
-        <APIModal isModalActive={isModalActive} activeItem={activeItem} onCardClick={closeModal} />
+        <APIModal
+          isModalActive={isModalActive}
+          activeItem={activeItem}
+          onCardClick={handleCloseModal}
+        />
       </>
     );
   }
