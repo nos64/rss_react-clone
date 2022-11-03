@@ -17,13 +17,13 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.LAYOUT} element={<App />}>
-          <Route path={ROUTES.API} element={<API />} />;
-          <Route path={ROUTES.APICARDDETAIL} element={<APICardDetailsPage />} />;
-          <Route path={ROUTES.ABOUTUS} element={<AboutUsPage />} />;
+          <Route path={ROUTES.HOME} element={<API />} />;
+          <Route path={ROUTES.API_CARD_DETAIL} element={<APICardDetailsPage />} />;
+          <Route path={ROUTES.ABOUT_US} element={<AboutUsPage />} />;
           <Route path={ROUTES.FORM} element={<FormPage />} />;
-          <Route path={ROUTES.FIRSTPAGE} element={<HomePage />} />;
-          <Route path={ROUTES.NOTFOUND} element={<NotFoundPage />} />;
-          <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOTFOUND} />} />;
+          <Route path={ROUTES.FIRST_PAGE} element={<HomePage />} />;
+          <Route path={ROUTES.NOT_FOUND} element={<NotFoundPage />} />;
+          <Route path={ROUTES.REDIRECT} element={<Navigate to={ROUTES.NOT_FOUND} />} />;
         </Route>
       </Routes>
     </BrowserRouter>

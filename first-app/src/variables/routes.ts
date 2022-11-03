@@ -1,10 +1,10 @@
 export const ROUTES = {
   LAYOUT: '/',
-  API: '',
-  APICARDDETAIL: ':id',
-  ABOUTUS: '/about',
+  HOME: '',
+  API_CARD_DETAIL: ':id',
+  ABOUT_US: '/about',
   FORM: '/form',
-  FIRSTPAGE: '/firstPage',
-  NOTFOUND: '*',
+  FIRST_PAGE: '/firstPage',
+  NOT_FOUND: '*',
   REDIRECT: '*',
 };

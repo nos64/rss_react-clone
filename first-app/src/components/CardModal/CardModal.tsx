@@ -7,20 +7,20 @@ import CardModalInside from 'components/CardModalInside';
 interface ICardModal {
   isModalActive: boolean;
   activeItem: null | ICard;
-  onClick: () => void;
+  onCardClick: () => void;
 }
 
 const CardModal = (props: ICardModal) => {
   return (
     <div
       className={props.isModalActive ? style.active : style.modal}
-      onClick={() => props.onClick()}
+      onClick={() => props.onCardClick()}
     >
       <div
         className={props.isModalActive ? style.modalContentActive : style.modalContent}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className={style.modalClose} onClick={() => props.onClick()}>
+        <button className={style.modalClose} onClick={() => props.onCardClick()}>
           <img src={closeBtn} alt="close Btn" />
         </button>
         {!!props.activeItem && <CardModalInside activeItem={props.activeItem} />}

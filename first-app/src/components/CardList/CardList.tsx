@@ -26,21 +26,14 @@ const CardList = () => {
         {cardDB.map((card) => (
           <Card
             key={card.id}
-            image={card.image}
-            brand={card.brand}
-            model={card.model}
-            year={card.year}
-            color={card.color}
-            doors={card.doors}
-            volume={card.volume}
-            owners={card.owners}
+            {...card}
             isModalActive={isModalActive}
             activeItem={activeItem}
-            onClick={() => handleClick(card)}
+            onCardClick={() => handleClick(card)}
           />
         ))}
       </ul>
-      <CardModal isModalActive={isModalActive} activeItem={activeItem} onClick={closeModal} />
+      <CardModal isModalActive={isModalActive} activeItem={activeItem} onCardClick={closeModal} />
     </>
   );
 };

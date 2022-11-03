@@ -15,11 +15,11 @@ export interface ICard {
 export interface ICardModal extends ICard {
   isModalActive: boolean;
   activeItem: null | ICard;
-  onClick: () => void;
+  onCardClick: () => void;
 }
 const Card = (props: ICardModal) => {
   return (
-    <li className={style.card} onClick={() => props.onClick()}>
+    <li className={style.card} onClick={() => props.onCardClick()}>
       <h3 className={style.card__title}>{props.brand}</h3>
       <p className={style.card__subtitle}>{props.model}</p>
       <div className={style.card__imageWrapper}>

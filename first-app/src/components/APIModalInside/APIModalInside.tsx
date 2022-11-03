@@ -1,6 +1,5 @@
 import CardSimpleText from 'components/CardSimpleText';
 import React, { useContext } from 'react';
-import { ICharacter } from '../APIComponent/APIComponent';
 import style from './APIModalInside.module.scss';
 import { GlobalContext } from 'contexts/GlobalContext';
 

@@ -1,10 +1,12 @@
-import { ICharacter, IError, IItems } from 'components/APIComponent/APIComponent';
 import {
   IAPIGlobalState,
   IAPIGlobalAction,
   IFormCard,
   statusSortType,
   genderSortType,
+  IError,
+  ICharacter,
+  IItems,
 } from '../types/types';
 import { initialState } from './GlobalContext';
 

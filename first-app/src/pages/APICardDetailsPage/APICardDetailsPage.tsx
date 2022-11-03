@@ -1,16 +1,14 @@
-import { ICharacter } from 'components/APIComponent/APIComponent';
 import CardSimpleText from 'components/CardSimpleText';
 import Container from 'components/Container';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, redirect, useParams } from 'react-router-dom';
 import style from './APICardDetailsPage.module.scss';
 import { GlobalContext } from 'contexts/GlobalContext';
+import { ICharacter } from 'types/types';
 
 const APICardDetailsPage = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const { activeItem } = state;
-
-  const [card, setCard] = useState<ICharacter | null>(null);
   const { id } = useParams();
   useEffect(() => {
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
