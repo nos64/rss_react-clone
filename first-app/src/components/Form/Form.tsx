@@ -6,6 +6,7 @@ import { FormFields, IFormError } from 'types/types';
 import FormInputField from 'components/FormInputField';
 import FormInputFieldRadioCheck from 'components/FormInputFieldRadioCheck';
 import { GlobalContext } from 'contexts/GlobalContext';
+import { errorMessagesText, formLineDescriptions } from 'utils/constants';
 
 const Form = () => {
   const firstName = createRef<HTMLInputElement>();
@@ -29,14 +30,14 @@ const Form = () => {
   ) => {
     e.preventDefault();
     if (
-      (firstName.current && firstName.current.value.length) ||
-      (surname.current && surname.current.value.length) ||
-      (dateOfBirth.current && dateOfBirth.current.value.length) ||
-      (email.current && email.current.value.length) ||
-      (genderMale.current && genderMale.current.checked) ||
-      (genderFemale.current && genderFemale.current.checked) ||
-      (country.current && country.current.value.length) ||
-      (picture.current && picture.current.value.length)
+      firstName?.current?.value.length ||
+      surname?.current?.value.length ||
+      dateOfBirth?.current?.value.length ||
+      email?.current?.value.length ||
+      genderMale?.current?.checked ||
+      genderFemale?.current?.checked ||
+      country?.current?.value.length ||
+      picture?.current?.value.length
     ) {
       setDisableBtn(false);
     } else {
@@ -85,39 +86,39 @@ const Form = () => {
     const errorMessage: Partial<IFormError> = {};
     if (firstName.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(firstName.current.value)) {
       isValidForm = false;
-      errorMessage.firstName = 'Please enter your correct first name';
+      errorMessage.firstName = errorMessagesText.firstName;
     }
     if (surname.current && !/^[a-zA-Zа-яА-яА-Я]+$/.test(surname.current.value)) {
       isValidForm = false;
-      errorMessage.surname = 'Please enter your correct surname name';
+      errorMessage.surname = errorMessagesText.surname;
     }
     if (dateOfBirth.current) {
       if (!dateOfBirth.current.value || new Date(dateOfBirth.current.value) > new Date()) {
         isValidForm = false;
-        errorMessage.dateOfBirth = 'Please select your correct date of birth';
+        errorMessage.dateOfBirth = errorMessagesText.dateOfBirth;
       }
     }
     if (genderMale.current && genderFemale.current) {
       if (!genderMale.current.checked && !genderFemale.current.checked) {
         isValidForm = false;
-        errorMessage.gender = 'Please select your gender';
+        errorMessage.gender = errorMessagesText.gender;
       }
     }
     if (email.current && !/.+@.+\..+/i.test(email.current.value)) {
       isValidForm = false;
-      errorMessage.email = 'Please enter correct E-mail';
+      errorMessage.email = errorMessagesText.email;
     }
     if (country.current && !country.current.value) {
       isValidForm = false;
-      errorMessage.country = 'Please select your country';
+      errorMessage.country = errorMessagesText.country;
     }
     if (picture.current && !picture.current.value) {
       isValidForm = false;
-      errorMessage.picture = 'Please input you avatar';
+      errorMessage.picture = errorMessagesText.picture;
     }
     if (rule.current && !rule.current.checked) {
       isValidForm = false;
-      errorMessage.rule = 'Please select this';
+      errorMessage.rule = errorMessagesText.rule;
     }
     setErrors(errorMessage);
     if (isValidForm) {
@@ -138,7 +139,7 @@ const Form = () => {
       <form className={style.form} action="" onSubmit={handleSubmit} data-testid="form">
         <h2 className={style.title}>Registration form</h2>
         <FormInputField
-          description={'First Name:'}
+          description={formLineDescriptions.firstName}
           inputType={'text'}
           inputName={'firstName'}
           ref={firstName}
@@ -148,7 +149,7 @@ const Form = () => {
         />
         <FormErrorMessage message={errors.firstName} />
         <FormInputField
-          description={'Surname:'}
+          description={formLineDescriptions.surname}
           inputType={'text'}
           inputName={'surname'}
           ref={surname}
@@ -159,7 +160,7 @@ const Form = () => {
         <FormErrorMessage message={errors.surname} />
         <div className={style.dateWrapper}>
           <FormInputField
-            description={'Date of birth:'}
+            description={formLineDescriptions.dateOfBirth}
             inputType={'date'}
             inputName={'dateOfBirth'}
             ref={dateOfBirth}
@@ -172,7 +173,7 @@ const Form = () => {
         <div className={style.genderWrapper} onFocus={() => resetErrorOnFocus('gender')}>
           Gender:
           <FormInputFieldRadioCheck
-            description={'Male'}
+            description={formLineDescriptions.genderMale}
             inputType={'radio'}
             inputName={'gender'}
             value={'Male'}
@@ -182,7 +183,7 @@ const Form = () => {
             onFocus={() => resetErrorOnFocus('gender')}
           />
           <FormInputFieldRadioCheck
-            description={'Female'}
+            description={formLineDescriptions.genderFemale}
             inputType={'radio'}
             inputName={'gender'}
             value={'Female'}
@@ -194,7 +195,7 @@ const Form = () => {
         </div>
         <FormErrorMessage message={errors.gender} />
         <FormInputField
-          description={'E-mail:'}
+          description={formLineDescriptions.email}
           inputType={'text'}
           inputName={'email'}
           ref={email}
@@ -204,7 +205,7 @@ const Form = () => {
         />
         <FormErrorMessage message={errors.email} />
         <label className={style.label}>
-          Country:
+          {formLineDescriptions.country}
           <select
             className={style.textField}
             name="country"
@@ -222,7 +223,7 @@ const Form = () => {
         </label>
         <FormErrorMessage message={errors.country} />
         <FormInputField
-          description={'Avatar:'}
+          description={formLineDescriptions.avatar}
           inputType={'file'}
           inputName={'picture'}
           ref={picture}
@@ -232,7 +233,7 @@ const Form = () => {
         />
         <FormErrorMessage message={errors.picture} />
         <FormInputFieldRadioCheck
-          description={'I consent to my personal data'}
+          description={formLineDescriptions.rule}
           inputType={'checkbox'}
           inputName={'rule'}
           value={'rule'}

@@ -5,13 +5,10 @@ interface Props {
   message?: string;
 }
 
-const FormErrorMessage = (props: Props) => {
+const FormErrorMessage = ({ message }: Props) => {
   return (
-    <div
-      className={style.errorMessage}
-      style={props.message ? { color: 'red' } : { color: 'transperernt' }}
-    >
-      {props.message}
+    <div className={style.errorMessage} style={{ color: `${message ? 'red' : 'transparent'}` }}>
+      {message}
     </div>
   );
 };

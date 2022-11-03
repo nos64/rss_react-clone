@@ -15,7 +15,7 @@ const CardList = () => {
     console.log(activeItem);
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setIsModalActive(false);
     setActiveItem(null);
   };
@@ -33,7 +33,11 @@ const CardList = () => {
           />
         ))}
       </ul>
-      <CardModal isModalActive={isModalActive} activeItem={activeItem} onCardClick={closeModal} />
+      <CardModal
+        isModalActive={isModalActive}
+        activeItem={activeItem}
+        onCardClick={handleCloseModal}
+      />
     </>
   );
 };
