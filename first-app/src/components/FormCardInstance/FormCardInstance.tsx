@@ -1,5 +1,6 @@
 import FormCardInstanceField from 'components/FormCardInstanceField';
 import React from 'react';
+import { formLineDescriptions } from 'utils/constants';
 import { IFormCard } from '../../types/types';
 import style from './FormCardInstance.module.scss';
 
@@ -7,12 +8,18 @@ const FormCardInstance = (props: IFormCard) => {
   return (
     <li className={style.item}>
       <div className={style.descriptionWrapper}>
-        <FormCardInstanceField description={'Name: '} param={props.firstName} />
-        <FormCardInstanceField description={'Surname: '} param={props.surname} />
-        <FormCardInstanceField description={'Date of birth: '} param={props.dateOfBirth} />
-        <FormCardInstanceField description={'Gender: '} param={props.gender} />
-        <FormCardInstanceField description={'E-mail: '} param={props.email} />
-        <FormCardInstanceField description={'Country: '} param={props.country} />
+        <FormCardInstanceField
+          description={formLineDescriptions.firstName}
+          param={props.firstName}
+        />
+        <FormCardInstanceField description={formLineDescriptions.surname} param={props.surname} />
+        <FormCardInstanceField
+          description={formLineDescriptions.dateOfBirth}
+          param={props.dateOfBirth}
+        />
+        <FormCardInstanceField description={formLineDescriptions.gender} param={props.gender} />
+        <FormCardInstanceField description={formLineDescriptions.email} param={props.email} />
+        <FormCardInstanceField description={formLineDescriptions.country} param={props.country} />
       </div>
       <div className={style.avatarWrapper}>
         <img className={style.image} src={props.picture} />

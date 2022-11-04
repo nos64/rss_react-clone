@@ -12,6 +12,7 @@ export const formLineDescriptions = {
   firstName: 'First Name:',
   surname: 'Surname:',
   dateOfBirth: 'Date of birth:',
+  gender: 'Gender: ',
   genderMale: 'Male',
   genderFemale: 'Female',
   email: 'E-mail:',

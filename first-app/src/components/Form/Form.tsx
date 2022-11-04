@@ -23,7 +23,6 @@ const Form = () => {
   const [errors, setErrors] = useState<Partial<IFormError>>({});
 
   const { state, dispatch } = useContext(GlobalContext);
-  const { formCards, formCard } = state;
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
