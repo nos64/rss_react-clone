@@ -10,8 +10,8 @@ export const initialState = {
   isModalActive: false,
   activeItem: null,
   responseFromServer: null,
-  formCards: [],
-  formCard: null,
+  formCards: [], ////////////
+  formCard: null, //////////
   statusParam: '',
   genderParam: '',
   currentPage: 1,
