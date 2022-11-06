@@ -7,11 +7,8 @@ export const initialState = {
   error: {},
   isLoaded: false,
   items: [],
-  isModalActive: false,
   activeItem: null,
   responseFromServer: null,
-  formCards: [], ////////////
-  formCard: null, //////////
   statusParam: '',
   genderParam: '',
   currentPage: 1,

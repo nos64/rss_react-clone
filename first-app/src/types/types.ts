@@ -40,11 +40,8 @@ export interface IAPIGlobalState {
   error: Partial<IError>;
   isLoaded: boolean;
   items: ICharacter[] | [];
-  isModalActive: boolean;
   activeItem: ICharacter | null;
   responseFromServer: IItems | null;
-  formCards: IFormCard[] | [];
-  formCard: IFormCard | null;
   statusParam: string;
   genderParam: string;
   currentPage: number;

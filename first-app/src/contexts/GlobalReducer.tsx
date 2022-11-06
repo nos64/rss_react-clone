@@ -1,7 +1,6 @@
 import {
   IAPIGlobalState,
   IAPIGlobalAction,
-  IFormCard,
   statusSortType,
   genderSortType,
   IError,
@@ -21,16 +20,10 @@ const apiReducer = (state: IAPIGlobalState, action: IAPIGlobalAction) => {
       return { ...state, isLoaded: payload as boolean };
     case 'items':
       return { ...state, items: payload as ICharacter[] };
-    case 'isModalActive':
-      return { ...state, isModalActive: payload as boolean };
     case 'activeItem':
       return { ...state, activeItem: payload as ICharacter };
     case 'responseFromServer':
       return { ...state, responseFromServer: payload as IItems };
-    // case 'formCards':
-    //   return { ...state, formCards: payload as IFormCard[] };
-    // case 'formCard':
-    //   return { ...state, formCard: payload as IFormCard };
     case 'statusParam':
       return { ...state, statusParam: payload as statusSortType };
     case 'genderParam':

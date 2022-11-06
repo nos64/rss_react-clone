@@ -1,13 +1,12 @@
 import Container from 'components/Container';
-import React, { createRef, useContext, useState } from 'react';
+import React, { createRef, useState } from 'react';
 import style from './Form.module.scss';
 import FormErrorMessage from '../FormErrorMessage';
 import { FormFields, IFormError } from 'types/types';
 import FormInputField from 'components/FormInputField';
 import FormInputFieldRadioCheck from 'components/FormInputFieldRadioCheck';
-// import { GlobalContext } from 'contexts/GlobalContext';
 import { errorMessagesText, formLineDescriptions } from 'utils/constants';
-import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { addFormCards } from 'store/formReducer';
 
 const Form = () => {
@@ -24,7 +23,6 @@ const Form = () => {
   const [disableBtn, setDisableBtn] = useState(true);
   const [errors, setErrors] = useState<Partial<IFormError>>({});
 
-  // const { state, dispatch } = useContext(GlobalContext);
   const dispatch = useAppDispatch();
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = (
@@ -77,8 +75,6 @@ const Form = () => {
         keyID: new Date().getTime().toString(),
       };
       dispatch(addFormCards(formObj));
-      // dispatch({ type: 'formCards', payload: [...state.formCards, formObj] });
-      // dispatch({ type: 'formCard', payload: formObj });
     }
     e.target.reset();
     setDisableBtn(true);

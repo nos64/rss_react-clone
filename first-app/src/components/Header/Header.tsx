@@ -5,10 +5,9 @@ import Container from 'components/Container';
 import { GlobalContext } from 'contexts/GlobalContext';
 const Header = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { activeItem, isModalActive } = state;
+  const { activeItem } = state;
 
   const handleClick = () => {
-    dispatch({ type: 'isModalActive', payload: !isModalActive });
     dispatch({ type: 'activeItem', payload: null });
   };
 

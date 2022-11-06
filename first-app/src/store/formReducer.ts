@@ -1,17 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IFormCard } from '../types/types';
 
-// type FormCard = {
-//   firstName: string;
-//   surname: string;
-//   dateOfBirth: string;
-//   gender: string;
-//   email: string;
-//   country: string;
-//   picture: string;
-//   rule: boolean;
-// };
-
 type FormCardState = {
   formCards: IFormCard[];
 };
