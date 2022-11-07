@@ -1,15 +1,17 @@
 import CardSimpleText from 'components/CardSimpleText';
 import Container from 'components/Container';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, redirect, useParams } from 'react-router-dom';
 import style from './APICardDetailsPage.module.scss';
-import { GlobalContext } from 'contexts/GlobalContext';
 import { ICharacter } from 'types/types';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { setActivItem } from '../../store/apiReducer';
 
 const APICardDetailsPage = () => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { activeItem } = state;
+  const dispatch = useAppDispatch();
+  const activeItem = useAppSelector((state) => state.apiData.activeItem);
   const { id } = useParams();
+
   useEffect(() => {
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
       .then((res) => {
@@ -18,11 +20,15 @@ const APICardDetailsPage = () => {
         }
         return res.json();
       })
-      .then((card: ICharacter) => dispatch({ type: 'activeItem', payload: card }));
-  }, [id]);
+      .then((card: ICharacter | null) => {
+        if (card) {
+          dispatch(setActivItem(card));
+        }
+      });
+  }, [dispatch, id]);
 
-  const handleClick = () => {
-    dispatch({ type: 'activeItem', payload: null });
+  const handleButtonClick = () => {
+    dispatch(setActivItem(null!));
     return redirect('/');
   };
 
@@ -30,7 +36,7 @@ const APICardDetailsPage = () => {
     <Container>
       {activeItem && (
         <>
-          <button className={style.button} onClick={handleClick}>
+          <button className={style.button} onClick={handleButtonClick}>
             <Link to={'/'}>Back to characters list</Link>
           </button>
           <h1 className={style.cardTitle}>{activeItem.name}</h1>

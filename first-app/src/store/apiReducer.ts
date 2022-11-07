@@ -47,7 +47,7 @@ const apiSlice = createSlice({
     setItems(state, action: PayloadAction<ICharacter[]>) {
       state.items = action.payload;
     },
-    setActiveItem(state, action: PayloadAction<ICharacter>) {
+    setActiveItem(state, action: PayloadAction<ICharacter | null>) {
       state.activeItem = action.payload;
     },
     setSearchQuery(state, action: PayloadAction<string>) {

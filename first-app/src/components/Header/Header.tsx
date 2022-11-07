@@ -1,14 +1,15 @@
 import style from './Header.module.scss';
 import { NavLink } from 'react-router-dom';
-import React, { useContext } from 'react';
+import React from 'react';
 import Container from 'components/Container';
-import { GlobalContext } from 'contexts/GlobalContext';
-const Header = () => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { activeItem } = state;
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { setActivItem } from '../../store/apiReducer';
 
+const Header = () => {
+  const dispatch = useAppDispatch();
+  const activeItem = useAppSelector((state) => state.apiData.activeItem);
   const handleClick = () => {
-    dispatch({ type: 'activeItem', payload: null });
+    dispatch(setActivItem(null!));
   };
 
   return (

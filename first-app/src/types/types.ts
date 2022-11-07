@@ -35,6 +35,7 @@ export interface IFormCard {
 }
 export type statusSortType = 'alive' | 'dead' | 'unknown' | '';
 export type genderSortType = 'female' | 'male' | 'genderless' | 'unknown' | '';
+
 export interface IAPIGlobalState {
   searchQuery: string;
   error: Partial<IError>;
@@ -49,25 +50,25 @@ export interface IAPIGlobalState {
   responseErr: boolean;
 }
 
-export interface IAPIGlobalAction {
-  type: string;
-  payload?:
-    | null
-    | boolean
-    | ICharacter
-    | ICharacter[]
-    | IItems
-    | IFormCard
-    | IFormCard[]
-    | IError
-    | string
-    | number;
-}
+// export interface IAPIGlobalAction {
+//   type: string;
+//   payload?:
+//     | null
+//     | boolean
+//     | ICharacter
+//     | ICharacter[]
+//     | IItems
+//     | IFormCard
+//     | IFormCard[]
+//     | IError
+//     | string
+//     | number;
+// }
 
-export type ContextType = {
-  state: IAPIGlobalState;
-  dispatch: Dispatch<IAPIGlobalAction>;
-};
+// export type ContextType = {
+//   state: IAPIGlobalState;
+//   dispatch: Dispatch<IAPIGlobalAction>;
+// };
 
 export interface IError {
   message: string;

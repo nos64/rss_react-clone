@@ -23,8 +23,6 @@ import { IError, IItems, ICharacter } from 'types/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import {
   setSearchQuery,
-  setStatusParam,
-  setGenderParam,
   setCurrentPage,
   setActivItem,
   setIsLoaded,
@@ -83,10 +81,6 @@ const APIComponent = () => {
     }
   };
 
-  // const filterByGender = () => fetchData();
-
-  // const filterByStatus = () => fetchData();
-
   if (error) {
     console.log('error');
     return <p> Error {error.message}</p>;
@@ -103,8 +97,6 @@ const APIComponent = () => {
           <>
             <APIInformationPanel />
             <div className={style.sortAndFilter}>
-              {/* <APIFilterByGender filterByGender={filterByGender} />
-              <APIFilterByStatus filterByStatus={filterByStatus} /> */}
               <APIFilterByGender />
               <APIFilterByStatus />
               <APISortByName />
