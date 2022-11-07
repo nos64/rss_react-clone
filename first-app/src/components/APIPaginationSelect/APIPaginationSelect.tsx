@@ -1,22 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import style from './APIPaginationSelect.module.scss';
-// import { GlobalContext } from 'contexts/GlobalContext';
-import {
-  setSearchQuery,
-  setStatusParam,
-  setGenderParam,
-  setCurrentPage,
-  setSortByName,
-  setActivItem,
-  setIsLoaded,
-  setResponseFromServer,
-  setItems,
-} from '../../store/apiReducer';
+import { setCurrentPage } from '../../store/apiReducer';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 
 const APIPaginationSelect = () => {
-  // const { state, dispatch } = useContext(GlobalContext);
-  // const { currentPage, responseFromServer } = state;
   const dispatch = useAppDispatch();
   const responseFromServer = useAppSelector((state) => state.apiData.responseFromServer);
   const currentPage = useAppSelector((state) => state.apiData.currentPage);
@@ -27,8 +14,7 @@ const APIPaginationSelect = () => {
   }
 
   const updatePage = (e: { target: { value: string } }) => {
-    console.log(e.target.value);
-    dispatch({ type: 'currentPage', payload: +e.target.value });
+    dispatch(setCurrentPage(+e.target.value));
   };
 
   return (

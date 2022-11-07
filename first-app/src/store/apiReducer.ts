@@ -6,6 +6,7 @@ import {
   FILTER_BY_GENDER,
   FILTER_BY_STATUS,
   SEARCH_PATH,
+  sortByNameEnum,
 } from 'utils/constants';
 import { IAPIGlobalState, IError, ICharacter, IItems } from '../types/types';
 
@@ -67,6 +68,20 @@ const apiSlice = createSlice({
     setActivItem(state, action: PayloadAction<ICharacter>) {
       state.activeItem = action.payload;
     },
+    reduserSortByName(state, action: PayloadAction<string>) {
+      const sortedArr = [...state.items].sort((a, b) => {
+        const nameA: string = a.name?.toLocaleLowerCase() || '';
+        const nameB: string = b.name?.toLocaleLowerCase() || '';
+        if (action.payload === sortByNameEnum.nameAZ) {
+          return nameA === nameB ? 0 : nameA > nameB ? 1 : -1;
+        }
+        if (action.payload === sortByNameEnum.nameZA) {
+          return nameA === nameB ? 0 : nameA < nameB ? 1 : -1;
+        }
+        return 0;
+      });
+      state.items = sortedArr;
+    },
     // createError(state, action: PayloadAction<Partial<IError>>) {
     //   state.error = action.payload;
     // },
@@ -97,5 +112,6 @@ export const {
   setIsLoaded,
   setResponseFromServer,
   setItems,
+  reduserSortByName,
 } = apiSlice.actions;
 export default apiSlice.reducer;

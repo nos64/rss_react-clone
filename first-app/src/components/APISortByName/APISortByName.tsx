@@ -1,13 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import style from './APISortByName.module.scss';
-import { GlobalContext } from 'contexts/GlobalContext';
+import { reduserSortByName } from '../../store/apiReducer';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { sortByNameEnum } from 'utils/constants';
 
 const APISortByName = () => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { sortByName } = state;
+  const dispatch = useAppDispatch();
+  const sortByName = useAppSelector((state) => state.apiData.sortByName);
 
   const sortyngByName = (e: { target: { value: string } }) => {
-    dispatch({ type: 'sortByName', payload: e.target.value });
+    // dispatch(setSortByName(e.target.value));
+    dispatch(reduserSortByName(e.target.value));
   };
 
   return (
@@ -20,8 +23,8 @@ const APISortByName = () => {
         value={sortByName}
       >
         <option value="">--Select sort--</option>
-        <option value="nameAZ">name A-Z</option>
-        <option value="nameZA">name Z-A</option>
+        <option value={sortByNameEnum.nameAZ}>name A-Z</option>
+        <option value={sortByNameEnum.nameZA}>name Z-A</option>
       </select>
     </label>
   );
