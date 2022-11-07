@@ -1,11 +1,26 @@
 import React, { useContext } from 'react';
 import style from './APIPagination.module.scss';
-import { GlobalContext } from 'contexts/GlobalContext';
+// import { GlobalContext } from 'contexts/GlobalContext';
 import APIPaginationSelect from 'components/APIPaginationSelect';
+import {
+  setSearchQuery,
+  setStatusParam,
+  setGenderParam,
+  setCurrentPage,
+  setSortByName,
+  setActivItem,
+  setIsLoaded,
+  setResponseFromServer,
+  setItems,
+} from '../../store/apiReducer';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 
 const APIPagination = () => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { currentPage, responseFromServer } = state;
+  // const { state, dispatch } = useContext(GlobalContext);
+  // const { currentPage, responseFromServer } = state;
+  const dispatch = useAppDispatch();
+  const responseFromServer = useAppSelector((state) => state.apiData.responseFromServer);
+  const currentPage = useAppSelector((state) => state.apiData.currentPage);
 
   const handlePageChange = (e: React.SyntheticEvent) => {
     if (e.target && e.target instanceof HTMLElement) {

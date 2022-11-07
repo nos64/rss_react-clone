@@ -1,21 +1,36 @@
 import React, { useContext } from 'react';
 import style from './APISearchBar.module.scss';
-import { GlobalContext } from 'contexts/GlobalContext';
+// import { GlobalContext } from 'contexts/GlobalContext';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import {
+  setSearchQuery,
+  setStatusParam,
+  setGenderParam,
+  setCurrentPage,
+  setSortByName,
+  setActivItem,
+  setIsLoaded,
+  setResponseFromServer,
+  setItems,
+} from '../../store/apiReducer';
 
 type SearchProps = {
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const APISearchBar = (props: SearchProps) => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { searchQuery } = state;
+  // const { state, dispatch } = useContext(GlobalContext);
+  // const { searchQuery } = state;
+  const searchQuery = useAppSelector((state) => state.apiData.searchQuery);
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
   };
 
   const handleInputChange = (e: { target: { value: string } }) => {
-    dispatch({ type: 'searchQuery', payload: e.target.value });
+    dispatch(setSearchQuery(e.target.value));
+    // dispatch({ type: 'searchQuery', payload: e.target.value });
   };
 
   return (

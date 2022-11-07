@@ -4,7 +4,7 @@ import APIErrorMessage from 'components/APIErrorMessage';
 import APISearchBar from 'components/APISearchBar';
 import loader from '../..//assets/images/oval.svg';
 import APICard from 'components/APICard';
-import { GlobalContext } from 'contexts/GlobalContext';
+// import { GlobalContext } from 'contexts/GlobalContext';
 import APIFilterByGender from 'components/APIFilterByGender';
 import APIFilterByStatus from 'components/APIFilterByStatus';
 import APISortByName from 'components/APISortByName';
@@ -21,13 +21,36 @@ import {
   sortByNameEnum,
 } from 'utils/constants';
 import { IError, IItems, ICharacter } from 'types/types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import {
+  setSearchQuery,
+  setStatusParam,
+  setGenderParam,
+  setCurrentPage,
+  setSortByName,
+  setActivItem,
+  setIsLoaded,
+  setResponseFromServer,
+  setItems,
+} from '../../store/apiReducer';
 
 const APIComponent = () => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { searchQuery, isLoaded, items, currentPage, statusParam, genderParam, sortByName } = state;
+  const dispatch = useAppDispatch();
+  const searchQuery = useAppSelector((state) => state.apiData.searchQuery);
+  const statusParam = useAppSelector((state) => state.apiData.statusParam);
+  const genderParam = useAppSelector((state) => state.apiData.genderParam);
+  const currentPage = useAppSelector((state) => state.apiData.currentPage);
+  const sortByName = useAppSelector((state) => state.apiData.sortByName);
+  const activeItem = useAppSelector((state) => state.apiData.activeItem);
+  const isLoaded = useAppSelector((state) => state.apiData.isLoaded);
+  const items = useAppSelector((state) => state.apiData.items);
+  const responseFromServer = useAppSelector((state) => state.apiData.responseFromServer);
+  // const { state, dispatch } = useContext(GlobalContext);
+  // const { searchQuery, isLoaded, items, currentPage, statusParam, genderParam, sortByName } = state;
   const [error, setError] = useState<Partial<IError>>();
   useEffect(() => {
-    dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
+    // dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
+    dispatch(setSearchQuery(localStorage.getItem('searchQuery') || ''));
     fetchData();
   }, []);
 
@@ -45,14 +68,19 @@ const APIComponent = () => {
       .then((res): Promise<IItems> => res.json())
       .then(
         (result: IItems) => {
-          dispatch({ type: 'responseFromServer', payload: result });
+          dispatch(setResponseFromServer(result));
+          // dispatch({ type: 'responseFromServer', payload: result });
           if (sortByName) sortyngByName(result.results);
-          dispatch({ type: 'isLoaded', payload: true });
-          dispatch({ type: 'items', payload: result.results });
-          dispatch({ type: 'searchQuery', payload: result.results ? searchQuery : '' });
+          dispatch(setIsLoaded(true));
+          // dispatch({ type: 'isLoaded', payload: true });
+          dispatch(setItems(result.results));
+          // dispatch({ type: 'items', payload: result.results });
+          dispatch(setSearchQuery(result.results ? searchQuery : ''));
+          // dispatch({ type: 'searchQuery', payload: result.results ? searchQuery : '' });
         },
         (error: IError) => {
-          dispatch({ type: 'isLoaded', payload: true });
+          dispatch(setIsLoaded(true));
+          // dispatch({ type: 'isLoaded', payload: true });
           setError(error);
         }
       );
@@ -60,8 +88,10 @@ const APIComponent = () => {
 
   const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      dispatch({ type: 'searchQuery', payload: searchQuery });
-      dispatch({ type: 'currentPage', payload: 1 });
+      dispatch(setSearchQuery(searchQuery));
+      // dispatch({ type: 'searchQuery', payload: searchQuery });
+      dispatch(setCurrentPage(1));
+      // dispatch({ type: 'currentPage', payload: 1 });
       fetchData();
     }
   };

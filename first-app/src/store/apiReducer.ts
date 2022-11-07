@@ -7,7 +7,7 @@ import {
   FILTER_BY_STATUS,
   SEARCH_PATH,
 } from 'utils/constants';
-import { IAPIGlobalState, IError, ICharacter } from '../types/types';
+import { IAPIGlobalState, IError, ICharacter, IItems } from '../types/types';
 
 const initialState: IAPIGlobalState = {
   searchQuery: localStorage.getItem('searchQuery') || '',
@@ -23,20 +23,32 @@ const initialState: IAPIGlobalState = {
   responseErr: false,
 };
 
-export const fetchItemsFromApi = createAsyncThunk(
-  'itemsFromApi/fetchItemsFromApi',
-  async (currentPage: number, genderParam: string, statusParam: string, searchQuery: string) => {
-    const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  }
-);
+// export const fetchItemsFromApi = createAsyncThunk(
+//   'itemsFromApi/fetchItemsFromApi',
+//   async (currentPage: number, genderParam: string, statusParam: string, searchQuery: string) => {
+//     const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     return data;
+//   }
+// );
 
 const apiSlice = createSlice({
   name: 'apiData',
   initialState,
   reducers: {
+    setIsLoaded(state, action: PayloadAction<boolean>) {
+      state.isLoaded = action.payload;
+    },
+    setResponseFromServer(state, action: PayloadAction<IItems>) {
+      state.responseFromServer = action.payload;
+    },
+    setItems(state, action: PayloadAction<ICharacter[]>) {
+      state.items = action.payload;
+    },
+    setActiveItem(state, action: PayloadAction<ICharacter>) {
+      state.activeItem = action.payload;
+    },
     setSearchQuery(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
     },
@@ -62,18 +74,28 @@ const apiSlice = createSlice({
     //   state.isLoaded = action.payload;
     // },
   },
-  extraReducers: {
-    [fetchItemsFromApi.pending]: (state) => {
+  // extraReducers: {
+  //   [fetchItemsFromApi.pending]: (state) => {
 
-    },
-    [fetchItemsFromApi.fulfilled]: (state) => {
+  //   },
+  //   [fetchItemsFromApi.fulfilled]: (state) => {
 
-    },
-    [fetchItemsFromApi.rejected]: (state) => {
+  //   },
+  //   [fetchItemsFromApi.rejected]: (state) => {
 
-    },
-  },
+  //   },
+  // },
 });
 
-export const { setSearchQuery } = apiSlice.actions;
+export const {
+  setSearchQuery,
+  setStatusParam,
+  setGenderParam,
+  setCurrentPage,
+  setSortByName,
+  setActivItem,
+  setIsLoaded,
+  setResponseFromServer,
+  setItems,
+} = apiSlice.actions;
 export default apiSlice.reducer;

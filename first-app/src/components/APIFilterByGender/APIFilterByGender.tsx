@@ -1,17 +1,34 @@
 import React, { useContext } from 'react';
-import { GlobalContext } from 'contexts/GlobalContext';
+// import { GlobalContext } from 'contexts/GlobalContext';
 import style from './APIFilterByGender.module.scss';
-
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import {
+  setSearchQuery,
+  setStatusParam,
+  setGenderParam,
+  setCurrentPage,
+  setSortByName,
+  setActivItem,
+  setIsLoaded,
+  setResponseFromServer,
+  setItems,
+} from '../../store/apiReducer';
 interface IfilterByGenderProps {
   filterByGender: (statusParam: string) => void;
 }
+
 const APIFilterByGender = (props: IfilterByGenderProps) => {
-  const { state, dispatch } = useContext(GlobalContext);
-  const { genderParam } = state;
+  // const { state, dispatch } = useContext(GlobalContext);
+  // const { genderParam } = state;
+  const dispatch = useAppDispatch();
+  const genderParam = useAppSelector((state) => state.apiData.genderParam);
+  const currentPage = useAppSelector((state) => state.apiData.currentPage);
 
   const handleFilterGender = (e: { target: { value: string } }) => {
-    dispatch({ type: 'genderParam', payload: e.target.value });
-    dispatch({ type: 'currentPage', payload: 1 });
+    dispatch(setGenderParam(e.target.value));
+    // dispatch({ type: 'genderParam', payload: e.target.value });
+    dispatch(setCurrentPage(1));
+    // dispatch({ type: 'currentPage', payload: 1 });
     props.filterByGender(e.target.value);
   };
   return (
