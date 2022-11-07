@@ -50,26 +50,6 @@ export interface IAPIGlobalState {
   responseErr: boolean;
 }
 
-// export interface IAPIGlobalAction {
-//   type: string;
-//   payload?:
-//     | null
-//     | boolean
-//     | ICharacter
-//     | ICharacter[]
-//     | IItems
-//     | IFormCard
-//     | IFormCard[]
-//     | IError
-//     | string
-//     | number;
-// }
-
-// export type ContextType = {
-//   state: IAPIGlobalState;
-//   dispatch: Dispatch<IAPIGlobalAction>;
-// };
-
 export interface IError {
   message: string;
   fileName: string;
