@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './APISortByName.module.scss';
-import { reduserSortByName } from '../../store/apiReducer';
+import { setSortByName, sortyngByName } from '../../store/apiReducer';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { sortByNameEnum } from 'utils/constants';
 
@@ -8,9 +8,9 @@ const APISortByName = () => {
   const dispatch = useAppDispatch();
   const sortByName = useAppSelector((state) => state.apiData.sortByName);
 
-  const sortyngByName = (e: { target: { value: string } }) => {
-    // dispatch(setSortByName(e.target.value));
-    dispatch(reduserSortByName(e.target.value));
+  const handleSortingSelect = (e: { target: { value: string } }) => {
+    dispatch(setSortByName(e.target.value));
+    dispatch(sortyngByName(e.target.value));
   };
 
   return (
@@ -19,7 +19,7 @@ const APISortByName = () => {
       <select
         className={style.textField}
         name="sotByName"
-        onChange={(e) => sortyngByName(e)}
+        onChange={(e) => handleSortingSelect(e)}
         value={sortByName}
       >
         <option value="">--Select sort--</option>

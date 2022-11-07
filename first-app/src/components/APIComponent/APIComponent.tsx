@@ -18,7 +18,6 @@ import {
   FILTER_BY_GENDER,
   FILTER_BY_STATUS,
   SEARCH_PATH,
-  sortByNameEnum,
 } from 'utils/constants';
 import { IError, IItems, ICharacter } from 'types/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -84,9 +83,9 @@ const APIComponent = () => {
     }
   };
 
-  const filterByGender = () => fetchData();
+  // const filterByGender = () => fetchData();
 
-  const filterByStatus = () => fetchData();
+  // const filterByStatus = () => fetchData();
 
   if (error) {
     console.log('error');
@@ -104,8 +103,10 @@ const APIComponent = () => {
           <>
             <APIInformationPanel />
             <div className={style.sortAndFilter}>
-              <APIFilterByGender filterByGender={filterByGender} />
-              <APIFilterByStatus filterByStatus={filterByStatus} />
+              {/* <APIFilterByGender filterByGender={filterByGender} />
+              <APIFilterByStatus filterByStatus={filterByStatus} /> */}
+              <APIFilterByGender />
+              <APIFilterByStatus />
               <APISortByName />
             </div>
             <APIPagination />

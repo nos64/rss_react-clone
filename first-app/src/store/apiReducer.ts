@@ -68,7 +68,7 @@ const apiSlice = createSlice({
     setActivItem(state, action: PayloadAction<ICharacter>) {
       state.activeItem = action.payload;
     },
-    reduserSortByName(state, action: PayloadAction<string>) {
+    sortyngByName(state, action: PayloadAction<string>) {
       const sortedArr = [...state.items].sort((a, b) => {
         const nameA: string = a.name?.toLocaleLowerCase() || '';
         const nameB: string = b.name?.toLocaleLowerCase() || '';
@@ -112,6 +112,6 @@ export const {
   setIsLoaded,
   setResponseFromServer,
   setItems,
-  reduserSortByName,
+  sortyngByName,
 } = apiSlice.actions;
 export default apiSlice.reducer;
