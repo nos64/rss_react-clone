@@ -12,7 +12,7 @@ import { IAPIGlobalState, IError, ICharacter, IItems } from '../types/types';
 
 const initialState: IAPIGlobalState = {
   searchQuery: localStorage.getItem('searchQuery') || '',
-  error: {},
+  error: undefined,
   isLoaded: false,
   items: [],
   activeItem: null,
@@ -24,15 +24,31 @@ const initialState: IAPIGlobalState = {
   responseErr: false,
 };
 
-// export const fetchItemsFromApi = createAsyncThunk(
-//   'itemsFromApi/fetchItemsFromApi',
-//   async (currentPage: number, genderParam: string, statusParam: string, searchQuery: string) => {
-//     const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
-//     const response = await fetch(url);
-//     const data = await response.json();
-//     return data;
-//   }
-// );
+interface fetchParams {
+  currentPage: number;
+  genderParam: string;
+  statusParam: string;
+  searchQuery: string;
+}
+export const fetchItemsFromApi = createAsyncThunk<
+  IItems,
+  Partial<fetchParams>,
+  { rejectValue: string }
+>(
+  'apiData/fetchItemsFromApi',
+  async (
+    { currentPage = 1, genderParam = '', statusParam = '', searchQuery = '' },
+    { rejectWithValue }
+  ) => {
+    const url = `${BASE_PATH}${CHARACTERS}${PAGE}${currentPage}${FILTER_BY_GENDER}${genderParam}${FILTER_BY_STATUS}${statusParam}${SEARCH_PATH}${searchQuery}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      return rejectWithValue('Error No Characters!');
+    }
+    const data: IItems = await response.json();
+    return data;
+  }
+);
 
 const apiSlice = createSlice({
   name: 'apiData',
@@ -82,24 +98,27 @@ const apiSlice = createSlice({
       });
       state.items = sortedArr;
     },
-    // createError(state, action: PayloadAction<Partial<IError>>) {
-    //   state.error = action.payload;
-    // },
-    // changeIsLoaded(state, action: PayloadAction<boolean>) {
-    //   state.isLoaded = action.payload;
-    // },
   },
-  // extraReducers: {
-  //   [fetchItemsFromApi.pending]: (state) => {
-
-  //   },
-  //   [fetchItemsFromApi.fulfilled]: (state) => {
-
-  //   },
-  //   [fetchItemsFromApi.rejected]: (state) => {
-
-  //   },
-  // },
+  extraReducers: (builder) => {
+    builder.addCase(fetchItemsFromApi.pending, (state) => {
+      state.isLoaded = false;
+      state.error = undefined;
+    });
+    builder.addCase(fetchItemsFromApi.fulfilled, (state, action) => {
+      state.isLoaded = true;
+      state.responseFromServer = action.payload;
+      state.items = action.payload.results;
+      state.searchQuery = action.payload.results ? state.searchQuery : '';
+    });
+    builder.addCase(fetchItemsFromApi.rejected, (state, action) => {
+      state.isLoaded = true;
+      state.error = action.payload;
+      state.searchQuery = '';
+      // state.statusParam = '';
+      // state.genderParam = '';
+      // state.sortByName = '';
+    });
+  },
 });
 
 export const {

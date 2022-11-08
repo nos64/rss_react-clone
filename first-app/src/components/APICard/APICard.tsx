@@ -4,7 +4,7 @@ import { ICharacter } from 'types/types';
 import { cardDescription } from 'utils/constants';
 import style from './APICard.module.scss';
 
-const APICard = (props: ICharacter) => {
+const APICard: React.FC<ICharacter> = (props) => {
   return (
     <li className={style.card}>
       <h3 className={style.card__title}>{props.name}</h3>

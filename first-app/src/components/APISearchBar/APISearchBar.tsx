@@ -1,13 +1,9 @@
 import React from 'react';
 import style from './APISearchBar.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { setSearchQuery } from '../../store/apiReducer';
+import { fetchItemsFromApi, setCurrentPage, setSearchQuery } from '../../store/apiReducer';
 
-type SearchProps = {
-  onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-};
-
-const APISearchBar = (props: SearchProps) => {
+const APISearchBar = () => {
   const searchQuery = useAppSelector((state) => state.apiData.searchQuery);
   const dispatch = useAppDispatch();
 
@@ -19,6 +15,14 @@ const APISearchBar = (props: SearchProps) => {
     dispatch(setSearchQuery(e.target.value));
   };
 
+  const getSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      dispatch(setSearchQuery(searchQuery));
+      dispatch(setCurrentPage(1));
+      dispatch(fetchItemsFromApi({ searchQuery }));
+    }
+  };
+
   return (
     <form className={style.searchForm} onSubmit={handleSubmit}>
       <label>
@@ -28,8 +32,9 @@ const APISearchBar = (props: SearchProps) => {
           name="searchString"
           placeholder="Enter name you character"
           onChange={handleInputChange}
-          onKeyPress={props.onKeyPress}
+          onKeyPress={getSearch}
           value={searchQuery}
+          autoFocus
         />
       </label>
     </form>

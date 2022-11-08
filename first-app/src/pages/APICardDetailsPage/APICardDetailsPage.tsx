@@ -6,6 +6,7 @@ import style from './APICardDetailsPage.module.scss';
 import { ICharacter } from 'types/types';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { setActivItem } from '../../store/apiReducer';
+import { cardDescription } from 'utils/constants';
 
 const APICardDetailsPage = () => {
   const dispatch = useAppDispatch();
@@ -49,11 +50,14 @@ const APICardDetailsPage = () => {
               />
             </div>
             <div className={style.textWrapper}>
-              <CardSimpleText description={'Status: '} param={activeItem.status} />
-              <CardSimpleText description={'Species: '} param={activeItem.species} />
-              <CardSimpleText description={'Gender: '} param={activeItem.gender} />
-              <CardSimpleText description={'Origin: '} param={activeItem.origin.name} />
-              <CardSimpleText description={'Location: '} param={activeItem.location.name} />
+              <CardSimpleText description={cardDescription.status} param={activeItem.status} />
+              <CardSimpleText description={cardDescription.species} param={activeItem.species} />
+              <CardSimpleText description={cardDescription.gender} param={activeItem.gender} />
+              <CardSimpleText description={cardDescription.origin} param={activeItem.origin.name} />
+              <CardSimpleText
+                description={cardDescription.location}
+                param={activeItem.location.name}
+              />
             </div>
           </div>
         </>
