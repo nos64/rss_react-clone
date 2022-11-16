@@ -23,16 +23,17 @@ const APICardDetailsPage = () => {
 
   const handleClick = () => {
     dispatch({ type: 'activeItem', payload: null });
-    return redirect('/');
   };
 
   return (
     <Container>
       {activeItem && (
         <>
-          <button className={style.button} onClick={handleClick}>
-            <Link to={'/'}>Back to characters list</Link>
-          </button>
+          <Link to={'/'}>
+            <button className={style.button} onClick={handleClick}>
+              Back to characters list
+            </button>
+          </Link>
           <h1 className={style.cardTitle}>{activeItem.name}</h1>
           <div className={style.wrapper}>
             <div className={style.imageWrapper}>
