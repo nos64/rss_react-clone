@@ -30,16 +30,17 @@ const APICardDetailsPage = () => {
 
   const handleButtonClick = () => {
     dispatch(setActivItem(null!));
-    return redirect('/');
   };
 
   return (
     <Container>
       {activeItem && (
         <>
-          <button className={style.button} onClick={handleButtonClick}>
-            <Link to={'/'}>Back to characters list</Link>
-          </button>
+          <Link to={'/'}>
+            <button className={style.button} type="button" onClick={handleButtonClick}>
+              Back to characters list
+            </button>
+          </Link>
           <h1 className={style.cardTitle}>{activeItem.name}</h1>
           <div className={style.wrapper}>
             <div className={style.imageWrapper}>

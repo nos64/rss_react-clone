@@ -25,7 +25,6 @@ const APIComponent = () => {
 
   useEffect(() => {
     dispatch(setSearchQuery(localStorage.getItem('searchQuery') || ''));
-    dispatch(fetchItemsFromApi({ currentPage, genderParam, statusParam, searchQuery }));
   }, []);
 
   useEffect(() => {
