@@ -7,7 +7,6 @@ interface IfilterByStatusProps {
 }
 const APIFilterByStatus = (props: IfilterByStatusProps) => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { statusParam } = state;
 
   const handleFilterStatus = (e: { target: { value: string } }) => {
     dispatch({ type: 'statusParam', payload: e.target.value });
@@ -21,7 +20,7 @@ const APIFilterByStatus = (props: IfilterByStatusProps) => {
         className={style.textField}
         name="gender"
         onChange={handleFilterStatus}
-        value={statusParam}
+        value={state.statusParam}
       >
         <option value="">--Select status--</option>
         <option value="alive">alive</option>

@@ -6,7 +6,6 @@ import { GlobalContext } from 'contexts/GlobalContext';
 
 const APIModal = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { isModalActive, activeItem } = state;
 
   const handleCloseModal = () => {
     dispatch({ type: 'isModalActive', payload: false });
@@ -14,15 +13,15 @@ const APIModal = () => {
   };
 
   return (
-    <div className={isModalActive ? style.active : style.modal} onClick={handleCloseModal}>
+    <div className={state.isModalActive ? style.active : style.modal} onClick={handleCloseModal}>
       <div
-        className={isModalActive ? style.modalContentActive : style.modalContent}
+        className={state.isModalActive ? style.modalContentActive : style.modalContent}
         onClick={(e) => e.stopPropagation()}
       >
         <button className={style.modalClose} onClick={handleCloseModal}>
           <img src={closeBtn} alt="close Btn" />
         </button>
-        {!!activeItem && <APIModalInside />}
+        {!!state.activeItem && <APIModalInside />}
       </div>
     </div>
   );

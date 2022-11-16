@@ -7,7 +7,6 @@ interface IfilterByGenderProps {
 }
 const APIFilterByGender = (props: IfilterByGenderProps) => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { genderParam } = state;
 
   const handleFilterGender = (e: { target: { value: string } }) => {
     dispatch({ type: 'genderParam', payload: e.target.value });
@@ -21,7 +20,7 @@ const APIFilterByGender = (props: IfilterByGenderProps) => {
         className={style.textField}
         name="gender"
         onChange={handleFilterGender}
-        value={genderParam}
+        value={state.genderParam}
       >
         <option value="">--Select gender--</option>
         <option value="female">female</option>
