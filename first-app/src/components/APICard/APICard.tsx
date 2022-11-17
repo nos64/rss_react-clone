@@ -8,6 +8,7 @@ import style from './APICard.module.scss';
 const APICard = (props: ICharacter) => {
   const { dispatch } = useContext(GlobalContext);
   const onCardClick = () => {
+    localStorage.setItem('activeItem', JSON.stringify(props));
     dispatch({ type: 'activeItem', payload: props });
   };
 

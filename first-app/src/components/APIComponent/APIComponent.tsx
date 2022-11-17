@@ -37,7 +37,6 @@ const APIComponent = () => {
   const [error, setError] = useState<Partial<IError>>();
   useEffect(() => {
     dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
-    // fetchData();
   }, []);
 
   useEffect(() => {
