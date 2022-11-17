@@ -1,12 +1,20 @@
 import CardSimpleText from 'components/CardSimpleText';
+import { useAppDispatch } from 'hooks/hooks';
 import React from 'react';
+import { setActivItem } from 'store/apiReducer';
 import { ICharacter } from 'types/types';
 import { cardDescription } from 'utils/constants';
 import style from './APICard.module.scss';
 
 const APICard: React.FC<ICharacter> = (props) => {
+  const dispatch = useAppDispatch();
+
+  const handleCardClick = () => {
+    dispatch(setActivItem(props));
+  };
+
   return (
-    <li className={style.card}>
+    <li className={style.card} onClick={handleCardClick}>
       <h3 className={style.card__title}>{props.name}</h3>
       <div className={style.card__imageWrapper}>
         <img className={style.card__image} src={`${props.image}`} alt={`Image ${props.name}`} />

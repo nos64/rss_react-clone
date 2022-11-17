@@ -1,43 +1,20 @@
 import CardSimpleText from 'components/CardSimpleText';
 import Container from 'components/Container';
-import React, { useEffect } from 'react';
-import { Link, redirect, useParams } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import style from './APICardDetailsPage.module.scss';
-import { ICharacter } from 'types/types';
-import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { setActivItem } from '../../store/apiReducer';
+import { useAppSelector } from 'hooks/hooks';
 import { cardDescription } from 'utils/constants';
 
 const APICardDetailsPage = () => {
-  const dispatch = useAppDispatch();
   const activeItem = useAppSelector((state) => state.apiData.activeItem);
-  const { id } = useParams();
-
-  // useEffect(() => {
-  //   fetch(`https://rickandmortyapi.com/api/character/${id}`)
-  //     .then((res) => {
-  //       if (!res) {
-  //         return redirect('/');
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((card: ICharacter | null) => {
-  //       if (card) {
-  //         dispatch(setActivItem(card));
-  //       }
-  //     });
-  // }, [dispatch, id]);
-
-  const handleButtonClick = () => {
-    dispatch(setActivItem(null!));
-  };
 
   return (
     <Container>
       {activeItem && (
         <>
           <Link to={'/'}>
-            <button className={style.button} type="button" onClick={handleButtonClick}>
+            <button className={style.button} type="button">
               Back to characters list
             </button>
           </Link>
