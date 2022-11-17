@@ -1,13 +1,24 @@
 import CardSimpleText from 'components/CardSimpleText';
 import Container from 'components/Container';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import style from './APICardDetailsPage.module.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { cardDescription } from 'utils/constants';
+import { useAppDispatch } from 'hooks/hooks';
+import { setActivItem } from 'store/apiReducer';
 
 const APICardDetailsPage = () => {
   const activeItem = useAppSelector((state) => state.apiData.activeItem);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem('activeItem')) {
+      dispatch(setActivItem(JSON.parse(localStorage.getItem('activeItem') as string)));
+    } else {
+      (() => navigate('/'))();
+    }
+  }, []);
 
   return (
     <Container>

@@ -5,6 +5,7 @@ import style from './App.module.scss';
 import Footer from 'components/Footer';
 import { Provider } from 'react-redux';
 import store from './store/index';
+
 export default class App extends Component {
   render() {
     return (

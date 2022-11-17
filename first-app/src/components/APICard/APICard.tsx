@@ -10,6 +10,7 @@ const APICard: React.FC<ICharacter> = (props) => {
   const dispatch = useAppDispatch();
 
   const handleCardClick = () => {
+    localStorage.setItem('activeItem', JSON.stringify(props));
     dispatch(setActivItem(props));
   };
 
