@@ -9,17 +9,8 @@ import { ICharacter } from 'types/types';
 const APICardDetailsPage = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const { activeItem } = state;
+  console.log('activeItem : ', activeItem);
   const { id } = useParams();
-  useEffect(() => {
-    fetch(`https://rickandmortyapi.com/api/character/${id}`)
-      .then((res) => {
-        if (!res) {
-          return redirect('/');
-        }
-        return res.json();
-      })
-      .then((card: ICharacter) => dispatch({ type: 'activeItem', payload: card }));
-  }, [id]);
 
   const handleClick = () => {
     dispatch({ type: 'activeItem', payload: null });

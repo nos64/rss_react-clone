@@ -24,7 +24,16 @@ import { IError, IItems, ICharacter } from 'types/types';
 
 const APIComponent = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { searchQuery, isLoaded, items, currentPage, statusParam, genderParam, sortByName } = state;
+  const {
+    searchQuery,
+    isLoaded,
+    items,
+    activeItem,
+    currentPage,
+    statusParam,
+    genderParam,
+    sortByName,
+  } = state;
   const [error, setError] = useState<Partial<IError>>();
   useEffect(() => {
     dispatch({ type: 'searchQuery', payload: localStorage.getItem('searchQuery') || '' });
