@@ -16,7 +16,7 @@ const APICardDetailsPage = () => {
     if (localStorage.getItem('activeItem')) {
       dispatch(setActivItem(JSON.parse(localStorage.getItem('activeItem') as string)));
     } else {
-      (() => navigate('/'))();
+      navigate('/');
     }
   }, []);
 

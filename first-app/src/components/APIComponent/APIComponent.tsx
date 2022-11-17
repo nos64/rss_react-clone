@@ -11,7 +11,7 @@ import APIPagination from 'components/APIPagination';
 import APIInformationPanel from 'components/APIInformationPanel';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { setSearchQuery, fetchItemsFromApi, setActivItem } from '../../store/apiReducer';
+import { setSearchQuery, fetchItemsFromApi } from '../../store/apiReducer';
 
 const APIComponent = () => {
   const dispatch = useAppDispatch();
