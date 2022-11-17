@@ -4,21 +4,25 @@ import { GlobalContext } from 'contexts/GlobalContext';
 
 const APIPaginationSelect = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { currentPage, responseFromServer } = state;
 
   const pages = [];
-  for (let i = 1; i <= responseFromServer!.info.pages; i++) {
-    pages.push(i);
+  if (state.responseFromServer) {
+    for (let i = 1; i <= state.responseFromServer.info.pages; i++) {
+      pages.push(i);
+    }
   }
-
   const updatePage = (e: { target: { value: string } }) => {
-    console.log(e.target.value);
     dispatch({ type: 'currentPage', payload: +e.target.value });
   };
 
   return (
     <label className={style.label}>
-      <select className={style.textField} name="pageNum" onChange={updatePage} value={currentPage}>
+      <select
+        className={style.textField}
+        name="pageNum"
+        onChange={updatePage}
+        value={state.currentPage}
+      >
         {pages.map((page) => (
           <option key={page} value={page}>
             {page}

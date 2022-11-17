@@ -4,7 +4,6 @@ import { GlobalContext } from 'contexts/GlobalContext';
 
 const APISortByName = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { sortByName } = state;
 
   const sortyngByName = (e: { target: { value: string } }) => {
     dispatch({ type: 'sortByName', payload: e.target.value });
@@ -17,11 +16,11 @@ const APISortByName = () => {
         className={style.textField}
         name="sotByName"
         onChange={(e) => sortyngByName(e)}
-        value={sortByName}
+        value={state.sortByName}
       >
         <option value="">--Select sort--</option>
-        <option value="nameAZ">name A-Z</option>
-        <option value="nameZA">name Z-A</option>
+        <option value="ASC">name A-Z</option>
+        <option value="DESC">name Z-A</option>
       </select>
     </label>
   );

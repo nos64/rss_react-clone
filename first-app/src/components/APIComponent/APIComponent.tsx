@@ -79,10 +79,10 @@ const APIComponent = () => {
     items.sort((a, b) => {
       const nameA: string = a.name?.toLocaleLowerCase() || '';
       const nameB: string = b.name?.toLocaleLowerCase() || '';
-      if (sortByName && sortByName === sortByNameEnum.nameAZ) {
+      if (sortByName && sortByName === sortByNameEnum.ASC) {
         return nameA === nameB ? 0 : nameA > nameB ? 1 : -1;
       }
-      if (sortByName && sortByName === sortByNameEnum.nameZA) {
+      if (sortByName && sortByName === sortByNameEnum.DESC) {
         return nameA === nameB ? 0 : nameA < nameB ? 1 : -1;
       }
       return 0;

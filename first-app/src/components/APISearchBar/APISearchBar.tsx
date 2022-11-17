@@ -8,7 +8,6 @@ type SearchProps = {
 
 const APISearchBar = (props: SearchProps) => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { searchQuery } = state;
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -28,7 +27,7 @@ const APISearchBar = (props: SearchProps) => {
           placeholder="Enter name you character"
           onChange={handleInputChange}
           onKeyPress={props.onKeyPress}
-          value={searchQuery}
+          value={state.searchQuery}
         />
       </label>
     </form>

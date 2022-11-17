@@ -5,10 +5,9 @@ import Container from 'components/Container';
 import { GlobalContext } from 'contexts/GlobalContext';
 const Header = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { activeItem, isModalActive } = state;
 
   const handleClick = () => {
-    dispatch({ type: 'isModalActive', payload: !isModalActive });
+    dispatch({ type: 'isModalActive', payload: !state.isModalActive });
     dispatch({ type: 'activeItem', payload: null });
   };
 
@@ -37,9 +36,9 @@ const Header = () => {
             </NavLink>
           </li>
         </ul>
-        {activeItem && (
+        {state.activeItem && (
           <p className={style.about}>
-            About: <span className={style.aboutText}>{activeItem.name}</span>
+            About: <span className={style.aboutText}>{state.activeItem.name}</span>
           </p>
         )}
       </Container>

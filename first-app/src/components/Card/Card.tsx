@@ -12,12 +12,12 @@ export interface ICard {
   owners: string;
   inBasket?: boolean;
 }
-export interface ICardModal extends ICard {
+export interface ICardModalProps extends ICard {
   isModalActive: boolean;
   activeItem: null | ICard;
   onCardClick: () => void;
 }
-const Card = (props: ICardModal) => {
+const Card = (props: ICardModalProps) => {
   return (
     <li className={style.card} onClick={() => props.onCardClick()}>
       <h3 className={style.card__title}>{props.brand}</h3>

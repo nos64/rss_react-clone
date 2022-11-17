@@ -5,11 +5,10 @@ import { GlobalContext } from 'contexts/GlobalContext';
 
 const FormCard = () => {
   const { state } = useContext(GlobalContext);
-  const { formCards } = state;
 
   return (
     <ul className={style.list}>
-      {formCards.map((card) => (
+      {state.formCards.map((card) => (
         <FormCardInstance
           key={card.keyID}
           firstName={card.firstName}

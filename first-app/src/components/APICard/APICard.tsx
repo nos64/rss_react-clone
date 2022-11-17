@@ -6,7 +6,7 @@ import { cardDescription } from 'utils/constants';
 import style from './APICard.module.scss';
 
 const APICard = (props: ICharacter) => {
-  const { state, dispatch } = useContext(GlobalContext);
+  const { dispatch } = useContext(GlobalContext);
   const onCardClick = () => {
     dispatch({ type: 'activeItem', payload: props });
   };

@@ -5,13 +5,12 @@ import APIPaginationSelect from 'components/APIPaginationSelect';
 
 const APIPagination = () => {
   const { state, dispatch } = useContext(GlobalContext);
-  const { currentPage, responseFromServer } = state;
 
   const handlePageChange = (e: React.SyntheticEvent) => {
     if (e.target && e.target instanceof HTMLElement) {
       const btnType: string | null = e.target.getAttribute('data-name');
       if (btnType) {
-        if (!isNaN(+btnType)) {
+        if (+btnType) {
           updatePage(+btnType);
         } else {
           switch (btnType) {
@@ -19,13 +18,13 @@ const APIPagination = () => {
               updatePage(1);
               break;
             case 'next':
-              updatePage(currentPage + 1);
+              updatePage(state.currentPage + 1);
               break;
             case 'prev':
-              updatePage(currentPage - 1);
+              updatePage(state.currentPage - 1);
               break;
             case 'last':
-              updatePage(responseFromServer!.info.pages);
+              updatePage(state.responseFromServer!.info.pages);
               break;
             default:
               null;
@@ -41,49 +40,41 @@ const APIPagination = () => {
 
   return (
     <div className={style.paginationWrapper}>
-      <div className={style.navBtns}>
-        <>
-          <button
-            className={style.button}
-            onClick={handlePageChange}
-            data-name="first"
-            disabled={currentPage === 1}
-          >
-            {'<<'}
-          </button>
-          <button
-            className={style.button}
-            onClick={handlePageChange}
-            data-name="prev"
-            disabled={currentPage === 1}
-          >
-            {'<'}
-          </button>
-        </>
-      </div>
-      <button data-name={currentPage} className={style.button + ' ' + style.active}>
-        {currentPage}
+      <button
+        className={style.button}
+        onClick={handlePageChange}
+        data-name="first"
+        disabled={state.currentPage === 1}
+      >
+        {'<<'}
       </button>
-      <div className={style.navBtns}>
-        <>
-          <button
-            className={style.button}
-            onClick={handlePageChange}
-            data-name="next"
-            disabled={currentPage === responseFromServer?.info.pages}
-          >
-            {'>'}
-          </button>
-          <button
-            className={style.button}
-            onClick={handlePageChange}
-            data-name="last"
-            disabled={currentPage === responseFromServer?.info.pages}
-          >
-            {'>>'}
-          </button>
-        </>
-      </div>
+      <button
+        className={style.button}
+        onClick={handlePageChange}
+        data-name="prev"
+        disabled={state.currentPage === 1}
+      >
+        {'<'}
+      </button>
+      <button data-name={state.currentPage} className={style.button + ' ' + style.active}>
+        {state.currentPage}
+      </button>
+      <button
+        className={style.button}
+        onClick={handlePageChange}
+        data-name="next"
+        disabled={state.currentPage === state.responseFromServer?.info.pages}
+      >
+        {'>'}
+      </button>
+      <button
+        className={style.button}
+        onClick={handlePageChange}
+        data-name="last"
+        disabled={state.currentPage === state.responseFromServer?.info.pages}
+      >
+        {'>>'}
+      </button>
       <APIPaginationSelect />
     </div>
   );
