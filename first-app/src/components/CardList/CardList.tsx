@@ -12,7 +12,6 @@ const CardList = () => {
   const handleClick = (item: ICard | null) => {
     setIsModalActive(!isModalActive);
     setActiveItem(!isModalActive ? item : null);
-    console.log(activeItem);
   };
 
   const handleCloseModal = () => {

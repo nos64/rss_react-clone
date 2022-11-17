@@ -41,7 +41,6 @@ export const cardDescription = {
 };
 
 export enum sortByNameEnum {
-  // 'nameAZ' = nameAZ,
-  nameAZ = 'nameAZ',
-  nameZA = 'nameZA',
+  ASC = 'ASC',
+  DESC = 'DESC',
 }

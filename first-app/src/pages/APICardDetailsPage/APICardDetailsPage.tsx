@@ -13,20 +13,20 @@ const APICardDetailsPage = () => {
   const activeItem = useAppSelector((state) => state.apiData.activeItem);
   const { id } = useParams();
 
-  useEffect(() => {
-    fetch(`https://rickandmortyapi.com/api/character/${id}`)
-      .then((res) => {
-        if (!res) {
-          return redirect('/');
-        }
-        return res.json();
-      })
-      .then((card: ICharacter | null) => {
-        if (card) {
-          dispatch(setActivItem(card));
-        }
-      });
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   fetch(`https://rickandmortyapi.com/api/character/${id}`)
+  //     .then((res) => {
+  //       if (!res) {
+  //         return redirect('/');
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((card: ICharacter | null) => {
+  //       if (card) {
+  //         dispatch(setActivItem(card));
+  //       }
+  //     });
+  // }, [dispatch, id]);
 
   const handleButtonClick = () => {
     dispatch(setActivItem(null!));

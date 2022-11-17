@@ -23,8 +23,8 @@ const APISortByName = () => {
         value={sortByName}
       >
         <option value="">--Select sort--</option>
-        <option value={sortByNameEnum.nameAZ}>name A-Z</option>
-        <option value={sortByNameEnum.nameZA}>name Z-A</option>
+        <option value={sortByNameEnum.ASC}>name A-Z</option>
+        <option value={sortByNameEnum.DESC}>name Z-A</option>
       </select>
     </label>
   );

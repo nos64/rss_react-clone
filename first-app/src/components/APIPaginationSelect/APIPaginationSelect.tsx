@@ -9,8 +9,10 @@ const APIPaginationSelect = () => {
   const currentPage = useAppSelector((state) => state.apiData.currentPage);
 
   const pages = [];
-  for (let i = 1; i <= responseFromServer!.info.pages; i++) {
-    pages.push(i);
+  if (responseFromServer) {
+    for (let i = 1; i <= responseFromServer.info.pages; i++) {
+      pages.push(i);
+    }
   }
 
   const updatePage = (e: { target: { value: string } }) => {

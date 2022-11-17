@@ -88,10 +88,10 @@ const apiSlice = createSlice({
       const sortedArr = [...state.items].sort((a, b) => {
         const nameA: string = a.name?.toLocaleLowerCase() || '';
         const nameB: string = b.name?.toLocaleLowerCase() || '';
-        if (action.payload === sortByNameEnum.nameAZ) {
+        if (action.payload === sortByNameEnum.ASC) {
           return nameA === nameB ? 0 : nameA > nameB ? 1 : -1;
         }
-        if (action.payload === sortByNameEnum.nameZA) {
+        if (action.payload === sortByNameEnum.DESC) {
           return nameA === nameB ? 0 : nameA < nameB ? 1 : -1;
         }
         return 0;
