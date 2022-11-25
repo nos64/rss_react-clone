@@ -38,7 +38,7 @@ export type genderSortType = 'female' | 'male' | 'genderless' | 'unknown' | '';
 
 export interface IAPIGlobalState {
   searchQuery: string;
-  error: string | undefined;
+  error?: string;
   isLoaded: boolean;
   items: ICharacter[] | [];
   activeItem: ICharacter | null;

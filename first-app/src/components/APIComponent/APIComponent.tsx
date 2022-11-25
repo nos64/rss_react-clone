@@ -12,16 +12,17 @@ import APIInformationPanel from 'components/APIInformationPanel';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { setSearchQuery, fetchItemsFromApi } from '../../store/apiReducer';
+import { ICharacter } from 'types/types';
 
 const APIComponent = () => {
   const dispatch = useAppDispatch();
-  const searchQuery = useAppSelector((state) => state.apiData.searchQuery);
-  const statusParam = useAppSelector((state) => state.apiData.statusParam);
-  const genderParam = useAppSelector((state) => state.apiData.genderParam);
-  const currentPage = useAppSelector((state) => state.apiData.currentPage);
-  const isLoaded = useAppSelector((state) => state.apiData.isLoaded);
-  const items = useAppSelector((state) => state.apiData.items);
-  const error = useAppSelector((state) => state.apiData.error);
+  const searchQuery: string = useAppSelector((state) => state.apiData.searchQuery);
+  const statusParam: string = useAppSelector((state) => state.apiData.statusParam);
+  const genderParam: string = useAppSelector((state) => state.apiData.genderParam);
+  const currentPage: number = useAppSelector((state) => state.apiData.currentPage);
+  const isLoaded: boolean = useAppSelector((state) => state.apiData.isLoaded);
+  const items: ICharacter[] | [] = useAppSelector((state) => state.apiData.items);
+  const error: string | undefined = useAppSelector((state) => state.apiData.error);
 
   useEffect(() => {
     dispatch(setSearchQuery(localStorage.getItem('searchQuery') || ''));
@@ -33,7 +34,7 @@ const APIComponent = () => {
 
   useEffect(() => {
     dispatch(fetchItemsFromApi({ currentPage, genderParam, statusParam, searchQuery }));
-  }, [genderParam, statusParam, currentPage, dispatch]);
+  }, [genderParam, statusParam, currentPage, dispatch, searchQuery]);
 
   if (error) {
     return (
